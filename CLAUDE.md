@@ -1,5 +1,8 @@
 # GrantBot
 
+**Version:** 0.2.0
+**Status:** M1 in progress (grants.gov collector + basic matching)
+
 AI-powered grant discovery and analysis for Generator AI Lab at Babson College.
 
 ## Quick Start
