@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feed Manager - Daily News Agent</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f8f9fa;
+            color: #000000;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: white;
+            border-right: 1px solid #e0e0e0;
+            position: fixed;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            padding: 24px 20px;
+            border-bottom: 1px solid #e0e0e0;
+            background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+            color: white;
+        }
+
+        .sidebar-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .sidebar-subtitle {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .sidebar-nav {
+            padding: 16px 0;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .sidebar-footer {
+            padding: 16px 20px;
+            border-top: 1px solid #e0e0e0;
+            background: #f8f9fa;
+        }
+
+        .sidebar-footer a {
+            display: block;
+            padding: 12px;
+            text-align: center;
+            color: #0d9488;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .sidebar-footer a:hover {
+            background: #e0e0e0;
+        }
+
+        .sidebar-footer a + a {
+            margin-top: 4px;
+        }
+
+        .nav-section {
+            margin-bottom: 24px;
+        }
+
+        .nav-section-title {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #666;
+            padding: 8px 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            color: #333;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+
+        .nav-item:hover {
+            background: #f5f5f5;
+        }
+
+        .nav-item.active {
+            background: #0d9488;
+            color: white;
+            font-weight: 500;
+        }
+
+        .nav-item-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-icon {
+            font-size: 16px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .nav-count {
+            font-size: 11px;
+            background: #e0e0e0;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-weight: 500;
+        }
+
+        .nav-item.active .nav-count {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            padding: 40px;
+        }
+
+        .content-header {
+            margin-bottom: 32px;
+        }
+
+        .content-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .content-title-icon {
+            font-size: 32px;
+        }
+
+        .content-subtitle {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Controls */
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 10px 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: #0d9488;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            padding: 6px 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            background: white;
+            transition: all 0.2s;
+        }
+
+        .filter-tab:hover {
+            border-color: #0d9488;
+            color: #0d9488;
+        }
+
+        .filter-tab.active {
+            background: #0d9488;
+            color: white;
+            border-color: #0d9488;
+        }
+
+        /* Stats */
+        .stats-bar {
+            background: white;
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .stats-left {
+            display: flex;
+            gap: 24px;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+        }
+
+        .stat-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .stat-dot.success { background: #22c55e; }
+        .stat-dot.empty { background: #f59e0b; }
+        .stat-dot.error { background: #ef4444; }
+        .stat-dot.unknown { background: #9e9e9e; }
+
+        .stat-label {
+            color: #666;
+        }
+
+        .stat-value {
+            font-weight: 600;
+            color: #000;
+        }
+
+        /* Bulk Actions */
+        .bulk-actions {
+            background: white;
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            display: flex;
+            gap: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            flex-wrap: wrap;
+        }
+
+        .bulk-btn {
+            padding: 8px 14px;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .bulk-btn:hover {
+            border-color: #0d9488;
+            color: #0d9488;
+        }
+
+        .bulk-btn.primary {
+            background: #0d9488;
+            color: white;
+            border-color: #0d9488;
+            margin-left: auto;
+        }
+
+        .bulk-btn.primary:hover {
+            background: #0f766e;
+        }
+
+        /* Feed Table */
+        .feed-table {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .table-header {
+            display: table;
+            width: 100%;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .table-header-row {
+            display: table-row;
+        }
+
+        .table-header-cell {
+            display: table-cell;
+            padding: 12px 16px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #666;
+            letter-spacing: 0.5px;
+        }
+
+        .feed-list {
+            display: table;
+            width: 100%;
+        }
+
+        .feed-item {
+            display: table-row;
+            transition: background 0.2s;
+        }
+
+        .feed-item:hover > div {
+            background: #f8f9fa;
+        }
+
+        .feed-item.inactive > div {
+            opacity: 0.4;
+        }
+
+        .feed-item > div {
+            display: table-cell;
+            padding: 12px 16px;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: middle;
+            font-size: 13px;
+        }
+
+        /* Status column with prominent dot */
+        .feed-status-col {
+            width: 80px;
+            text-align: center;
+        }
+
+        .status-indicator {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .status-indicator.success {
+            background: #22c55e;
+            box-shadow: 0 0 12px rgba(34, 197, 94, 0.5);
+        }
+        .status-indicator.empty {
+            background: #f59e0b;
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.5);
+        }
+        .status-indicator.error {
+            background: #ef4444;
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.5);
+        }
+        .status-indicator.unknown {
+            background: #9e9e9e;
+        }
+
+        /* Feed name column */
+        .feed-name-col {
+            width: 30%;
+        }
+
+        .feed-name-col a {
+            color: #000;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .feed-name-col a:hover {
+            color: #0d9488;
+            text-decoration: underline;
+        }
+
+        /* URL column */
+        .feed-url-col {
+            width: 30%;
+            color: #666;
+            font-size: 11px;
+            font-family: 'Monaco', 'Menlo', monospace;
+        }
+
+        /* Badges column */
+        .feed-badges-col {
+            width: 15%;
+        }
+
+        .badge {
+            font-size: 10px;
+            padding: 3px 7px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-right: 4px;
+            font-weight: 500;
+        }
+
+        .badge.type-rss { background: #e0f2fe; color: #0369a1; }
+        .badge.type-reddit { background: #fee2e2; color: #dc2626; }
+        .badge.type-api { background: #f3e8ff; color: #7c3aed; }
+        .badge.type-readwise { background: #fef3c7; color: #b45309; }
+        .badge.priority-high { background: #fef3c7; color: #b45309; }
+        .badge.priority-medium { background: #e5e7eb; color: #4b5563; }
+        .badge.priority-low { background: #f0f0f0; color: #666; }
+
+        /* Toggle column */
+        .feed-toggle-col {
+            width: 100px;
+            text-align: right;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 28px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #cbd5e1;
+            transition: 0.3s;
+            border-radius: 28px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        input:checked + .toggle-slider {
+            background-color: #22c55e;
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(32px);
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        /* Save Bar */
+        .save-bar {
+            position: fixed;
+            bottom: 0;
+            left: 280px;
+            right: 0;
+            background: #000;
+            color: white;
+            padding: 16px 40px;
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 50;
+        }
+
+        .save-bar.visible {
+            display: flex;
+        }
+
+        .save-bar-btn {
+            padding: 8px 16px;
+            background: white;
+            color: #000;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            margin-left: 8px;
+        }
+
+        .save-bar-btn:hover {
+            background: #f5f5f5;
+        }
+
+        .save-bar-btn.secondary {
+            background: transparent;
+            color: white;
+            border: 1px solid white;
+        }
+
+        .save-bar-btn.secondary:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* Dashboard View */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-card {
+            background: white;
+            padding: 24px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .dashboard-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .dashboard-card-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .dashboard-card-value {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .dashboard-card-value.success { color: #22c55e; }
+        .dashboard-card-value.empty { color: #f59e0b; }
+        .dashboard-card-value.error { color: #ef4444; }
+        .dashboard-card-value.total { color: #0d9488; }
+
+        .dashboard-card-label {
+            color: #666;
+            font-size: 13px;
+        }
+
+        .category-status-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .category-status-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .category-status-item:hover {
+            background: #e9ecef;
+        }
+
+        .category-status-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .category-status-icon {
+            font-size: 20px;
+        }
+
+        .category-status-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .category-status-stats {
+            display: flex;
+            gap: 12px;
+            font-size: 12px;
+        }
+
+        .category-status-stat {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Suggestions Section */
+        .suggestions-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 2px dashed #e0e0e0;
+        }
+
+        .suggestions-header {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .suggestions-header::before {
+            content: "💡";
+            font-size: 18px;
+        }
+
+        .suggestion-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 10px;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .suggestion-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .suggestion-main {
+            flex: 1;
+        }
+
+        .suggestion-name {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .suggestion-desc {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        .suggestion-meta {
+            font-size: 11px;
+            color: #999;
+        }
+
+        .suggestion-actions {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .suggestion-actions .btn {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-title">Feed Manager</div>
+                <div class="sidebar-subtitle">Daily News Agent v4</div>
+            </div>
+            <nav class="sidebar-nav" id="sidebarNav">
+                <div class="loading">Loading categories...</div>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="v5-recipients.html">🧪 V5 Recipients</a>
+                <a href="email-archive.html">📧 Email Archive</a>
+                <a href="../../index.html">🏠 Back to Home</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="content-header">
+                <div class="content-title">
+                    <span class="content-title-icon" id="categoryIcon">📰</span>
+                    <span id="categoryTitle">Loading...</span>
+                </div>
+                <div class="content-subtitle" id="categorySubtitle">Loading feeds...</div>
+            </div>
+
+            <!-- Search & Filter -->
+            <div class="controls">
+                <input type="text" class="search-bar" id="searchInput" placeholder="🔍 Search feeds by name or URL..." oninput="applyFilters()">
+                <div class="filter-tabs">
+                    <button class="filter-tab active" onclick="setFilter('all')">All Feeds</button>
+                    <button class="filter-tab" onclick="setFilter('enabled')">Active Only</button>
+                    <button class="filter-tab" onclick="setFilter('disabled')">Inactive Only</button>
+                    <button class="filter-tab" onclick="setFilter('success')">Working</button>
+                    <button class="filter-tab" onclick="setFilter('empty')">Empty</button>
+                    <button class="filter-tab" onclick="setFilter('error')">Errors</button>
+                </div>
+            </div>
+
+            <!-- Stats Bar -->
+            <div class="stats-bar">
+                <div class="stats-left" id="statsLeft">
+                    <div class="stat-item">
+                        <span class="stat-dot success"></span>
+                        <span class="stat-label">Working:</span>
+                        <span class="stat-value" id="statSuccess">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-dot empty"></span>
+                        <span class="stat-label">Empty:</span>
+                        <span class="stat-value" id="statEmpty">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-dot error"></span>
+                        <span class="stat-label">Errors:</span>
+                        <span class="stat-value" id="statError">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bulk Actions -->
+            <div class="bulk-actions">
+                <button class="bulk-btn" onclick="bulkEnableAll()">Enable All</button>
+                <button class="bulk-btn" onclick="bulkDisableAll()">Disable All</button>
+                <button class="bulk-btn" onclick="bulkDisableEmpty()">Disable Empty</button>
+                <button class="bulk-btn" onclick="bulkDisableErrors()">Disable Errors</button>
+            </div>
+
+            <!-- Feed Table -->
+            <div class="feed-table">
+                <div class="table-header">
+                    <div class="table-header-row">
+                        <div class="table-header-cell" style="width: 80px; text-align: center;">Status</div>
+                        <div class="table-header-cell" style="width: 30%;">Feed Name</div>
+                        <div class="table-header-cell" style="width: 30%;">URL</div>
+                        <div class="table-header-cell" style="width: 15%;">Type</div>
+                        <div class="table-header-cell" style="width: 100px; text-align: right;">Active</div>
+                    </div>
+                </div>
+                <div class="feed-list" id="feedList">
+                    <div class="loading">Loading feeds...</div>
+                </div>
+            </div>
+
+            <!-- Suggestions Section -->
+            <div id="suggestionsContainer"></div>
+        </div>
+    </div>
+
+    <!-- Save Bar -->
+    <div class="save-bar" id="saveBar">
+        <span id="saveMessage">You have unsaved changes</span>
+        <div>
+            <button class="save-bar-btn secondary" onclick="discardChanges()">Discard</button>
+            <button class="save-bar-btn" onclick="saveChanges()">💾 Save Changes</button>
+        </div>
+    </div>
+
+    <script>
+        let configData = null;
+        let feedStatus = {};
+        let feedSuggestions = {};
+        let currentCategory = null;
+        let hasChanges = false;
+        let currentSearchTerm = '';
+        let currentStatusFilter = 'all';
+        let isAuthenticated = true; // Enable all features (GitHub auth not implemented yet)
+
+        // Category icons mapping
+        const categoryIcons = {
+            'on_this_day': '📅',
+            'weather': '🌤️',
+            'readwise_highlights': '📚',
+            'readwise_reader': '📖',
+            'ai': '🤖',
+            'academic_research': '🎓',
+            'higher_education': '🏫',
+            'space_news': '🚀',
+            'us_news': '📰',
+            'market_business': '💼',
+            'longform_articles': '📝',
+            'moonshot_strategy': '🎯',
+            'agentic_coding': '💻',
+            'from_reddit': '🔴',
+            'good_news': '😊',
+            'personal_finance_fire': '💰',
+            'sustainable_homes': '🏠',
+            'solopreneur_startups': '💡',
+            'tech_tools': '🔧',
+            'tech_headlines': '📱',
+            'daily_stoicism': '🏛️'
+        };
+
+        async function init() {
+            try {
+                // Load all data
+                await Promise.all([
+                    loadConfig(),
+                    loadFeedStatus(),
+                    loadFeedSuggestions()
+                ]);
+
+                renderSidebar();
+
+                // Select first category by default
+                const firstCategory = Object.keys(configData)[0];
+                if (firstCategory) {
+                    selectCategory(firstCategory);
+                }
+            } catch (error) {
+                console.error('Error loading:', error);
+                document.getElementById('feedList').innerHTML = `
+                    <div style="padding: 20px; color: #ef4444;">
+                        Error loading configuration: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        function getBasePath() {
+            if (window.location.protocol === 'file:') {
+                return '../..';
+            }
+            return '../..';
+        }
+
+        async function loadConfig() {
+            const basePath = getBasePath();
+            const response = await fetch(`${basePath}/config/sources-v4.yaml`);
+            if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            const yamlText = await response.text();
+            configData = parseYAML(yamlText);
+        }
+
+        async function loadFeedStatus() {
+            try {
+                const basePath = getBasePath();
+                const response = await fetch(`${basePath}/config/feed-status.json`);
+                if (response.ok) {
+                    const data = await response.json();
+                    feedStatus = data.feeds || {};
+                }
+            } catch (e) {
+                console.log('Could not load feed status:', e);
+            }
+        }
+
+        async function loadFeedSuggestions() {
+            try {
+                const basePath = getBasePath();
+                const response = await fetch(`${basePath}/config/feed-suggestions.json`);
+                if (response.ok) {
+                    const data = await response.json();
+                    feedSuggestions = data.suggestions || {};
+                }
+            } catch (e) {
+                console.log('Could not load feed suggestions:', e);
+            }
+        }
+
+        function parseYAML(yamlText) {
+            const categories = {};
+            const lines = yamlText.split('\n');
+            let currentCategory = null;
+            let currentSource = null;
+            let inSources = false;
+
+            for (let line of lines) {
+                const trimmed = line.trim();
+                if (trimmed.startsWith('#') || !trimmed) continue;
+
+                if (line.match(/^  [a-z_]+:$/)) {
+                    const categoryName = line.trim().replace(':', '');
+                    currentCategory = categoryName;
+                    categories[categoryName] = {
+                        name: categoryName,
+                        priority: '',
+                        word_target: '',
+                        sources: []
+                    };
+                    inSources = false;
+                    continue;
+                }
+
+                if (!currentCategory) continue;
+
+                if (line.match(/^    priority:/)) {
+                    categories[currentCategory].priority = trimmed.split(':')[1].trim();
+                }
+                if (line.match(/^    word_target:/)) {
+                    categories[currentCategory].word_target = trimmed.split(':')[1].trim();
+                }
+                if (line.match(/^    sources:$/)) {
+                    inSources = true;
+                    continue;
+                }
+
+                if (inSources) {
+                    if (line.match(/^      - name:/)) {
+                        currentSource = {
+                            name: trimmed.split('name:')[1].trim().replace(/"/g, ''),
+                            url: '',
+                            type: '',
+                            priority: '',
+                            enabled: true
+                        };
+                        categories[currentCategory].sources.push(currentSource);
+                    } else if (currentSource) {
+                        if (line.match(/^        url:/)) {
+                            currentSource.url = trimmed.split('url:')[1].trim().replace(/"/g, '');
+                        }
+                        if (line.match(/^        type:/)) {
+                            currentSource.type = trimmed.split('type:')[1].trim();
+                        }
+                        if (line.match(/^        priority:/)) {
+                            currentSource.priority = trimmed.split('priority:')[1].trim();
+                        }
+                        if (line.match(/^        enabled:/)) {
+                            currentSource.enabled = trimmed.split('enabled:')[1].trim() === 'true';
+                        }
+                    }
+                }
+            }
+
+            return categories;
+        }
+
+        function renderSidebar() {
+            const navHtml = `
+                <div class="nav-section">
+                    <div class="nav-section-title">Views</div>
+                    <div class="nav-item" data-view="dashboard" onclick="showDashboard()">
+                        <div class="nav-item-info">
+                            <span class="nav-icon">📊</span>
+                            <span>Dashboard</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-section">
+                    <div class="nav-section-title">Categories</div>
+                    ${Object.values(configData).map(cat => {
+                        const icon = categoryIcons[cat.name] || '📰';
+                        const count = cat.sources.length;
+                        return `
+                            <div class="nav-item" data-category="${cat.name}" onclick="selectCategory('${cat.name}')">
+                                <div class="nav-item-info">
+                                    <span class="nav-icon">${icon}</span>
+                                    <span>${formatCategoryName(cat.name)}</span>
+                                </div>
+                                <span class="nav-count">${count}</span>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+                <div class="nav-section">
+                    <div class="nav-section-title">Tools</div>
+                    <a href="email-archive.html" class="nav-item">
+                        <div class="nav-item-info">
+                            <span class="nav-icon">📧</span>
+                            <span>Email Archive</span>
+                        </div>
+                    </a>
+                    <a href="../../index.html" class="nav-item">
+                        <div class="nav-item-info">
+                            <span class="nav-icon">🏠</span>
+                            <span>Home</span>
+                        </div>
+                    </a>
+                </div>
+            `;
+            document.getElementById('sidebarNav').innerHTML = navHtml;
+        }
+
+        function selectCategory(categoryName) {
+            currentCategory = categoryName;
+
+            // Update sidebar active state
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            const activeItem = document.querySelector(`[data-category="${categoryName}"]`);
+            if (activeItem) {
+                activeItem.classList.add('active');
+            }
+
+            // Show controls if hidden (coming from dashboard)
+            const controlsEl = document.querySelector('.controls');
+            const statsEl = document.querySelector('.stats-bar');
+            const bulkEl = document.querySelector('.bulk-actions');
+
+            if (controlsEl) controlsEl.style.display = 'block';
+            if (statsEl) statsEl.style.display = 'flex';
+            if (bulkEl) bulkEl.style.display = 'flex';
+
+            // Recreate feed table if it was replaced by dashboard
+            const mainContent = document.querySelector('.main-content');
+            const dashboardGrid = mainContent.querySelector('.dashboard-grid');
+
+            if (dashboardGrid) {
+                // Remove all dashboard elements
+                dashboardGrid.remove();
+                const oldFeedTable = mainContent.querySelector('.feed-table');
+                if (oldFeedTable) oldFeedTable.remove();
+                const oldSuggestions = mainContent.querySelector('#suggestionsContainer');
+                if (oldSuggestions) oldSuggestions.remove();
+
+                // Recreate proper feed table structure
+                const tableHtml = `
+                    <div class="feed-table">
+                        <div class="table-header">
+                            <div class="table-header-row">
+                                <div class="table-header-cell" style="width: 80px; text-align: center;">Status</div>
+                                <div class="table-header-cell" style="width: 30%;">Feed Name</div>
+                                <div class="table-header-cell" style="width: 30%;">URL</div>
+                                <div class="table-header-cell" style="width: 15%;">Type</div>
+                                <div class="table-header-cell" style="width: 100px; text-align: right;">Active</div>
+                            </div>
+                        </div>
+                        <div class="feed-list" id="feedList">
+                            <div class="loading">Loading feeds...</div>
+                        </div>
+                    </div>
+                    <div id="suggestionsContainer"></div>
+                `;
+                mainContent.insertAdjacentHTML('beforeend', tableHtml);
+            }
+
+            // Update header
+            const category = configData[categoryName];
+            const icon = categoryIcons[categoryName] || '📰';
+            document.getElementById('categoryIcon').textContent = icon;
+            document.getElementById('categoryTitle').textContent = formatCategoryName(categoryName);
+            document.getElementById('categorySubtitle').textContent =
+                `${category.sources.length} feeds${category.word_target ? ' • ' + category.word_target + ' words' : ''}`;
+
+            // Render feeds
+            renderFeeds();
+            renderSuggestions();
+            updateStats();
+        }
+
+        function formatCategoryName(name) {
+            return name
+                .split('_')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(' ');
+        }
+
+        function renderFeeds() {
+            const category = configData[currentCategory];
+            if (!category) return;
+
+            const filteredFeeds = category.sources.filter((feed, index) => {
+                feed._index = index; // Store original index
+                return shouldShowFeed(feed, currentCategory);
+            });
+
+            if (filteredFeeds.length === 0) {
+                document.getElementById('feedList').innerHTML = `
+                    <div style="padding: 40px; text-align: center; color: #666;">
+                        No feeds match your filters
+                    </div>
+                `;
+                return;
+            }
+
+            const html = filteredFeeds.map(feed => {
+                const status = getFeedStatus(feed.name);
+                const isDisabled = feed.enabled === false;
+                const htmlUrl = getHtmlUrl(feed);
+
+                return `
+                    <div class="feed-item ${isDisabled ? 'inactive' : ''}">
+                        <div class="feed-status-col">
+                            <span class="status-indicator ${status.class}" title="${status.tooltip}"></span>
+                        </div>
+                        <div class="feed-name-col">
+                            <a href="${htmlUrl}" target="_blank">${feed.name}</a>
+                        </div>
+                        <div class="feed-url-col">${feed.url}</div>
+                        <div class="feed-badges-col">
+                            ${feed.type ? `<span class="badge type-${feed.type}">${feed.type}</span>` : ''}
+                            ${feed.priority ? `<span class="badge priority-${feed.priority}">${feed.priority}</span>` : ''}
+                        </div>
+                        <div class="feed-toggle-col">
+                            <label class="toggle-switch">
+                                <input type="checkbox" ${feed.enabled !== false ? 'checked' : ''}
+                                    onchange="toggleFeed('${currentCategory}', ${feed._index}, this.checked)">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('feedList').innerHTML = html;
+        }
+
+        function updateStats() {
+            if (!currentCategory) return;
+
+            const category = configData[currentCategory];
+            let success = 0, empty = 0, error = 0;
+
+            category.sources.forEach(feed => {
+                const status = getFeedStatus(feed.name);
+                if (status.class === 'success') success++;
+                else if (status.class === 'empty') empty++;
+                else if (status.class === 'error') error++;
+            });
+
+            document.getElementById('statSuccess').textContent = success;
+            document.getElementById('statEmpty').textContent = empty;
+            document.getElementById('statError').textContent = error;
+        }
+
+        function getFeedStatus(feedName) {
+            const status = feedStatus[feedName];
+            if (!status) return { class: 'unknown', tooltip: 'Unknown status' };
+
+            const map = {
+                'success': { class: 'success', tooltip: status.tooltip || '✓ Working' },
+                'empty': { class: 'empty', tooltip: status.tooltip || '⚠ No new articles' },
+                'error': { class: 'error', tooltip: status.tooltip || '✗ Error' }
+            };
+
+            return map[status.status] || { class: 'unknown', tooltip: 'Unknown' };
+        }
+
+        function getHtmlUrl(feed) {
+            if (feed.url.includes('reddit.com')) {
+                return feed.url.replace('/.rss', '/');
+            } else if (feed.url.includes('/feed')) {
+                return feed.url.replace(/\/feed(\.xml)?$/, '/');
+            } else if (feed.url.includes('/rss')) {
+                return feed.url.replace(/\/rss(\.xml)?$/, '/');
+            } else if (feed.url.includes('.xml')) {
+                return feed.url.replace(/\.xml$/, '/');
+            } else if (feed.url.includes('atom.xml')) {
+                return feed.url.replace(/atom\.xml$/, '');
+            }
+            try {
+                const url = new URL(feed.url);
+                return `${url.protocol}//${url.hostname}`;
+            } catch {
+                return feed.url;
+            }
+        }
+
+        function shouldShowFeed(feed, categoryName) {
+            // Search filter
+            if (currentSearchTerm) {
+                const matchesName = feed.name.toLowerCase().includes(currentSearchTerm);
+                const matchesUrl = feed.url.toLowerCase().includes(currentSearchTerm);
+                if (!matchesName && !matchesUrl) return false;
+            }
+
+            // Status filter
+            if (currentStatusFilter !== 'all') {
+                if (currentStatusFilter === 'enabled' && feed.enabled === false) return false;
+                if (currentStatusFilter === 'disabled' && feed.enabled !== false) return false;
+
+                const status = getFeedStatus(feed.name);
+                if (currentStatusFilter === 'success' && status.class !== 'success') return false;
+                if (currentStatusFilter === 'error' && status.class !== 'error') return false;
+                if (currentStatusFilter === 'empty' && status.class !== 'empty') return false;
+            }
+
+            return true;
+        }
+
+        function setFilter(filterType) {
+            currentStatusFilter = filterType;
+
+            // Update active tab
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            renderFeeds();
+        }
+
+        function applyFilters() {
+            currentSearchTerm = document.getElementById('searchInput').value.toLowerCase();
+            renderFeeds();
+        }
+
+        function toggleFeed(categoryName, feedIndex, enabled) {
+            configData[categoryName].sources[feedIndex].enabled = enabled;
+            markChanged();
+            renderFeeds();
+            updateStats();
+        }
+
+        function bulkEnableAll() {
+            if (!confirm('Enable all feeds in this category?')) return;
+            const category = configData[currentCategory];
+            category.sources.forEach(feed => feed.enabled = true);
+            markChanged();
+            renderFeeds();
+            updateStats();
+        }
+
+        function bulkDisableAll() {
+            if (!confirm('Disable all feeds in this category?')) return;
+            const category = configData[currentCategory];
+            category.sources.forEach(feed => feed.enabled = false);
+            markChanged();
+            renderFeeds();
+            updateStats();
+        }
+
+        function bulkDisableEmpty() {
+            const category = configData[currentCategory];
+            let count = 0;
+            category.sources.forEach(feed => {
+                const status = getFeedStatus(feed.name);
+                if (status.class === 'empty') {
+                    feed.enabled = false;
+                    count++;
+                }
+            });
+
+            if (count === 0) {
+                alert('No empty feeds found in this category.');
+                return;
+            }
+
+            markChanged();
+            renderFeeds();
+            updateStats();
+            alert(`✅ Disabled ${count} empty feed${count !== 1 ? 's' : ''}`);
+        }
+
+        function renderSuggestions() {
+            if (!currentCategory) return;
+
+            const suggestions = feedSuggestions[currentCategory] || [];
+            const container = document.getElementById('suggestionsContainer');
+
+            if (suggestions.length === 0) {
+                container.innerHTML = '';
+                return;
+            }
+
+            const html = `
+                <div class="suggestions-section">
+                    <div class="suggestions-header">Suggested Feeds (${suggestions.length})</div>
+                    ${suggestions.map(sug => `
+                        <div class="suggestion-item">
+                            <div class="suggestion-main">
+                                <div class="suggestion-name">${sug.name}</div>
+                                <div class="suggestion-desc">${sug.description || ''}</div>
+                                <div class="suggestion-meta">
+                                    ${sug.estimated_posts_per_week || ''} ${sug.estimated_posts_per_week ? '•' : ''} ${sug.confidence || 'unknown'} quality
+                                </div>
+                            </div>
+                            <div class="suggestion-actions">
+                                ${sug.preview_link ? `<a href="${sug.preview_link}" target="_blank" class="btn secondary">Preview</a>` : ''}
+                                <a href="${sug.url}" target="_blank" class="btn secondary">Test</a>
+                                ${isAuthenticated ? `<button class="btn" onclick='addSuggestion("${currentCategory}", ${JSON.stringify(JSON.stringify(sug))})'>Add</button>` : ''}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        function addSuggestion(categoryName, suggestion) {
+            const sugObj = typeof suggestion === 'string' ? JSON.parse(suggestion) : suggestion;
+            configData[categoryName].sources.push({
+                name: sugObj.name,
+                url: sugObj.url,
+                type: sugObj.type || 'rss',
+                priority: sugObj.confidence === 'high' ? 'high' : 'medium',
+                enabled: true
+            });
+            markChanged();
+            renderFeeds();
+            renderSuggestions();
+            updateStats();
+            alert(`✅ Added "${sugObj.name}" to ${categoryName}`);
+        }
+
+        function bulkDisableErrors() {
+            const category = configData[currentCategory];
+            let count = 0;
+            category.sources.forEach(feed => {
+                const status = getFeedStatus(feed.name);
+                if (status.class === 'error') {
+                    feed.enabled = false;
+                    count++;
+                }
+            });
+
+            if (count === 0) {
+                alert('No error feeds found in this category.');
+                return;
+            }
+
+            markChanged();
+            renderFeeds();
+            updateStats();
+            alert(`✅ Disabled ${count} feed${count !== 1 ? 's' : ''} with errors`);
+        }
+
+        function markChanged() {
+            hasChanges = true;
+            document.getElementById('saveBar').classList.add('visible');
+        }
+
+        function discardChanges() {
+            if (confirm('Discard all unsaved changes?')) {
+                location.reload();
+            }
+        }
+
+        async function saveChanges() {
+            alert('Save functionality will be implemented next. Your changes are tracked and ready to be committed to GitHub.');
+            // TODO: Implement GitHub API save
+        }
+
+        function showDashboard() {
+            currentCategory = null;
+
+            // Update sidebar active state
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            const dashboardItem = document.querySelector('[data-view="dashboard"]');
+            if (dashboardItem) {
+                dashboardItem.classList.add('active');
+            }
+
+            // Calculate overall stats
+            let totalFeeds = 0;
+            let totalSuccess = 0;
+            let totalEmpty = 0;
+            let totalError = 0;
+            let totalUnknown = 0;
+
+            const categoryStats = Object.values(configData).map(cat => {
+                let success = 0, empty = 0, error = 0, unknown = 0;
+                cat.sources.forEach(feed => {
+                    totalFeeds++;
+                    const status = getFeedStatus(feed.name);
+                    if (status.class === 'success') { success++; totalSuccess++; }
+                    else if (status.class === 'empty') { empty++; totalEmpty++; }
+                    else if (status.class === 'error') { error++; totalError++; }
+                    else { unknown++; totalUnknown++; }
+                });
+                return {
+                    name: cat.name,
+                    total: cat.sources.length,
+                    success, empty, error, unknown
+                };
+            });
+
+            // Update header
+            document.getElementById('categoryIcon').textContent = '📊';
+            document.getElementById('categoryTitle').textContent = 'Feed Health Dashboard';
+            document.getElementById('categorySubtitle').textContent = `Overview of all ${totalFeeds} feeds across ${Object.keys(configData).length} categories`;
+
+            // Hide controls and stats bar
+            document.querySelector('.controls').style.display = 'none';
+            document.querySelector('.stats-bar').style.display = 'none';
+            document.querySelector('.bulk-actions').style.display = 'none';
+
+            // Render dashboard
+            const dashboardHtml = `
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="dashboard-card-title">Total Feeds</div>
+                        <div class="dashboard-card-value total">${totalFeeds}</div>
+                        <div class="dashboard-card-label">Across all categories</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="dashboard-card-title">Working Feeds</div>
+                        <div class="dashboard-card-value success">${totalSuccess}</div>
+                        <div class="dashboard-card-label">${Math.round(totalSuccess/totalFeeds*100)}% success rate</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="dashboard-card-title">Empty Feeds</div>
+                        <div class="dashboard-card-value empty">${totalEmpty}</div>
+                        <div class="dashboard-card-label">No new articles</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="dashboard-card-title">Error Feeds</div>
+                        <div class="dashboard-card-value error">${totalError}</div>
+                        <div class="dashboard-card-label">Broken or inaccessible</div>
+                    </div>
+                </div>
+
+                <div class="feed-table">
+                    <div style="padding: 20px; border-bottom: 2px solid #e0e0e0; background: #f8f9fa;">
+                        <h3 style="font-size: 16px; font-weight: 600;">Category Health</h3>
+                        <p style="font-size: 13px; color: #666; margin-top: 4px;">Click any category to view and manage its feeds</p>
+                    </div>
+                    <div style="padding: 20px;">
+                        <div class="category-status-list">
+                            ${categoryStats.map(cat => {
+                                const icon = categoryIcons[cat.name] || '📰';
+                                const healthPercent = Math.round((cat.success / cat.total) * 100);
+                                return `
+                                    <div class="category-status-item" onclick="selectCategory('${cat.name}')">
+                                        <div class="category-status-info">
+                                            <span class="category-status-icon">${icon}</span>
+                                            <div>
+                                                <div class="category-status-name">${formatCategoryName(cat.name)}</div>
+                                                <div style="font-size: 12px; color: #666;">${cat.total} feeds • ${healthPercent}% healthy</div>
+                                            </div>
+                                        </div>
+                                        <div class="category-status-stats">
+                                            ${cat.success > 0 ? `<div class="category-status-stat"><span class="stat-dot success"></span> ${cat.success}</div>` : ''}
+                                            ${cat.empty > 0 ? `<div class="category-status-stat"><span class="stat-dot empty"></span> ${cat.empty}</div>` : ''}
+                                            ${cat.error > 0 ? `<div class="category-status-stat"><span class="stat-dot error"></span> ${cat.error}</div>` : ''}
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.querySelector('.feed-table').outerHTML = dashboardHtml;
+        }
+
+        // Initialize
+        init();
+    </script>
+</body>
+</html>

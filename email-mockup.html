@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Design Mockup - Daily News Agent v7.1</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, 'Helvetica Neue', Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #2c3e50;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .email-container {
+            background-color: #ffffff;
+            margin: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Header Banner */
+        .header-banner {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%);
+            color: white;
+            padding: 20px 24px;
+            text-align: center;
+        }
+
+        .header-date {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.9;
+            margin-bottom: 4px;
+        }
+
+        .header-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .header-stats {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-top: 8px;
+        }
+
+        /* Weather Card */
+        .weather-card {
+            background: linear-gradient(135deg, #e8f4f8 0%, #d4e8ed 100%);
+            margin: 16px;
+            padding: 16px 20px;
+            border-radius: 8px;
+            border-left: 4px solid #3182ce;
+        }
+
+        .weather-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .weather-location {
+            font-weight: 600;
+            color: #1e3a5f;
+            font-size: 15px;
+        }
+
+        .weather-date {
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .weather-forecast {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .weather-period {
+            flex: 1;
+            text-align: center;
+            padding: 10px 8px;
+            background: rgba(255,255,255,0.7);
+            border-radius: 6px;
+        }
+
+        .weather-period-name {
+            font-size: 11px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .weather-icon {
+            font-size: 24px;
+            margin: 4px 0;
+        }
+
+        .weather-temp {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e3a5f;
+        }
+
+        .weather-desc {
+            font-size: 10px;
+            color: #64748b;
+            margin-top: 2px;
+        }
+
+        /* Content Area */
+        .content {
+            padding: 20px 24px;
+        }
+
+        /* Section Headers with Colored Bar */
+        h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e3a5f;
+            margin: 28px 0 14px 0;
+            padding: 10px 14px;
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            border-left: 4px solid #3182ce;
+            border-radius: 0 6px 6px 0;
+        }
+
+        /* Category Badge */
+        .category-badge {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
+        .badge-ai { background: #dbeafe; color: #1e40af; }
+        .badge-business { background: #dcfce7; color: #166534; }
+        .badge-space { background: #fae8ff; color: #86198f; }
+        .badge-news { background: #fee2e2; color: #991b1b; }
+
+        h3 {
+            font-size: 15px;
+            font-weight: 600;
+            color: #334155;
+            margin: 20px 0 10px 0;
+        }
+
+        p {
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 0 0 14px 0;
+            color: #475569;
+        }
+
+        a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        ul, ol {
+            margin: 0 0 14px 0;
+            padding-left: 20px;
+        }
+
+        li {
+            font-size: 14px;
+            line-height: 1.5;
+            margin: 6px 0;
+            color: #475569;
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 12px 16px;
+            margin: 16px 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .highlight-box p {
+            margin: 0;
+            font-size: 13px;
+            color: #92400e;
+        }
+
+        /* Section Divider */
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #e2e8f0, transparent);
+            margin: 24px 0;
+        }
+
+        /* Footer */
+        .footer {
+            background: #f8fafc;
+            padding: 16px 24px;
+            text-align: center;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .footer p {
+            font-size: 12px;
+            color: #94a3b8;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <!-- Header Banner -->
+        <div class="header-banner">
+            <div class="header-date">Sunday, January 11, 2026</div>
+            <h1 class="header-title">Daily News Digest</h1>
+            <div class="header-stats">120 articles analyzed across 12 categories</div>
+        </div>
+
+        <!-- Weather Card -->
+        <div class="weather-card">
+            <div class="weather-header">
+                <span class="weather-location">Framingham, MA</span>
+                <span class="weather-date">January 11</span>
+            </div>
+            <div class="weather-forecast">
+                <div class="weather-period">
+                    <div class="weather-period-name">Morning</div>
+                    <div class="weather-icon">🌧️</div>
+                    <div class="weather-temp">36°F</div>
+                    <div class="weather-desc">Light drizzle</div>
+                </div>
+                <div class="weather-period">
+                    <div class="weather-period-name">Afternoon</div>
+                    <div class="weather-icon">☀️</div>
+                    <div class="weather-temp">42°F</div>
+                    <div class="weather-desc">Clear</div>
+                </div>
+                <div class="weather-period">
+                    <div class="weather-period-name">Evening</div>
+                    <div class="weather-icon">🌙</div>
+                    <div class="weather-temp">32°F</div>
+                    <div class="weather-desc">Clear</div>
+                </div>
+                <div class="weather-period">
+                    <div class="weather-period-name">Overnight</div>
+                    <div class="weather-icon">🌧️</div>
+                    <div class="weather-temp">38°F</div>
+                    <div class="weather-desc">Drizzle</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <h2>Key Themes This Week</h2>
+
+            <div class="highlight-box">
+                <p><strong>Top Story:</strong> AI infrastructure costs continue to dominate tech discussions, with new semantic caching approaches showing promise for 73% cost reduction.</p>
+            </div>
+
+            <p>This week's coverage reveals a clear pattern: the AI industry is pivoting from raw capability expansion to operational efficiency. Multiple sources report on infrastructure optimization strategies that could reshape enterprise AI adoption.</p>
+
+            <div class="section-divider"></div>
+
+            <h2>AI & Technology <span class="category-badge badge-ai">24 articles</span></h2>
+
+            <h3>Emerging Cost Management Strategies</h3>
+            <p>Today's AI coverage centers on infrastructure optimization, particularly semantic caching technologies. The VentureBeat article reveals a breakthrough approach potentially reducing Large Language Model (LLM) API expenses by 73% through intelligent, context-aware data retrieval.</p>
+
+            <ul>
+                <li><a href="#">How Semantic Caching Can Cut LLM API Costs by 73%</a> - VentureBeat</li>
+                <li><a href="#">OpenAI Announces New Enterprise Tier</a> - TechCrunch</li>
+                <li><a href="#">Claude 4 Benchmarks Show Reasoning Improvements</a> - Anthropic Blog</li>
+            </ul>
+
+            <div class="section-divider"></div>
+
+            <h2>Market & Business <span class="category-badge badge-business">10 articles</span></h2>
+
+            <h3>Tech Rally Continues</h3>
+            <p>Major indices posted gains as earnings reports exceeded expectations. The semiconductor sector led the charge, with AI-focused companies seeing the strongest momentum.</p>
+
+            <ul>
+                <li><a href="#">NVIDIA Hits New All-Time High</a> - Reuters</li>
+                <li><a href="#">Tech Sector Outlook for Q1 2026</a> - Bloomberg</li>
+            </ul>
+
+            <div class="section-divider"></div>
+
+            <h2>Space & Science <span class="category-badge badge-space">10 articles</span></h2>
+
+            <h3>Mars Mission Updates</h3>
+            <p>NASA's Perseverance rover continues to make discoveries, with new data suggesting ancient microbial activity may have left traces in Jezero Crater sediments.</p>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Daily News Agent v7.1</p>
+            <p style="margin-top: 4px; color: #cbd5e1;">Summarized by Claude Haiku</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V5 Settings - Daily News Agent</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f8f9fa;
+            color: #000000;
+            line-height: 1.6;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: white;
+            border-right: 1px solid #e0e0e0;
+            position: fixed;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            padding: 24px 20px;
+            border-bottom: 1px solid #e0e0e0;
+            background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+            color: white;
+        }
+
+        .sidebar-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .sidebar-subtitle {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .sidebar-footer {
+            padding: 16px 20px;
+            border-top: 1px solid #e0e0e0;
+            background: #f8f9fa;
+        }
+
+        .sidebar-footer a {
+            display: block;
+            padding: 12px;
+            text-align: center;
+            color: #0d9488;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .sidebar-footer a:hover {
+            background: #e0e0e0;
+        }
+
+        .sidebar-footer a + a {
+            margin-top: 4px;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            padding: 32px;
+        }
+
+        .page-header {
+            margin-bottom: 32px;
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 8px;
+        }
+
+        .page-subtitle {
+            font-size: 16px;
+            color: #666;
+        }
+
+        .v5-banner {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 6px rgba(239, 68, 68, 0.3);
+        }
+
+        .v5-banner-icon {
+            font-size: 24px;
+        }
+
+        .v5-banner-text {
+            flex: 1;
+        }
+
+        .v5-banner-title {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .v5-banner-desc {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 24px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #1a202c;
+        }
+
+        .setting-group {
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .setting-group:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .setting-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        .setting-description {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 12px;
+        }
+
+        .tone-options {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .tone-option {
+            flex: 1;
+            min-width: 200px;
+            padding: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tone-option:hover {
+            border-color: #0d9488;
+            background: #f0fdfa;
+        }
+
+        .tone-option.selected {
+            border-color: #0d9488;
+            background: #f0fdfa;
+        }
+
+        .tone-option-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 4px;
+        }
+
+        .tone-option.selected .tone-option-title {
+            color: #0d9488;
+        }
+
+        .tone-option-desc {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #0d9488;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0f766e;
+        }
+
+        .save-status {
+            display: none;
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-top: 16px;
+            font-size: 14px;
+        }
+
+        .save-status.success {
+            display: block;
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #10b981;
+        }
+
+        .save-status.error {
+            display: block;
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #ef4444;
+        }
+
+        .info-box {
+            background: #e0f2fe;
+            border-left: 4px solid #0ea5e9;
+            padding: 16px;
+            border-radius: 6px;
+            margin-bottom: 24px;
+        }
+
+        .info-box-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #0369a1;
+        }
+
+        .info-box-text {
+            font-size: 14px;
+            color: #075985;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-title">V5 Settings</div>
+                <div class="sidebar-subtitle">Daily News Agent v5</div>
+            </div>
+            <div class="sidebar-footer">
+                <a href="v5-recipients.html">📧 V5 Recipients</a>
+                <a href="config-unified.html">⚙️ Feed Manager</a>
+                <a href="email-archive.html">📧 Email Archive</a>
+                <a href="../../index.html">🏠 Back to Home</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="page-header">
+                <h1 class="page-title">V5 Settings</h1>
+                <p class="page-subtitle">Configure advanced v5 experimental features</p>
+            </div>
+
+            <div class="v5-banner">
+                <span class="v5-banner-icon">🧪</span>
+                <div class="v5-banner-text">
+                    <div class="v5-banner-title">V5 Experimental Features</div>
+                    <div class="v5-banner-desc">Advanced configuration for meta-summary generation and tone control</div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <div class="info-box-title">💡 About Meta-Summary Settings</div>
+                <div class="info-box-text">
+                    The meta-summary is the AI-generated synthesis that appears at the top of each daily update. It analyzes patterns across all categories and provides key insights. These settings control the tone and style of that summary.
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 class="card-title">Meta-Summary Configuration</h2>
+
+                <div class="setting-group">
+                    <div class="setting-label">Tone Style</div>
+                    <div class="setting-description">
+                        Choose how the meta-summary should be written. This affects vocabulary, sentence structure, and overall presentation style.
+                    </div>
+
+                    <div class="tone-options">
+                        <div class="tone-option" data-tone="analytical">
+                            <div class="tone-option-title">📊 Analytical</div>
+                            <div class="tone-option-desc">Rigorous, data-driven tone like The Economist. Focuses on implications and underlying trends.</div>
+                        </div>
+
+                        <div class="tone-option" data-tone="conversational">
+                            <div class="tone-option-title">💬 Conversational</div>
+                            <div class="tone-option-desc">Accessible, engaging tone like Morning Brew. Makes complex topics relatable and easy to understand.</div>
+                        </div>
+
+                        <div class="tone-option" data-tone="mixed">
+                            <div class="tone-option-title">🎯 Mixed (Recommended)</div>
+                            <div class="tone-option-desc">Blends analytical depth with accessible language. Think Stratechery or Axios - smart but readable.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="saveSettings()" class="btn btn-primary">💾 Save Settings</button>
+                <div id="saveStatus" class="save-status"></div>
+            </div>
+
+            <div class="card">
+                <h2 class="card-title">Other V5 Features</h2>
+                <div class="setting-description" style="margin-bottom: 16px;">
+                    Additional v5 experimental features:
+                </div>
+                <ul style="margin-left: 20px; color: #666; font-size: 14px; line-height: 1.8;">
+                    <li><strong>Variable-length summaries:</strong> Meta-summary length adapts based on article count (50-400 words)</li>
+                    <li><strong>Category weighting:</strong> Categories with more articles receive more focus in meta-summary</li>
+                    <li><strong>Actionable insights:</strong> AI includes specific takeaways and implications</li>
+                    <li><strong>Historical context:</strong> Connects current news to broader trends when relevant</li>
+                    <li><strong>Intra-category analysis:</strong> Shows how articles within the same category relate to each other</li>
+                    <li><strong>Claude Haiku 4.5:</strong> Faster, more cost-effective AI model with GPT-4 fallback</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSettings = {
+            meta_summary: {
+                tone: "mixed"
+            }
+        };
+
+        // Load settings on page load
+        async function loadSettings() {
+            try {
+                const response = await fetch('../../config/v5-settings.json');
+                if (response.ok) {
+                    const data = await response.json();
+                    currentSettings = data;
+
+                    // Set selected tone
+                    const tone = data.meta_summary?.tone || 'mixed';
+                    document.querySelectorAll('.tone-option').forEach(opt => {
+                        if (opt.dataset.tone === tone) {
+                            opt.classList.add('selected');
+                        }
+                    });
+                } else {
+                    // File doesn't exist yet, use defaults
+                    setDefaultTone();
+                }
+            } catch (error) {
+                console.error('Error loading settings:', error);
+                setDefaultTone();
+            }
+        }
+
+        function setDefaultTone() {
+            document.querySelector('[data-tone="mixed"]').classList.add('selected');
+        }
+
+        // Handle tone selection
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSettings();
+
+            document.querySelectorAll('.tone-option').forEach(option => {
+                option.addEventListener('click', () => {
+                    // Remove selected from all
+                    document.querySelectorAll('.tone-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    // Add selected to clicked
+                    option.classList.add('selected');
+                });
+            });
+        });
+
+        function saveSettings() {
+            // Get selected tone
+            const selectedTone = document.querySelector('.tone-option.selected');
+            if (!selectedTone) {
+                showStatus('Please select a tone option', 'error');
+                return;
+            }
+
+            const tone = selectedTone.dataset.tone;
+
+            // Build settings object
+            const settings = {
+                meta_summary: {
+                    tone: tone,
+                    description: "Tone options: analytical, conversational, mixed"
+                },
+                updated_at: new Date().toISOString(),
+                version: "v5"
+            };
+
+            // Download file
+            downloadSettingsFile(settings);
+
+            showStatus(`Settings saved! Download the file and place it at: config/v5-settings.json`, 'success');
+        }
+
+        function downloadSettingsFile(data) {
+            const json = JSON.stringify(data, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'v5-settings.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function showStatus(message, type) {
+            const statusEl = document.getElementById('saveStatus');
+            statusEl.textContent = message;
+            statusEl.className = `save-status ${type}`;
+
+            setTimeout(() => {
+                statusEl.className = 'save-status';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+name: Daily News Update V7.3
+
+on:
+  schedule:
+    - cron: '0 10 * * *'  # 5:00 AM EST (10:00 AM UTC)
+  workflow_dispatch:  # Manual trigger anytime
+
+# Grant write permissions for the workflow to commit changes
+permissions:
+  contents: write
+
+jobs:
+  generate-update-v7:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: v7.1-development
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          # Additional dependency for trafilatura
+          pip install lxml_html_clean
+
+      - name: Run V7 daily update
+        env:
+          CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          UPDATE_SOURCE: Web
+        run: |
+          python src/main_v7.py
+
+      - name: Update RSS feed gist
+        env:
+          GH_TOKEN: ${{ secrets.GIST_TOKEN }}
+        run: |
+          if [ -f feed.xml ] && [ -n "$GH_TOKEN" ]; then
+            gh gist edit 11ee103ea93247c291f4e2fa63313e20 feed.xml
+            echo "RSS feed gist updated"
+          else
+            echo "Skipping gist update (no token or no feed.xml)"
+          fi
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add "Published Updates/*.md"
+          git add "Published Updates/email-html/*.html"
+          git add "config/feed-status.json"
+          git add "feed.xml" 2>/dev/null || true
+          git add "cache/extraction/*.json" 2>/dev/null || true
+          git diff --staged --quiet || git commit -m "V7.3 daily update: $(date +'%Y-%m-%d')"
+          git pull --rebase --autostash origin v7.1-development
+          git push

@@ -1,0 +1,87 @@
+categories:
+  moonshots:
+    priority: high
+    word_target: 150
+    keywords: [breakthrough, innovation, grand challenge, moonshot, disruptive technology, scientific breakthrough]
+    sources:
+      - name: MIT News
+        url: https://news.mit.edu/rss/topic/innovation
+        type: rss
+      - name: Stanford News
+        url: https://news.stanford.edu/feed/
+        type: rss
+      - name: Nature News
+        url: https://www.nature.com/nature.rss
+        type: rss
+        
+  strategic_management:
+    priority: medium
+    word_target: 100
+    keywords: [strategy, management, business model, competitive advantage, organizational change]
+    sources:
+      - name: Harvard Business Review
+        url: https://hbr.org/feed
+        type: rss
+      - name: MIT Sloan
+        url: https://mitsloan.mit.edu/feed
+        type: rss
+        
+  tech_headlines:
+    priority: high
+    word_target: 200
+    keywords: [technology, AI, software, hardware, startup, product launch]
+    sources:
+      - name: The Verge
+        url: https://www.theverge.com/rss/index.xml
+        type: rss
+      - name: Wired
+        url: https://www.wired.com/feed/rss
+        type: rss
+      - name: TechCrunch
+        url: https://techcrunch.com/feed/
+        type: rss
+        
+  us_news:
+    priority: medium
+    word_target: 150
+    keywords: [politics, government, policy, election, congress, senate]
+    exclude_keywords: [Trump, Donald Trump, MAGA]
+    sources:
+      - name: Reuters
+        url: https://feeds.reuters.com/reuters/topNews
+        type: rss
+      - name: AP News
+        url: https://feeds.apnews.com/rss/apf-topnews
+        type: rss
+        
+  market_business:
+    priority: high
+    word_target: 200
+    keywords: [market, stocks, business, economy, earnings, IPO, merger]
+    sources:
+      - name: WSJ Business
+        url: https://feeds.a.dj.com/rss/RSSMarketsMain.xml
+        type: rss
+      - name: MarketWatch
+        url: https://feeds.marketwatch.com/marketwatch/marketpulse/
+        type: rss
+        
+  on_this_day:
+    priority: low
+    word_target: 50
+    sources:
+      - name: Wikipedia On This Day
+        type: api
+        endpoint: https://api.wikimedia.org/feed/v1/wikipedia/en/onthisday/all
+        
+  boston_tech:
+    priority: medium
+    word_target: 100
+    keywords: [Boston, Cambridge, MIT, Harvard, startup, biotech, fintech]
+    sources:
+      - name: Boston Globe Tech
+        url: https://www.bostonglobe.com/business/technology/?outputType=rss
+        type: rss
+      - name: Boston Business Journal
+        url: https://www.bizjournals.com/boston/feeds/headlines.xml
+        type: rss

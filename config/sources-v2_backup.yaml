@@ -1,0 +1,773 @@
+# Updated Configuration with NYTimes feeds and new structure
+categories:
+  on_this_day:
+    priority: low
+    word_target: 50
+    sources:
+      - name: Wikipedia On This Day
+        type: api
+        endpoint: https://api.wikimedia.org/feed/v1/wikipedia/en/onthisday/all
+
+  weather:
+    priority: low
+    word_target: 30
+    keywords: [weather, forecast, temperature]
+    sources:
+      - name: Weather API
+        type: api
+        endpoint: weather_api_placeholder
+
+  ai:
+    priority: high
+    word_target: 450
+    keywords:
+      - artificial intelligence
+      - AI
+      - machine learning
+      - agentic coding
+      - text-to-code
+      - vibe coding
+      - replit
+      - cursor
+      - claude code
+      - lovable
+      - bolt
+      - builder.io
+      - retool
+      - anima
+      - vercel
+      - supabase
+      - codesandbox
+      - coding assistant
+      - low-code
+      - no-code
+      - AI models
+      - ChatGPT
+      - Claude
+      - Gemini
+      - changelog
+      - platform update
+      - early access
+      - beta release
+      - GPT-4
+      - GPT-5
+      - claude-3
+      - anthropic
+      - model release
+      - API update
+      - deployment
+      - authentication
+      - debugging
+      - integration
+    sources:
+      # Primary AI tool-specific feeds (prioritize these)
+      - name: Replit Blog
+        url: https://blog.replit.com/feed.xml
+        html_url: https://blog.replit.com/
+        type: rss
+        priority: high
+      - name: Vercel Blog
+        url: https://vercel.com/blog.rss
+        html_url: https://vercel.com/blog
+        type: rss
+        priority: high
+      - name: Supabase Blog
+        url: https://supabase.com/blog/rss.xml
+        html_url: https://supabase.com/blog
+        type: rss
+        priority: high
+      - name: Cursor Changelog (Unofficial)
+        url: https://cursor-changelog.com/feed
+        html_url: https://cursor.com/en/changelog
+        type: rss
+        priority: high
+      - name: Lovable Blog
+        url: https://lovable.dev/blog
+        html_url: https://lovable.dev/blog
+        type: rss
+        priority: high
+      - name: GitHub Blog
+        url: https://github.blog/feed/
+        html_url: https://github.blog/
+        type: rss
+        priority: high
+      # AI research and model announcements
+      - name: OpenAI Blog
+        url: https://openai.com/blog/rss.xml
+        html_url: https://openai.com/blog/
+        type: rss
+      - name: Google AI Blog
+        url: https://googleaiblog.blogspot.com/atom.xml
+        html_url: https://ai.googleblog.com/
+        type: rss
+      - name: Hugging Face Blog
+        url: https://huggingface.co/blog/feed.xml
+        html_url: https://huggingface.co/blog
+        type: rss
+      - name: DeepMind Blog
+        url: https://deepmind.com/blog/feed/basic/
+        html_url: https://deepmind.com/blog/
+        type: rss
+      # AI news aggregators (limit articles from these)
+      - name: MIT News - Artificial intelligence
+        url: https://news.mit.edu/rss/topic/artificial-intelligence2
+        html_url: https://news.mit.edu/topic/mitartificial-intelligence2-rss.xml
+        type: rss
+        max_articles: 2
+      - name: VentureBeat AI
+        url: https://feeds.feedburner.com/venturebeat/SZYF
+        html_url: https://venturebeat.com/ai/
+        type: rss
+        max_articles: 2
+      # Note: The Information AI requires subscription, no public RSS
+      # Strategy and analysis
+      - name: One Useful Thing (And Also Some Other Things)
+        url: https://oneusefulthing.substack.com/feed
+        html_url: https://oneusefulthing.substack.com/
+        type: rss
+      - name: ByteByteGo
+        url: https://blog.bytebytego.com/feed
+        html_url: https://blog.bytebytego.com/
+        type: rss
+      # Limited feeds to reduce dominance
+      - name: Dev.to AI
+        url: https://dev.to/feed/tag/ai
+        html_url: https://dev.to/t/ai
+        type: rss
+        max_articles: 3
+      - name: Hacker News Top
+        url: https://news.ycombinator.com/rss
+        html_url: https://news.ycombinator.com/
+        type: rss
+        max_articles: 3
+
+  academic_research:
+    priority: medium
+    word_target: 100
+    keywords:
+      - academy of management
+      - strategic management journal
+      - administrative sciences quarterly
+      - management research
+      - organizational behavior
+      - innovation
+      - entrepreneurship
+    sources:
+      # Management journals (with limits)
+      - name: Strategic Management Journal
+        url: https://onlinelibrary.wiley.com/feed/10970266/most-recent
+        html_url: https://onlinelibrary.wiley.com/journal/10970266
+        type: rss
+        max_articles: 3
+      - name: Administrative Science Quarterly
+        url: https://journals.sagepub.com/action/showFeed?ui=0&mi=ehikzz&ai=2b4&jc=asqa&type=etoc&feed=rss
+        html_url: https://journals.sagepub.com/home/asq
+        type: rss
+        max_articles: 2
+      - name: Organization Science
+        url: https://pubsonline.informs.org/action/showFeed?type=etoc&feed=rss&jc=orsc
+        html_url: https://pubsonline.informs.org/journal/orsc
+        type: rss
+        max_articles: 2
+      - name: Journal of Business Venturing
+        url: https://rss.sciencedirect.com/publication/science/08839026
+        html_url: https://www.sciencedirect.com/journal/journal-of-business-venturing
+        type: rss
+        max_articles: 2
+      - name: Research Policy
+        url: https://rss.sciencedirect.com/publication/science/00487333
+        html_url: https://www.sciencedirect.com/journal/research-policy
+        type: rss
+        max_articles: 3
+      # Keep existing AOM journals
+      - name: Academy of Management Journal
+        url: https://journals.aom.org/action/showFeed?jc=amj&type=etoc&feed=rss
+        html_url: https://journals.aom.org/loi/amj?af=R
+        type: rss
+      - name: Academy of Management Review
+        url: https://journals.aom.org/action/showFeed?jc=amr&type=etoc&feed=rss
+        html_url: https://journals.aom.org/loi/amr?af=R
+        type: rss
+
+  moonshot_strategy:
+    priority: high
+    word_target: 300
+    keywords:
+      - breakthrough
+      - innovation
+      - grand challenge
+      - moonshot
+      - disruptive
+      - impossible
+      - first principles
+      - quantum
+      - fusion
+      - space exploration
+      - medical breakthrough
+      - scientific breakthrough
+      - deepmind
+      - singularity
+      - public-private partnership
+      - coalition building
+      - strategic move
+      - acquisition
+      - pivot
+      - DARPA
+      - Google X
+      - breakthrough thinking
+      - paradigm shift
+      - radical innovation
+    sources:
+      - name: Latest Post
+        url: https://deepmind.com/blog/feed/basic/
+        html_url: https://deepmind.com/blog/
+        type: rss
+      - name: Space.com
+        url: https://www.space.com/syn/space.xml
+        html_url: https://www.space.com/
+        type: rss
+      - name: Top News - MIT Technology Review
+        url: https://www.technologyreview.com/topnews.rss
+        html_url: https://www.technologyreview.com/topnews.rss
+        type: rss
+      - name: ScienceDaily Newsletter
+        url: https://sciencedaily.substack.com/feed
+        html_url: https://sciencedaily.substack.com/
+        type: rss
+      - name: NYTimes Science
+        url: https://rss.nytimes.com/services/xml/rss/nyt/Science.xml
+        html_url: https://www.nytimes.com/section/science
+        type: rss
+      - name: NYTimes Space
+        url: https://rss.nytimes.com/services/xml/rss/nyt/Space.xml
+        html_url: https://www.nytimes.com/section/science/space
+        type: rss
+      - name: NYTimes Health
+        url: https://rss.nytimes.com/services/xml/rss/nyt/Health.xml
+        html_url: https://www.nytimes.com/section/health
+        type: rss
+      - name: HBS Working Knowledge
+        url: https://hbswk.hbs.edu/rss/rss.xml
+        html_url: https://hbswk.hbs.edu/
+        type: rss
+      - name: Knowledge@Wharton
+        url: http://knowledge.wharton.upenn.edu/knowledgefeed.xml
+        html_url: http://knowledge.wharton.upenn.edu/
+        type: rss
+      - name: McKinsey Insights
+        url: https://www.mckinsey.com/Insights/rss.aspx
+        html_url: https://www.mckinsey.com/insights
+        type: rss
+      - name: MIT Sloan Management Review
+        url: https://feeds.feedburner.com/mitsmr
+        html_url: https://sloanreview.mit.edu/
+        type: rss
+      - name: Platform Strategy
+        url: https://feeds.feedburner.com/platformed
+        html_url: https://platformed.info/
+        type: rss
+
+  market_business:
+    priority: high
+    word_target: 300
+    keywords:
+      - market
+      - stocks
+      - business
+      - economy
+      - earnings
+      - IPO
+      - merger
+      - funding
+      - investment
+      - startup
+      - venture capital
+      - acquisition
+      - trading
+      - strategic move
+      - pivot
+      - partnership
+      - strategic decision
+      - business strategy
+      - corporate strategy
+      - strategic acquisition
+    sources:
+      # Premium financial sources
+      - name: Financial Times
+        url: https://www.ft.com/?format=rss
+        html_url: https://www.ft.com/
+        type: rss
+        max_articles: 3
+      - name: WSJ Markets
+        url: https://feeds.a.dj.com/rss/RSSMarketsMain.xml
+        html_url: https://www.wsj.com/news/markets
+        type: rss
+        max_articles: 3
+      - name: Bloomberg
+        url: https://feeds.bloomberg.com/markets/news.rss
+        html_url: https://www.bloomberg.com/markets
+        type: rss
+        max_articles: 3
+      # Business news
+      - name: Business Insider
+        url: https://feeds.businessinsider.com/custom/all
+        html_url: https://www.businessinsider.com/
+        type: rss
+        max_articles: 2
+      - name: CNBC Top News
+        url: https://www.cnbc.com/id/100003114/device/rss/rss.html
+        html_url: https://www.cnbc.com/
+        type: rss
+        max_articles: 2
+      - name: Fortune
+        url: https://fortune.com/feed/
+        html_url: https://fortune.com/
+        type: rss
+        max_articles: 3
+      # VC and startup focused
+      - name: Tomasz Tunguz
+        url: https://tomtunguz.com/index.xml
+        html_url: https://www.tomtunguz.com/index.xml/
+        type: rss
+      - name: StrictlyVC
+        url: https://www.strictlyvc.com/feed
+        html_url: https://www.strictlyvc.com/
+        type: rss
+      - name: Crunchbase News
+        url: https://news.crunchbase.com/feed/
+        html_url: https://news.crunchbase.com/
+        type: rss
+        max_articles: 2
+      # Limited NYTimes
+      - name: NYTimes Business
+        url: https://rss.nytimes.com/services/xml/rss/nyt/Business.xml
+        html_url: https://www.nytimes.com/section/business
+        type: rss
+        max_articles: 2
+
+  us_news:
+    priority: medium
+    word_target: 200
+    keywords:
+      - politics
+      - government
+      - policy
+      - congress
+      - senate
+      - election
+      - federal
+      - supreme court
+      - legislation
+    exclude_keywords:
+      - Trump
+      - Donald Trump
+      - MAGA
+    sources:
+      # Diversified news sources
+      - name: Washington Post National
+        url: https://feeds.washingtonpost.com/rss/national
+        html_url: https://www.washingtonpost.com/national/
+        type: rss
+        max_articles: 3
+      - name: NPR News
+        url: https://feeds.npr.org/1001/rss.xml
+        html_url: https://www.npr.org/sections/news/
+        type: rss
+        max_articles: 3
+      - name: BBC News US
+        url: https://feeds.bbci.co.uk/news/world/us_and_canada/rss.xml
+        html_url: https://www.bbc.com/news/world/us_and_canada
+        type: rss
+        max_articles: 2
+      - name: NYTimes US
+        url: https://rss.nytimes.com/services/xml/rss/nyt/US.xml
+        html_url: https://www.nytimes.com/section/us
+        type: rss
+        max_articles: 3
+      - name: Politico
+        url: https://rss.politico.com/politics-news.xml
+        html_url: https://www.politico.com/
+        type: rss
+        max_articles: 2
+      - name: The Hill
+        url: https://thehill.com/feed/
+        html_url: https://thehill.com/
+        type: rss
+        max_articles: 2
+
+  tech_headlines:
+    priority: high
+    word_target: 300
+    keywords:
+      - technology
+      - tech
+      - software
+      - hardware
+      - startup
+      - product launch
+      - apple
+      - google
+      - microsoft
+      - meta
+      - amazon
+      - tesla
+    sources:
+      # Apple/Mac specific
+      - name: 9to5Mac
+        url: https://9to5mac.com/feed/
+        html_url: https://9to5mac.com/
+        type: rss
+        max_articles: 3
+      - name: MacRumors
+        url: https://feeds.macrumors.com/MacRumors-All
+        html_url: https://www.macrumors.com/
+        type: rss
+        max_articles: 2
+      - name: Daring Fireball
+        url: https://daringfireball.net/feeds/main
+        html_url: https://daringfireball.net/
+        type: rss
+        max_articles: 2
+      # General tech news (limited)
+      - name: TechCrunch
+        url: https://techcrunch.com/feed/
+        html_url: https://techcrunch.com/
+        type: rss
+        max_articles: 3
+      - name: The Verge -  All Posts
+        url: https://www.theverge.com/rss/index.xml
+        html_url: http://www.theverge.com/
+        type: rss
+        max_articles: 3
+      - name: Ars Technica
+        url: https://feeds.arstechnica.com/arstechnica/index/
+        html_url: https://arstechnica.com/
+        type: rss
+        max_articles: 3
+      - name: TechRadar
+        url: https://www.techradar.com/rss
+        html_url: https://www.techradar.com/
+        type: rss
+        max_articles: 2
+      - name: Engadget
+        url: https://www.engadget.com/rss.xml
+        html_url: https://www.engadget.com/
+        type: rss
+        max_articles: 2
+      - name: The Register
+        url: https://www.theregister.com/headlines.atom
+        html_url: https://www.theregister.com/
+        type: rss
+        max_articles: 2
+      - name: Technically
+        url: https://read.technically.dev/feed
+        html_url: https://read.technically.dev/
+        type: rss
+
+  space_news:
+    priority: medium
+    word_target: 200
+    keywords:
+      - NASA
+      - SpaceX
+      - Artemis
+      - Mars
+      - space exploration
+      - rocket launch
+      - ISS
+      - international space station
+      - satellite
+      - space mission
+      - astronaut
+      - lunar
+      - moon landing
+      - space technology
+      - orbital
+      - spacecraft
+    sources:
+      # Primary space sources
+      - name: NASA News
+        url: https://www.nasa.gov/rss/dyn/breaking_news.rss
+        html_url: https://www.nasa.gov/news/
+        type: rss
+        max_articles: 3
+      - name: Space.com
+        url: https://www.space.com/syn/space.xml
+        html_url: https://www.space.com/
+        type: rss
+        max_articles: 3
+      - name: SpaceNews
+        url: https://spacenews.com/feed/
+        html_url: https://spacenews.com/
+        type: rss
+        max_articles: 3
+      # Additional space sources
+      - name: ESA News
+        url: https://www.esa.int/rssfeed/Our_Activities/Space_News
+        html_url: https://www.esa.int/
+        type: rss
+        max_articles: 2
+      - name: Ars Technica Space
+        url: https://feeds.arstechnica.com/arstechnica/science
+        html_url: https://arstechnica.com/science/
+        type: rss
+        max_articles: 2
+      - name: Universe Today
+        url: https://www.universetoday.com/feed
+        html_url: https://www.universetoday.com/
+        type: rss
+        max_articles: 2
+      - name: NYTimes Space
+        url: https://rss.nytimes.com/services/xml/rss/nyt/Space.xml
+        html_url: https://www.nytimes.com/section/science/space
+        type: rss
+        max_articles: 2
+
+  longform_articles:
+    priority: medium
+    word_target: 200
+    keywords:
+      - longform
+      - analysis
+      - deep dive
+      - investigation
+      - profile
+      - feature
+      - moonshot
+      - tech
+      - gadgets
+      - space
+      - strategy
+      - innovation
+      - breakthrough
+    sources:
+      - name: Stratechery by Ben Thompson
+        url: https://stratechery.com/feed/
+        html_url: https://stratechery.com/
+        type: rss
+      - name: Reddit Longform (Filtered)
+        url: https://www.reddit.com/r/longform.rss
+        html_url: https://www.reddit.com/r/longform/
+        type: rss
+        filter_keywords:
+          - moonshot
+          - technology
+          - tech
+          - gadgets
+          - space
+          - strategy
+          - innovation
+          - breakthrough
+          - startup
+          - AI
+          - artificial intelligence
+        max_articles: 3
+      - name: Wait But Why
+        url: https://waitbutwhy.com/feed
+        html_url: https://waitbutwhy.com/
+        type: rss
+      - name: The Atlantic Technology
+        url: https://www.theatlantic.com/technology/rss
+        html_url: https://www.theatlantic.com/technology/
+        type: rss
+        max_articles: 2
+      - name: Wired Backchannel
+        url: https://www.wired.com/feed/category/backchannel/latest/rss
+        html_url: https://www.wired.com/category/backchannel/
+        type: rss
+        max_articles: 2
+      - name: Aeon Essays
+        url: https://aeon.co/feed.rss
+        html_url: https://aeon.co/
+        type: rss
+        max_articles: 2
+
+  higher_education:
+    priority: medium
+    word_target: 200
+    keywords:
+      - higher education
+      - university
+      - college
+      - Babson
+      - AI in education
+      - educational technology
+      - student
+      - faculty
+      - academic
+      - Boston
+      - Cambridge
+      - MIT
+      - Harvard
+      - hackathon
+      - innovation challenge
+      - entrepreneurship event
+      - startup competition
+      - teaching opportunity
+      - Worcester
+    sources:
+      - name: Chronicle of Higher Education
+        url: https://www.chronicle.com/section/Research/33/rss
+        html_url: https://www.chronicle.com/
+        type: rss
+      - name: NYTimes Education
+        url: https://rss.nytimes.com/services/xml/rss/nyt/Education.xml
+        html_url: https://www.nytimes.com/section/education
+        type: rss
+      - name: Babson News
+        url: https://www.babson.edu/news-events/babson-announcements/
+        html_url: https://www.babson.edu/news-events/
+        type: web_scraper
+        note: "No RSS available, manual check needed"
+      - name: Babson Entrepreneurship
+        url: https://entrepreneurship.babson.edu/feed/
+        html_url: https://entrepreneurship.babson.edu/
+        type: rss
+      - name: MIT News
+        url: https://news.mit.edu/rss/feed
+        html_url: https://news.mit.edu/
+        type: rss
+      - name: Harvard Gazette
+        url: https://news.harvard.edu/gazette/rss/
+        html_url: https://news.harvard.edu/gazette/
+        type: rss
+      - name: Boston Business Journal
+        url: https://feeds.bizjournals.com/bizj_boston
+        html_url: https://www.bizjournals.com/boston/
+        type: rss
+
+  tech_tools:
+    priority: high
+    word_target: 200
+    keywords:
+      - new release
+      - app update  
+      - feature launch
+      - beta release
+      - changelog
+      - version
+      - API update
+      - model release
+      - GPT-4
+      - GPT-5
+      - Claude
+      - Gemini
+      - ChatGPT
+      - Anthropic
+      - OpenAI
+      - Google AI
+      - Ollama
+      - local model
+      - quantization
+      - mobile app
+      - developer tool
+      - SDK
+      - framework
+      - Gamma
+      - ElevenLabs
+      - Cursor
+      - Replit
+      - Vercel
+      - Supabase
+      - specialized tool
+      - vertical AI
+      - productivity tool
+      - AI assistant
+      - coding assistant
+      - design tool
+      - hardware launch
+      - smart home
+      - home automation
+      - autonomous driving
+      - self-driving
+      - FSD
+      - Tesla
+      - Waymo
+      - robotics
+      - IoT
+      - smart device
+      - wearable tech
+    sources:
+      # AI model & platform announcements
+      - name: OpenAI Blog
+        url: https://openai.com/blog/rss.xml
+        html_url: https://openai.com/blog/
+        type: rss
+        priority: high
+      - name: Anthropic Blog
+        url: https://www.anthropic.com/news/feed.xml
+        html_url: https://www.anthropic.com/news
+        type: rss
+        priority: high
+      - name: Google AI Blog
+        url: https://ai.googleblog.com/feeds/posts/default
+        html_url: https://ai.googleblog.com/
+        type: rss
+        priority: high
+      # Developer tools & platforms
+      - name: GitHub Blog
+        url: https://github.blog/feed/
+        html_url: https://github.blog/
+        type: rss
+      - name: Vercel Blog
+        url: https://vercel.com/blog.rss
+        html_url: https://vercel.com/blog
+        type: rss
+      - name: Replit Blog
+        url: https://blog.replit.com/feed.xml
+        html_url: https://blog.replit.com/
+        type: rss
+      - name: Supabase Blog
+        url: https://supabase.com/blog/rss.xml
+        html_url: https://supabase.com/blog
+        type: rss
+      # Tech news focused on releases
+      - name: TechCrunch
+        url: https://techcrunch.com/feed/
+        html_url: https://techcrunch.com/
+        type: rss
+      - name: The Verge
+        url: https://www.theverge.com/rss/index.xml
+        html_url: https://www.theverge.com/
+        type: rss
+      - name: Product Hunt
+        url: https://www.producthunt.com/feed
+        html_url: https://www.producthunt.com/
+        type: rss
+        priority: high
+      # Reddit for tool announcements
+      - name: r/MachineLearning
+        url: https://reddit.com/r/MachineLearning/.rss
+        html_url: https://reddit.com/r/MachineLearning/
+        type: rss
+      - name: r/LocalLLaMA
+        url: https://reddit.com/r/LocalLLaMA/.rss
+        html_url: https://reddit.com/r/LocalLLaMA/
+        type: rss
+        priority: high
+      # Hardware & autonomous vehicles
+      - name: r/SelfDrivingCars
+        url: https://reddit.com/r/SelfDrivingCars/.rss
+        html_url: https://reddit.com/r/SelfDrivingCars/
+        type: rss
+      - name: r/HomeAutomation
+        url: https://reddit.com/r/HomeAutomation/.rss
+        html_url: https://reddit.com/r/HomeAutomation/
+        type: rss
+      - name: r/hardware
+        url: https://reddit.com/r/hardware/.rss
+        html_url: https://reddit.com/r/hardware/
+        type: rss
+
+  daily_stoicism:
+    priority: low
+    word_target: 50
+    sources:
+      - name: Daily Stoic
+        url: https://dailystoic.com/feed/
+        html_url: https://dailystoic.com/
+        type: rss
+      - name: Ryan Holiday
+        url: https://feeds.feedburner.com/rudiusmedia/rch
+        html_url: https://www.ryanholiday.net/
+        type: rss

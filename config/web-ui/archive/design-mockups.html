@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Config Viewer - Design Mockups</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f5f5;
+            color: #000000;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 40px;
+        }
+
+        .mockup-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+
+        .mockup-section {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .mockup-header {
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #000;
+        }
+
+        .mockup-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .mockup-desc {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .category-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #000;
+        }
+
+        /* Common elements */
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .status-dot.success { background: #2e7d32; }
+        .status-dot.empty { background: #f57c00; }
+        .status-dot.error { background: #c62828; }
+
+        .badge {
+            font-size: 11px;
+            padding: 2px 6px;
+            border: 1px solid #e0e0e0;
+            border-radius: 3px;
+            color: #666;
+            display: inline-block;
+        }
+
+        .btn {
+            padding: 4px 10px;
+            background: white;
+            color: #000;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background: #f5f5f5;
+        }
+
+        /* OPTION 1: Table-Like Layout */
+        .option1 .feed-list {
+            display: table;
+            width: 100%;
+        }
+
+        .option1 .feed-item {
+            display: table-row;
+        }
+
+        .option1 .feed-item > div {
+            display: table-cell;
+            padding: 8px 12px;
+            border-bottom: 1px solid #e8e8e8;
+            vertical-align: middle;
+        }
+
+        .option1 .feed-controls {
+            width: 50px;
+        }
+
+        .option1 .feed-name-col {
+            width: 35%;
+        }
+
+        .option1 .feed-url-col {
+            width: 35%;
+            color: #999;
+            font-size: 11px;
+            font-family: monospace;
+        }
+
+        .option1 .feed-badges-col {
+            width: 15%;
+        }
+
+        .option1 .feed-actions-col {
+            width: 80px;
+            text-align: right;
+        }
+
+        .option1 input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            margin-right: 8px;
+        }
+
+        /* OPTION 2: Multi-Column Info Display */
+        .option2 .feed-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 6px 8px;
+            border-bottom: 1px solid #e8e8e8;
+        }
+
+        .option2 .feed-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .option2 input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .option2 .feed-main {
+            flex: 0 1 auto;
+            min-width: 0;
+        }
+
+        .option2 .feed-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 2px;
+        }
+
+        .option2 .feed-name {
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .option2 .feed-domain {
+            font-size: 11px;
+            color: #999;
+            font-family: monospace;
+        }
+
+        .option2 .feed-actions {
+            margin-left: auto;
+            flex-shrink: 0;
+        }
+
+        /* OPTION 3: Tighter Grid */
+        .option3 .feed-item {
+            display: grid;
+            grid-template-columns: 60px 1fr 100px;
+            gap: 16px;
+            align-items: center;
+            padding: 6px 8px;
+            border-bottom: 1px solid #e8e8e8;
+        }
+
+        .option3 .feed-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .option3 input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .option3 .feed-info {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .option3 .feed-name {
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .option3 .feed-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            color: #999;
+        }
+
+        .option3 .feed-actions {
+            text-align: right;
+        }
+
+        /* OPTION 4: Condensed Single-Line */
+        .option4 .feed-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px 8px;
+            border-bottom: 1px solid #e8e8e8;
+            font-size: 13px;
+        }
+
+        .option4 input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .option4 .feed-name {
+            font-weight: 500;
+            margin-right: 4px;
+        }
+
+        .option4 .feed-domain {
+            color: #999;
+            font-size: 11px;
+            font-family: monospace;
+        }
+
+        .option4 .feed-badges {
+            display: flex;
+            gap: 4px;
+            margin-left: 8px;
+        }
+
+        .option4 .feed-actions {
+            margin-left: auto;
+        }
+
+        /* OPTION 5: Dense List with Subtle Cards */
+        .option5 .feed-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 10px;
+            margin-bottom: 4px;
+            background: #fafafa;
+            border-radius: 4px;
+            border: 1px solid #f0f0f0;
+        }
+
+        .option5 .feed-item:hover {
+            background: #f5f5f5;
+            border-color: #e0e0e0;
+        }
+
+        .option5 .feed-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .option5 input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .option5 .feed-main {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .option5 .feed-name {
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .option5 .feed-url {
+            font-size: 11px;
+            color: #999;
+            font-family: monospace;
+        }
+
+        .option5 .feed-actions {
+            flex-shrink: 0;
+        }
+
+        /* Current Design for Comparison */
+        .current .feed-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid #e8e8e8;
+        }
+
+        .current .feed-toggle {
+            flex-shrink: 0;
+        }
+
+        .current input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .current .feed-main {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .current .feed-name {
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 3px;
+        }
+
+        .current .feed-url {
+            font-size: 11px;
+            color: #999;
+            font-family: monospace;
+            margin-bottom: 4px;
+        }
+
+        .current .feed-badges {
+            display: flex;
+            gap: 6px;
+        }
+
+        .current .feed-actions {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Config Viewer Design Options</h1>
+        <p class="subtitle">Compare different layouts to reduce white space</p>
+
+        <div class="mockup-grid">
+
+            <!-- CURRENT DESIGN -->
+            <div class="mockup-section current">
+                <div class="mockup-header">
+                    <div class="mockup-title">Current Design (For Reference)</div>
+                    <div class="mockup-desc">Flex layout with flexible middle section - creates white space</div>
+                </div>
+                <div class="category-name">AI & Technology</div>
+                <div class="feed-list">
+                    <div class="feed-item">
+                        <div class="feed-toggle">
+                            <input type="checkbox" checked>
+                        </div>
+                        <span class="status-dot success"></span>
+                        <div class="feed-main">
+                            <div class="feed-name">OpenAI Blog</div>
+                            <div class="feed-url">https://openai.com/blog/rss.xml</div>
+                            <div class="feed-badges">
+                                <span class="badge">rss</span>
+                                <span class="badge">high</span>
+                            </div>
+                        </div>
+                        <div class="feed-actions">
+                            <a href="#" class="btn">RSS</a>
+                        </div>
+                    </div>
+                    <div class="feed-item">
+                        <div class="feed-toggle">
+                            <input type="checkbox" checked>
+                        </div>
+                        <span class="status-dot empty"></span>
+                        <div class="feed-main">
+                            <div class="feed-name">Hugging Face Blog</div>
+                            <div class="feed-url">https://huggingface.co/blog/feed.xml</div>
+                            <div class="feed-badges">
+                                <span class="badge">rss</span>
+                            </div>
+                        </div>
+                        <div class="feed-actions">
+                            <a href="#" class="btn">RSS</a>
+                        </div>
+                    </div>
+                    <div class="feed-item">
+                        <div class="feed-toggle">
+                            <input type="checkbox">
+                        </div>
+                        <span class="status-dot error"></span>
+                        <div class="feed-main">
+                            <div class="feed-name">Google AI Blog</div>
+                            <div class="feed-url">https://googleaiblog.blogspot.com/atom.xml</div>
+                            <div class="feed-badges">
+                                <span class="badge">rss</span>
+                                <span class="badge">medium</span>
+                            </div>
+                        </div>
+                        <div class="feed-actions">
+                            <a href="#" class="btn">RSS</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OPTION 1: Table-Like Layout -->
+            <div class="mockup-section option1">
+                <div class="mockup-header">
+                    <div class="mockup-title">Option 1: Table-Like Layout</div>
+                    <div class="mockup-desc">Fixed column widths, aligned vertically - most structured</div>
+                </div>
+                <div class="category-name">AI & Technology</div>
+                <div class="feed-list">
+                    <div class="feed-item">
+                        <div class="feed-controls">
+                            <input type="checkbox" checked>
+                            <span class="status-dot success"></span>
+                        </div>
+                        <div class="feed-name-col">OpenAI Blog</div>
+                        <div class="feed-url-col">openai.com/blog/rss.xml</div>
+                        <div class="feed-badges-col">
+                            <span class="badge">rss</span>
+                            <span class="badge">high</span>
+                        </div>
+                        <div class="feed-actions-col">
+                            <a href="#" class="btn">RSS</a>
+                        </div>
+                    </div>
+                    <div class="feed-item">
+                        <div class="feed-controls">
+                            <input type="checkbox" checked>
+                            <span class="status-dot empty"></span>
+                        </div>
+                        <div class="feed-name-col">Hugging Face Blog</div>
+                        <div class="feed-url-col">huggingface.co/blog/feed.xml</div>
+                        <div class="feed-badges-col">
+                            <span class="badge">rss</span>
+                        </div>
+                        <div class="feed-actions-col">
+                            <a href="#" class="btn">RSS</a>
+                        </div>
+                    </div>
+                    <div class="feed-item">
+                        <div class="feed-controls">
+                            <input type="checkbox">
+                            <span class="status-dot error"></span>
+                        </div>
+                        <div class="feed-name-col">Google AI Blog</div>
+                        <div class="feed-url-col">googleaiblog.blogspot.com/atom.xml</div>
+                        <div class="feed-badges-col">
+                            <span class="badge">rss</span>
+                            <span class="badge">medium</span>
+                        </div>
+                        <div class="feed-actions-col">
+                            <a href="#" class="btn">RSS</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OPTION 2: Multi-Column Info Display -->
+            <div class="mockup-section option2">
+                <div class="mockup-header">
+                    <div class="mockup-title">Option 2: Multi-Column Info Display</div>
+                    <div class="mockup-desc">Badges on same line as name, shortened URLs - compact but readable</div>
+                </div>
+                <div class="category-name">AI & Technology</div>
+                <div class="feed-list">
+                    <div class="feed-item">
+                        <div class="feed-controls">
+                            <input type="checkbox" checked>
+                            <span class="status-dot success"></span>
+                        </div>
+                        <div class="feed-main">
+                            <div class="feed-header">
+                                <span class="feed-name">OpenAI Blog</span>
+                                <span class="badge">rss</span>
+                                <span class="badge">high</span>
+                            </div>
+                            <div class="feed-domain">openai.com/blog/rss.xml</div>
+                        </div>
+                        <div class="feed-actions">
+                            <a href="#" class="btn">RSS</a>
+                        </div>
+                    </div>
+                    <div class="feed-item">
+                        <div class="feed-controls">
+                            <input type="checkbox" checked>
+                            <span class="status-dot empty"></span>
+                        </div>
+                        <div class="feed-main">
+                            <div class="feed-header">
+                                <span class="feed-name">Hugging Face Blog</span>
+                                <span class="badge">rss</span>
+                            </div>
+                            <div class="feed-domain">huggingface.co/blog/feed.xml</div>
+                        </div>
+                        <div class="feed-actions">
+                            <a href="#" class="btn">RSS</a>
+                        </div>
+                    </div>
+                    <div class="feed-item">
+                        <div class="feed-controls">
+                            <input type="checkbox">
+                            <span class="status-dot error"></span>
+                        </div>
+                        <div class="feed-main">
+                            <div class="feed-header">
+                                <span class="feed-name">Google AI Blog</span>
+                                <span class="badge">rss</span>
+                                <span class="badge">medium</span>
+                            </div>
+                            <div class="feed-domain">googleaiblog.blogspot.com/atom.xml</div>
+                        </div>
+                        <div class="feed-actions">
+                            <a href="#" class="btn">RSS</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OPTION 3: Tighter Grid -->
+            <div class="mockup-section option3">
+                <div class="mockup-header">
+                    <div class="mockup-title">Option 3: Tighter Grid with Sections</div>
+                    <div class="mockup-desc">CSS Grid layout, grouped controls, fixed widths - balanced</div>
+                </div>
+                <div class="category-name">AI & Technology</div>
+                <div class="feed-list">
+                    <div class="feed-item">
+                        <div class="feed-controls">
+                            <input type="checkbox" checked>
+                            <span class="status-dot success"></span>
+                        </div>
+                        <div class="feed-info">
+                            <div class="feed-name">OpenAI Blog</div>
+                            <div class="feed-meta">
+                                <span>openai.com</span>
+                                <span class="badge">rss</span>
+                                <span class="badge">high</span>
+                            </div>
+                        </div>
+                        <div class="feed-actions">
+                            <a href="#" class="btn">RSS</a>
+                        </div>
+                    </div>
+                    <div class="feed-item">
+                        <div class="feed-controls">
+                            <input type="checkbox" checked>
+                            <span class="status-dot empty"></span>
+                        </div>
+                        <div class="feed-info">
+                            <div class="feed-name">Hugging Face Blog</div>
+                            <div class="feed-meta">
+                                <span>huggingface.co</span>
+                                <span class="badge">rss</span>
+                            </div>
+                        </div>
+                        <div class="feed-actions">
+                            <a href="#" class="btn">RSS</a>
+                        </div>
+                    </div>
+                    <div class="feed-item">
+                        <div class="feed-controls">
+                            <input type="checkbox">
+                            <span class="status-dot error"></span>
+                        </div>
+                        <div class="feed-info">
+                            <div class="feed-name">Google AI Blog</div>
+                            <div class="feed-meta">
+                                <span>googleaiblog.blogspot.com</span>
+                                <span class="badge">rss</span>
+                                <span class="badge">medium</span>
+                            </div>
+                        </div>
+                        <div class="feed-actions">
+                            <a href="#" class="btn">RSS</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OPTION 4: Condensed Single-Line -->
+            <div class="mockup-section option4">
+                <div class="mockup-header">
+                    <div class="mockup-title">Option 4: Condensed Single-Line</div>
+                    <div class="mockup-desc">Everything on one line - most compact, good for scanning</div>
+                </div>
+                <div class="category-name">AI & Technology</div>
+                <div class="feed-list">
+                    <div class="feed-item">
+                        <input type="checkbox" checked>
+                        <span class="status-dot success"></span>
+                        <span class="feed-name">OpenAI Blog</span>
+                        <span class="feed-domain">(openai.com)</span>
+                        <div class="feed-badges">
+                            <span class="badge">rss</span>
+                            <span class="badge">high</span>
+                        </div>
+                        <div class="feed-actions">
+                            <a href="#" class="btn">RSS</a>
+                        </div>
+                    </div>
+                    <div class="feed-item">
+                        <input type="checkbox" checked>
+                        <span class="status-dot empty"></span>
+                        <span class="feed-name">Hugging Face Blog</span>
+                        <span class="feed-domain">(huggingface.co)</span>
+                        <div class="feed-badges">
+                            <span class="badge">rss</span>
+                        </div>
+                        <div class="feed-actions">
+                            <a href="#" class="btn">RSS</a>
+                        </div>
+                    </div>
+                    <div class="feed-item">
+                        <input type="checkbox">
+                        <span class="status-dot error"></span>
+                        <span class="feed-name">Google AI Blog</span>
+                        <span class="feed-domain">(googleaiblog.blogspot.com)</span>
+                        <div class="feed-badges">
+                            <span class="badge">rss</span>
+                            <span class="badge">medium</span>
+                        </div>
+                        <div class="feed-actions">
+                            <a href="#" class="btn">RSS</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OPTION 5: Dense List with Subtle Cards -->
+            <div class="mockup-section option5">
+                <div class="mockup-header">
+                    <div class="mockup-title">Option 5: Dense List with Subtle Cards</div>
+                    <div class="mockup-desc">Light background cards, tighter spacing - visual separation without full cards</div>
+                </div>
+                <div class="category-name">AI & Technology</div>
+                <div class="feed-list">
+                    <div class="feed-item">
+                        <div class="feed-controls">
+                            <input type="checkbox" checked>
+                            <span class="status-dot success"></span>
+                        </div>
+                        <div class="feed-main">
+                            <div class="feed-name">OpenAI Blog</div>
+                            <div class="feed-url">openai.com/blog/rss.xml • <span class="badge">rss</span> <span class="badge">high</span></div>
+                        </div>
+                        <div class="feed-actions">
+                            <a href="#" class="btn">RSS</a>
+                        </div>
+                    </div>
+                    <div class="feed-item">
+                        <div class="feed-controls">
+                            <input type="checkbox" checked>
+                            <span class="status-dot empty"></span>
+                        </div>
+                        <div class="feed-main">
+                            <div class="feed-name">Hugging Face Blog</div>
+                            <div class="feed-url">huggingface.co/blog/feed.xml • <span class="badge">rss</span></div>
+                        </div>
+                        <div class="feed-actions">
+                            <a href="#" class="btn">RSS</a>
+                        </div>
+                    </div>
+                    <div class="feed-item">
+                        <div class="feed-controls">
+                            <input type="checkbox">
+                            <span class="status-dot error"></span>
+                        </div>
+                        <div class="feed-main">
+                            <div class="feed-name">Google AI Blog</div>
+                            <div class="feed-url">googleaiblog.blogspot.com/atom.xml • <span class="badge">rss</span> <span class="badge">medium</span></div>
+                        </div>
+                        <div class="feed-actions">
+                            <a href="#" class="btn">RSS</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div style="margin-top: 60px; padding: 30px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+            <h2 style="margin-bottom: 16px;">Quick Comparison</h2>
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="border-bottom: 2px solid #000;">
+                        <th style="text-align: left; padding: 12px;">Option</th>
+                        <th style="text-align: left; padding: 12px;">White Space</th>
+                        <th style="text-align: left; padding: 12px;">Readability</th>
+                        <th style="text-align: left; padding: 12px;">Scannability</th>
+                        <th style="text-align: left; padding: 12px;">Best For</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 12px;"><strong>Current</strong></td>
+                        <td style="padding: 12px;">High ⚠️</td>
+                        <td style="padding: 12px;">Excellent ✅</td>
+                        <td style="padding: 12px;">Good ✅</td>
+                        <td style="padding: 12px;">Clarity over density</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 12px;"><strong>Option 1</strong></td>
+                        <td style="padding: 12px;">Low ✅</td>
+                        <td style="padding: 12px;">Excellent ✅</td>
+                        <td style="padding: 12px;">Excellent ✅✅</td>
+                        <td style="padding: 12px;">Data-heavy, scanning</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 12px;"><strong>Option 2</strong></td>
+                        <td style="padding: 12px;">Medium ✅</td>
+                        <td style="padding: 12px;">Very Good ✅</td>
+                        <td style="padding: 12px;">Good ✅</td>
+                        <td style="padding: 12px;">Balance of info & space</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 12px;"><strong>Option 3</strong></td>
+                        <td style="padding: 12px;">Low ✅</td>
+                        <td style="padding: 12px;">Very Good ✅</td>
+                        <td style="padding: 12px;">Very Good ✅</td>
+                        <td style="padding: 12px;">Clean grid lovers</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 12px;"><strong>Option 4</strong></td>
+                        <td style="padding: 12px;">Very Low ✅✅</td>
+                        <td style="padding: 12px;">Good ⚠️</td>
+                        <td style="padding: 12px;">Excellent ✅✅</td>
+                        <td style="padding: 12px;">Maximum density</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px;"><strong>Option 5</strong></td>
+                        <td style="padding: 12px;">Low ✅</td>
+                        <td style="padding: 12px;">Excellent ✅</td>
+                        <td style="padding: 12px;">Good ✅</td>
+                        <td style="padding: 12px;">Visual separation</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

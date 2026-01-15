@@ -1,0 +1,524 @@
+# Updated Configuration with NYTimes feeds and new structure
+categories:
+  on_this_day:
+    priority: low
+    word_target: 50
+    sources:
+      - name: Wikipedia On This Day
+        url:
+        type: api
+
+  weather:
+    priority: low
+    word_target: 30
+    sources:
+      - name: Weather API
+        url:
+        type: api
+
+  readwise_highlights:
+    priority: medium
+    word_target: 150
+    sources:
+      - name: Readwise Highlights
+        url:
+        type: readwise
+        readwise_type: highlights
+        days_back: 1
+        limit: 5
+
+  readwise_reader:
+    priority: medium
+    word_target: 200
+    sources:
+      - name: Readwise Reader
+        url:
+        type: readwise
+        readwise_type: articles
+        days_back: 1
+        limit: 5
+
+  ai:
+    priority: high
+    word_target: 450
+    sources:
+      - name: Replit Blog
+        url: https://blog.replit.com/feed.xml
+        type: rss
+      - name: Vercel Blog
+        url: https://vercel.com/blog.rss
+        type: rss
+      - name: Supabase Blog
+        url: https://supabase.com/blog/rss.xml
+        type: rss
+      - name: Cursor Changelog (Unofficial)
+        url: https://cursor-changelog.com/feed
+        type: rss
+      - name: Lovable Blog
+        url: https://lovable.dev/blog
+        type: rss
+      - name: GitHub Blog
+        url: https://github.blog/feed/
+        type: rss
+      - name: OpenAI Blog
+        url: https://openai.com/blog/rss.xml
+        type: rss
+      - name: Google AI Blog
+        url: https://googleaiblog.blogspot.com/atom.xml
+        type: rss
+      - name: Hugging Face Blog
+        url: https://huggingface.co/blog/feed.xml
+        type: rss
+      - name: DeepMind Blog
+        url: https://deepmind.com/blog/feed/basic/
+        type: rss
+      - name: MIT News - Artificial intelligence
+        url: https://news.mit.edu/rss/topic/artificial-intelligence2
+        type: rss
+      - name: VentureBeat AI
+        url: https://feeds.feedburner.com/venturebeat/SZYF
+        type: rss
+      - name: One Useful Thing (And Also Some Other Things)
+        url: https://oneusefulthing.substack.com/feed
+        type: rss
+      - name: ByteByteGo
+        url: https://blog.bytebytego.com/feed
+        type: rss
+
+  academic_research:
+    priority: medium
+    word_target: 100
+    sources:
+      - name: Strategic Management Journal
+        url: https://onlinelibrary.wiley.com/feed/10970266/most-recent
+        type: rss
+      - name: Administrative Science Quarterly
+        url: https://journals.sagepub.com/action/showFeed?ui=0&mi=ehikzz&ai=2b4&jc=asqa&type=etoc&feed=rss
+        type: rss
+      - name: Organization Science
+        url: https://pubsonline.informs.org/action/showFeed?type=etoc&feed=rss&jc=orsc
+        type: rss
+      - name: Journal of Business Venturing
+        url: https://rss.sciencedirect.com/publication/science/08839026
+        type: rss
+      - name: Research Policy
+        url: https://rss.sciencedirect.com/publication/science/00487333
+        type: rss
+      - name: Academy of Management Journal
+        url: https://journals.aom.org/action/showFeed?jc=amj&type=etoc&feed=rss
+        type: rss
+      - name: Academy of Management Review
+        url: https://journals.aom.org/action/showFeed?jc=amr&type=etoc&feed=rss
+        type: rss
+
+  moonshot_strategy:
+    priority: high
+    word_target: 500
+    sources:
+      - name: Platform Strategy
+        url: https://feeds.feedburner.com/platformed
+        type: rss
+      - name: Phys.org
+        url: https://phys.org/rss-feed
+        type: rss
+      - name: ScienceDaily
+        url: https://sciencedaily.com/rss/all.xml
+        type: rss
+      - name: Nature News
+        url: https://nature.com/nature.rss
+        type: rss
+      - name: Science Magazine
+        url: https://science.org/rss/news_current.xml
+        type: rss
+      - name: MIT News Science
+        url: https://news.mit.edu/rss/topic/science
+        type: rss
+      - name: Popular Science
+        url: https://popsci.com/feed
+        type: rss
+      - name: Quanta Magazine
+        url: https://quantamagazine.org/feed
+        type: rss
+      - name: New Scientist
+        url: https://newscientist.com/feed/home
+        type: rss
+      - name: r/science
+        url: https://reddit.com/r/science/.rss
+        type: reddit
+      - name: r/Futurology
+        url: https://reddit.com/r/Futurology/.rss
+        type: reddit
+
+  market_business:
+    priority: high
+    word_target: 300
+    sources:
+      - name: Financial Times
+        url: https://www.ft.com/?format=rss
+        type: rss
+      - name: Tomasz Tunguz
+        url: https://tomtunguz.com/index.xml
+        type: rss
+      - name: StrictlyVC
+        url: https://www.strictlyvc.com/feed
+        type: rss
+      - name: Crunchbase News
+        url: https://news.crunchbase.com/feed/
+        type: rss
+
+  us_news:
+    priority: medium
+    word_target: 200
+    sources:
+      - name: NPR News
+        url: https://feeds.npr.org/1001/rss.xml
+        type: rss
+      - name: BBC News US
+        url: https://feeds.bbci.co.uk/news/world/us_and_canada/rss.xml
+        type: rss
+
+  tech_headlines:
+    priority: high
+    word_target: 300
+    sources:
+      - name: Daring Fireball
+        url: https://daringfireball.net/feeds/main
+        type: rss
+      - name: TechCrunch
+        url: https://techcrunch.com/feed/
+        type: rss
+      - name: Ars Technica
+        url: https://feeds.arstechnica.com/arstechnica/index/
+        type: rss
+      - name: TechRadar
+        url: https://www.techradar.com/rss
+        type: rss
+
+  space_news:
+    priority: medium
+    word_target: 200
+    sources:
+      - name: Space.com
+        url: https://www.space.com/syn/space.xml
+        type: rss
+      - name: r/space
+        url: https://reddit.com/r/space/.rss
+        type: rss
+      - name: r/nasa
+        url: https://reddit.com/r/nasa/.rss
+        type: rss
+      - name: Ars Technica Space
+        url: https://feeds.arstechnica.com/arstechnica/science
+        type: rss
+      - name: NYTimes Space
+        url: https://rss.nytimes.com/services/xml/rss/nyt/Space.xml
+        type: rss
+
+  longform_articles:
+    priority: medium
+    word_target: 200
+    sources:
+      - name: Stratechery by Ben Thompson
+        url: https://stratechery.com/feed/
+        type: rss
+      - name: Reddit Longform (Filtered)
+        url: https://www.reddit.com/r/longform.rss
+        type: rss
+
+  higher_education:
+    priority: medium
+    word_target: 200
+    sources:
+      - name: Babson Entrepreneurship
+        url: https://entrepreneurship.babson.edu/feed/
+        type: rss
+      - name: MIT News
+        url: https://news.mit.edu/rss/feed
+        type: rss
+
+  tech_tools:
+    priority: medium
+    word_target: 200
+    sources:
+      - name: OpenAI Blog
+        url: https://openai.com/blog/rss.xml
+        type: rss
+      - name: Anthropic Blog
+        url: https://www.anthropic.com/news/feed.xml
+        type: rss
+      - name: Google AI Blog
+        url: https://ai.googleblog.com/feeds/posts/default
+        type: rss
+      - name: GitHub Blog
+        url: https://github.blog/feed/
+        type: rss
+      - name: Vercel Blog
+        url: https://vercel.com/blog.rss
+        type: rss
+      - name: Replit Blog
+        url: https://blog.replit.com/feed.xml
+        type: rss
+      - name: Supabase Blog
+        url: https://supabase.com/blog/rss.xml
+        type: rss
+      - name: TechCrunch
+        url: https://techcrunch.com/feed/
+        type: rss
+      - name: The Verge
+        url: https://www.theverge.com/rss/index.xml
+        type: rss
+      - name: Product Hunt
+        url: https://www.producthunt.com/feed
+        type: rss
+      - name: r/MachineLearning
+        url: https://reddit.com/r/MachineLearning/.rss
+        type: rss
+      - name: r/LocalLLaMA
+        url: https://reddit.com/r/LocalLLaMA/.rss
+        type: rss
+      - name: r/artificial
+        url: https://reddit.com/r/artificial/.rss
+        type: rss
+      - name: r/OpenAI
+        url: https://reddit.com/r/OpenAI/.rss
+        type: rss
+      - name: r/SelfDrivingCars
+        url: https://reddit.com/r/SelfDrivingCars/.rss
+        type: rss
+      - name: r/HomeAutomation
+        url: https://reddit.com/r/HomeAutomation/.rss
+        type: rss
+      - name: r/hardware
+        url: https://reddit.com/r/hardware/.rss
+        type: rss
+      - name: Notion Blog
+        url: https://www.notion.so/blog/rss
+        type: rss
+      - name: r/SideProject
+        url: https://www.reddit.com/r/SideProject/.rss
+        type: reddit
+      - name: r/webdev
+        url: https://www.reddit.com/r/webdev/.rss
+        type: reddit
+
+  agentic_coding:
+    priority: high
+    word_target: 400
+    sources:
+      - name: r/ChatGPTCoding
+        url: https://reddit.com/r/ChatGPTCoding/.rss
+        type: rss
+      - name: r/ClaudeAI
+        url: https://reddit.com/r/ClaudeAI/.rss
+        type: rss
+      - name: r/CursorAI
+        url: https://reddit.com/r/CursorAI/.rss
+        type: rss
+      - name: r/replit
+        url: https://reddit.com/r/replit/.rss
+        type: rss
+      - name: r/vibecoding
+        url: https://reddit.com/r/vibecoding/.rss
+        type: rss
+      - name: r/ollama
+        url: https://reddit.com/r/ollama/.rss
+        type: rss
+      - name: r/LocalLLaMA
+        url: https://reddit.com/r/LocalLLaMA/.rss
+        type: rss
+
+  from_reddit:
+    priority: high
+    word_target: 200
+    sources:
+      - name: r/DataIsBeautiful
+        url: https://reddit.com/r/DataIsBeautiful/.rss
+        type: rss
+
+  daily_stoicism:
+    priority: low
+    word_target: 50
+    sources:
+      - name: Ryan Holiday
+        url: https://feeds.feedburner.com/rudiusmedia/rch
+        type: rss
+
+  good_news:
+    priority: medium
+    word_target: 300
+    sources:
+      - name: Good News Network
+        url: https://goodnewsnetwork.org/feed
+        type: rss
+      - name: Positive News
+        url: https://positive.news/feed
+        type: rss
+      - name: Reasons to be Cheerful
+        url: https://reasonstobecheerful.world/feed
+        type: rss
+      - name: YES! Magazine
+        url: https://yesmagazine.org/feed
+        type: rss
+      - name: Sunny Skyz
+        url: https://feeds.feedburner.com/SunnySkyz
+        type: rss
+      - name: SUCCESS Magazine
+        url: https://success.com/feed
+        type: rss
+      - name: Upworthy
+        url: https://upworthy.com/feed
+        type: rss
+      - name: r/UpliftingNews
+        url: https://reddit.com/r/UpliftingNews/.rss
+        type: reddit
+      - name: r/MadeMeSmile
+        url: https://reddit.com/r/MadeMeSmile/.rss
+        type: reddit
+      - name: r/HumansBeingBros
+        url: https://reddit.com/r/HumansBeingBros/.rss
+        type: reddit
+
+  personal_finance_fire:
+    priority: high
+    word_target: 400
+    sources:
+      - name: Mr. Money Mustache
+        url: https://mrmoneymustache.com/feed
+        type: rss
+      - name: Mad Fientist
+        url: https://madfientist.com/feed
+        type: rss
+      - name: Financial Samurai
+        url: https://financialsamurai.com/feed
+        type: rss
+      - name: Go Curry Cracker
+        url: https://gocurrycracker.com/feed
+        type: rss
+      - name: Early Retirement Now
+        url: https://earlyretirementnow.com/feed
+        type: rss
+      - name: TAWCAN
+        url: https://tawcan.com/feed
+        type: rss
+      - name: Millennial Revolution
+        url: https://millennial-revolution.com/feed
+        type: rss
+      - name: The White Coat Investor
+        url: https://whitecoatinvestor.com/feed
+        type: rss
+      - name: r/financialindependence
+        url: https://reddit.com/r/financialindependence/.rss
+        type: reddit
+      - name: r/leanfire
+        url: https://reddit.com/r/leanfire/.rss
+        type: reddit
+      - name: r/fatFIRE
+        url: https://reddit.com/r/fatFIRE/.rss
+        type: reddit
+      - name: r/FIRE
+        url: https://reddit.com/r/FIRE/.rss
+        type: reddit
+      - name: r/personalfinance
+        url: https://reddit.com/r/personalfinance/.rss
+        type: reddit
+      - name: r/financialplanning
+        url: https://reddit.com/r/financialplanning/.rss
+        type: reddit
+      - name: r/investing
+        url: https://reddit.com/r/investing/.rss
+        type: reddit
+      - name: r/frugal
+        url: https://reddit.com/r/frugal/.rss
+        type: reddit
+
+  sustainable_homes:
+    priority: medium
+    word_target: 300
+    sources:
+      - name: Green Building Advisor
+        url: https://greenbuildingadvisor.com/rss.xml
+        type: rss
+      - name: Passive House Accelerator
+        url: https://passivehouseaccelerator.com/feed
+        type: rss
+      - name: BuildingGreen
+        url: https://buildinggreen.com/feed
+        type: rss
+      - name: Passive House Plus
+        url: https://passivehouseplus.ie/feed
+        type: rss
+      - name: EcoHome
+        url: https://ecohome.net/feed
+        type: rss
+      - name: Smart Home Solver
+        url: https://smarthomesolver.com/feed
+        type: rss
+      - name: Prefab Review
+        url: https://prefabreview.com/feed
+        type: rss
+      - name: r/PassiveHouse
+        url: https://reddit.com/r/PassiveHouse/.rss
+        type: reddit
+      - name: r/GreenBuilding
+        url: https://reddit.com/r/GreenBuilding/.rss
+        type: reddit
+      - name: r/homebuilding
+        url: https://reddit.com/r/homebuilding/.rss
+        type: reddit
+      - name: r/sustainability
+        url: https://reddit.com/r/sustainability/.rss
+        type: reddit
+      - name: r/ZeroWaste
+        url: https://reddit.com/r/ZeroWaste/.rss
+        type: reddit
+      - name: r/architecture
+        url: https://reddit.com/r/architecture/.rss
+        type: reddit
+      - name: r/smarthome
+        url: https://reddit.com/r/smarthome/.rss
+        type: reddit
+
+  solopreneur_startups:
+    priority: high
+    word_target: 300
+    sources:
+      - name: Indie Hackers
+        url: https://indiehackers.com/feed
+        type: rss
+      - name: Tiny Empires
+        url: https://tinyempires.substack.com/feed
+        type: rss
+      - name: MicroConf
+        url: https://microconf.com/feed
+        type: rss
+      - name: Failory
+        url: https://failory.com/feed
+        type: rss
+      - name: Starter Story
+        url: https://starterstory.com/feed
+        type: rss
+      - name: Solo Build It
+        url: https://sitesell.com/blog/feed
+        type: rss
+      - name: r/indiehackers
+        url: https://reddit.com/r/indiehackers/.rss
+        type: reddit
+      - name: r/SaaS
+        url: https://reddit.com/r/SaaS/.rss
+        type: reddit
+      - name: r/entrepreneur
+        url: https://reddit.com/r/entrepreneur/.rss
+        type: reddit
+      - name: r/startups
+        url: https://reddit.com/r/startups/.rss
+        type: reddit
+      - name: r/SaaSMarketing
+        url: https://reddit.com/r/SaaSMarketing/.rss
+        type: reddit
+      - name: r/smallbusiness
+        url: https://reddit.com/r/smallbusiness/.rss
+        type: reddit
+      - name: r/freelance
+        url: https://reddit.com/r/freelance/.rss
+        type: reddit
+

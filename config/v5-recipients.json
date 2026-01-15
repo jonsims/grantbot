@@ -1,0 +1,9 @@
+{
+  "recipients": [
+    "jon.sims@gmail.com",
+    "noyes.erik@gmail.com"
+  ],
+  "updated_at": "2025-10-15T14:30:00Z",
+  "version": "v5",
+  "description": "Email recipients for V5 TEST daily news updates. Managed via web UI at config/web-ui/v5-recipients.html"
+}

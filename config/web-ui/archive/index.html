@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily News Agent - Config Editor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .auth-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+        }
+
+        .config-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+        }
+
+        .category-section {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .category-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .word-target {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .source-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+            background: #f9f9f9;
+            margin-bottom: 8px;
+            border-radius: 4px;
+        }
+
+        .source-item label {
+            flex: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-indicator {
+            font-size: 12px;
+            display: inline-block;
+        }
+
+        .status-success {
+            color: #28a745;
+        }
+
+        .status-empty {
+            color: #ffc107;
+        }
+
+        .status-warning {
+            color: #fd7e14;
+        }
+
+        .status-error {
+            color: #dc3545;
+        }
+
+        .status-unknown {
+            color: #6c757d;
+        }
+
+        .source-url {
+            background: #f0f0f0;
+            padding: 8px;
+            margin: 4px 0 8px 0;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .source-url code {
+            color: #333;
+            word-break: break-all;
+        }
+
+        .url-toggle {
+            font-size: 12px;
+            padding: 6px 12px;
+        }
+
+        .test-feed-link {
+            font-size: 12px;
+            padding: 6px 12px;
+            background: #17a2b8;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            white-space: nowrap;
+            display: inline-block;
+        }
+
+        .test-feed-link:hover {
+            background: #138496;
+        }
+
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        input[type="number"] {
+            width: 80px;
+            padding: 6px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        input[type="text"], input[type="url"], input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .add-source-form {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+
+        .form-row {
+            margin-bottom: 10px;
+        }
+
+        .form-row label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        button.secondary {
+            background: #6c757d;
+        }
+
+        button.secondary:hover {
+            background: #545b62;
+        }
+
+        button.save-btn {
+            background: #28a745;
+            font-size: 16px;
+            padding: 12px 30px;
+        }
+
+        button.save-btn:hover {
+            background: #218838;
+        }
+
+        .actions {
+            position: sticky;
+            bottom: 0;
+            background: white;
+            padding: 20px;
+            border-top: 2px solid #ddd;
+            margin: -20px;
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: space-between;
+        }
+
+        .status {
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .help-text {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .status-legend {
+            background: #f9f9f9;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .status-legend span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .suggestions-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px dashed #e0e0e0;
+        }
+
+        .suggestions-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .suggestions-header h3 {
+            font-size: 16px;
+            color: #555;
+            margin: 0;
+        }
+
+        .suggestions-toggle {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .suggestion-item {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            gap: 10px;
+        }
+
+        .suggestion-info {
+            flex: 1;
+        }
+
+        .suggestion-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .suggestion-description {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 6px;
+        }
+
+        .suggestion-meta {
+            font-size: 12px;
+            color: #888;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .suggestion-meta span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .suggestion-sample {
+            font-style: italic;
+            color: #555;
+            margin-top: 8px;
+            padding: 6px;
+            background: white;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+
+        .suggestion-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .suggestion-actions button {
+            font-size: 13px;
+            padding: 6px 12px;
+            white-space: nowrap;
+        }
+
+        .add-suggestion-btn {
+            background: #28a745;
+        }
+
+        .add-suggestion-btn:hover {
+            background: #218838;
+        }
+
+        .preview-btn {
+            background: #6c757d;
+        }
+
+        .preview-btn:hover {
+            background: #545b62;
+        }
+
+        .confidence-badge {
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 3px;
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .confidence-high {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .confidence-medium {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .no-suggestions {
+            padding: 15px;
+            text-align: center;
+            color: #999;
+            font-size: 13px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <h1>Daily News Agent - Config Editor</h1>
+    <p class="subtitle">Simple interface to manage RSS feeds and categories</p>
+    <div style="margin-top: 20px; margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
+        <a href="../../index.html" style="display: inline-block; padding: 8px 16px; background: #007bff; color: white; text-decoration: none; border-radius: 6px; font-size: 14px;">🏠 Home</a>
+        <a href="email-archive.html" style="display: inline-block; padding: 8px 16px; background: #6c757d; color: white; text-decoration: none; border-radius: 6px; font-size: 14px;">📧 Email Archive</a>
+        <a href="feed-status.html" style="display: inline-block; padding: 8px 16px; background: #6c757d; color: white; text-decoration: none; border-radius: 6px; font-size: 14px;">📊 Feed Status</a>
+    </div>
+
+    <div id="status" class="status"></div>
+    <div id="loading" class="loading">Loading configuration...</div>
+
+    <!-- GitHub Authentication -->
+    <div id="auth-section" class="auth-section">
+        <h2>GitHub Authentication</h2>
+        <p class="help-text">You need a Personal Access Token (PAT) to save changes. <a href="SETUP_INSTRUCTIONS.md" target="_blank">Setup Instructions →</a></p>
+        <div class="form-row">
+            <label>GitHub Personal Access Token:</label>
+            <input type="password" id="github-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+            <p class="help-text">Token is stored in browser localStorage (this device only)</p>
+        </div>
+        <button onclick="saveToken()">Save Token</button>
+    </div>
+
+    <!-- Configuration Editor -->
+    <div id="config-editor" class="config-section hidden">
+        <h2>Feed Configuration</h2>
+
+        <div class="status-legend">
+            <strong>Feed Status:</strong>
+            <span><span class="status-indicator status-success">●</span> Working (has articles)</span>
+            <span><span class="status-indicator status-empty">○</span> Empty (no articles)</span>
+            <span><span class="status-indicator status-warning">▲</span> Warning (parsing issues)</span>
+            <span><span class="status-indicator status-error">✗</span> Error (failed)</span>
+            <span><span class="status-indicator status-unknown">?</span> Unknown (no data)</span>
+        </div>
+
+        <div id="categories-container"></div>
+
+        <div class="actions">
+            <div>
+                <button onclick="loadConfig()" class="secondary">Reload Config</button>
+                <button onclick="downloadConfig()" class="secondary">Download Backup</button>
+            </div>
+            <button onclick="saveConfig()" class="save-btn">Save to GitHub</button>
+        </div>
+    </div>
+
+    <script src="config-editor.js"></script>
+</body>
+</html>

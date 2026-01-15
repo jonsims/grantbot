@@ -1,0 +1,13 @@
+{
+  "meta_summary": {
+    "tone": "mixed",
+    "description": "Tone options: analytical, conversational, mixed"
+  },
+  "features": {
+    "readwise_enabled": false,
+    "stoicism_enabled": false,
+    "description": "Toggle optional features on/off"
+  },
+  "updated_at": "2025-10-15T21:15:00Z",
+  "version": "v5"
+}

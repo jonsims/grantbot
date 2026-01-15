@@ -1,0 +1,44 @@
+name: Weekly Feed Suggestions
+
+on:
+  schedule:
+    # Run every Monday at 3:00 AM EST (8:00 AM UTC)
+    - cron: '0 8 * * 1'
+  workflow_dispatch:  # Allow manual trigger
+
+permissions:
+  contents: write
+
+jobs:
+  generate-suggestions:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: v4-development
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Generate feed suggestions
+        run: |
+          python src/utils/feed_discovery.py
+
+      - name: Commit and push suggestions
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add config/feed-suggestions.json
+          git diff --staged --quiet || git commit -m "🔍 Weekly feed suggestions update: $(date +'%Y-%m-%d')"
+          git pull --rebase origin v4-development
+          git push

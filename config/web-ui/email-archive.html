@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Archive - Daily News Agent</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f5f5;
+            overflow: hidden;
+        }
+
+        .layout {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: white;
+            border-right: 1px solid #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+
+        .sidebar-header {
+            background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+            color: white;
+            padding: 24px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .sidebar-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .sidebar-subtitle {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            overflow-y: auto;
+            padding: 12px 0;
+        }
+
+        .nav-section {
+            margin-bottom: 20px;
+        }
+
+        .nav-section-title {
+            padding: 8px 20px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #999;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            color: #333;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+
+        .nav-item:hover {
+            background: #f8f9fa;
+        }
+
+        .nav-item.active {
+            background: #0d9488;
+            color: white;
+            font-weight: 500;
+        }
+
+        .nav-item-date {
+            font-weight: 500;
+        }
+
+        .nav-item-badge {
+            padding: 2px 8px;
+            background: #e0e0e0;
+            color: #666;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .nav-item.active .nav-item-badge {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        .nav-item-badge.v2 {
+            background: #22c55e;
+            color: white;
+        }
+
+        .nav-item-badge.v4 {
+            background: #14b8a6;
+            color: white;
+        }
+
+        .sidebar-footer {
+            padding: 16px 20px;
+            border-top: 1px solid #e0e0e0;
+            background: #f8f9fa;
+        }
+
+        .sidebar-footer a {
+            display: block;
+            padding: 8px 12px;
+            color: #0d9488;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 6px;
+            transition: background 0.2s;
+            text-align: center;
+        }
+
+        .sidebar-footer a:hover {
+            background: #e0e0e0;
+        }
+
+        .sidebar-footer a + a {
+            margin-top: 4px;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .main-header {
+            background: white;
+            padding: 20px 40px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .main-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .filter-controls label {
+            font-size: 13px;
+            font-weight: 500;
+            color: #666;
+        }
+
+        .filter-controls select {
+            padding: 6px 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 13px;
+            background: white;
+            cursor: pointer;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            background: #0d9488;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 13px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background: #0f766e;
+        }
+
+        .btn.secondary {
+            background: #6c757d;
+        }
+
+        .btn.secondary:hover {
+            background: #545b62;
+        }
+
+        .content-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 40px;
+        }
+
+        .email-viewer {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .email-viewer-header {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .email-viewer-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .email-viewer-meta {
+            font-size: 13px;
+            color: #666;
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .version-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background: #14b8a6;
+            color: white;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .version-badge.v2 {
+            background: #22c55e;
+        }
+
+        .version-badge.v4 {
+            background: #14b8a6;
+        }
+
+        .email-content {
+            padding: 30px;
+        }
+
+        .email-content iframe {
+            width: 100%;
+            border: none;
+            min-height: 800px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 100px 20px;
+            color: #666;
+        }
+
+        .empty-state h2 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            font-size: 16px;
+            color: #0d9488;
+        }
+
+        .error-message {
+            background: #fee;
+            color: #c33;
+            padding: 16px 20px;
+            border-radius: 6px;
+            margin: 20px;
+            font-size: 14px;
+        }
+
+        /* Scrollbar Styling */
+        .sidebar-nav::-webkit-scrollbar,
+        .content-area::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .sidebar-nav::-webkit-scrollbar-track,
+        .content-area::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .sidebar-nav::-webkit-scrollbar-thumb,
+        .content-area::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 4px;
+        }
+
+        .sidebar-nav::-webkit-scrollbar-thumb:hover,
+        .content-area::-webkit-scrollbar-thumb:hover {
+            background: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-title">📧 Email Archive</div>
+                <div class="sidebar-subtitle">Daily News Agent</div>
+            </div>
+
+            <nav class="sidebar-nav" id="sidebarNav">
+                <div class="loading">Loading...</div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="v5-recipients.html">🧪 V5 Recipients</a>
+                <a href="config-unified.html">⚙️ Feed Manager</a>
+                <a href="../../index.html">🏠 Back to Home</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="main-header">
+                <div class="main-title" id="mainTitle">Select an email to view</div>
+                <div class="filter-controls">
+                    <label>Version:</label>
+                    <select id="versionFilter" onchange="filterEmails()">
+                        <option value="all">All</option>
+                        <option value="v2">v2 Only</option>
+                        <option value="v4">v4 Only</option>
+                    </select>
+                    <button class="btn secondary" onclick="loadEmails()">🔄 Refresh</button>
+                </div>
+            </div>
+
+            <div class="content-area" id="contentArea">
+                <div class="empty-state">
+                    <h2>Welcome to Email Archive</h2>
+                    <p>Select an email from the sidebar to view its content</p>
+                    <p style="font-size: 13px; color: #999; margin-top: 20px;">
+                        Browse through your daily news updates organized by date
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let allEmails = [];
+        let currentEmail = null;
+        let currentFilter = 'all';
+
+        async function loadEmails() {
+            const nav = document.getElementById('sidebarNav');
+            nav.innerHTML = '<div class="loading">Loading...</div>';
+
+            try {
+                // Get list of email HTML files
+                const response = await fetch('../../Published Updates/email-html/');
+                const text = await response.text();
+
+                // Parse HTML to find email files
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(text, 'text/html');
+                const links = Array.from(doc.querySelectorAll('a'))
+                    .map(a => a.getAttribute('href'))
+                    .filter(href => href && (href.includes('-email.html') || href.includes('-v4-email.html')));
+
+                if (links.length === 0) {
+                    nav.innerHTML = '<div class="empty-state" style="padding: 40px 20px;"><p style="font-size: 13px; color: #999;">No emails found</p></div>';
+                    return;
+                }
+
+                // Parse email metadata
+                allEmails = links.map(link => {
+                    const filename = link.split('/').pop();
+                    const isV4 = filename.includes('-v4-email.html');
+                    const dateStr = filename.replace('-v4-email.html', '').replace('-email.html', '');
+
+                    return {
+                        filename: filename,
+                        path: `../../Published Updates/email-html/${filename}`,
+                        date: dateStr,
+                        version: isV4 ? 'v4' : 'v2',
+                        displayDate: formatDate(dateStr)
+                    };
+                }).sort((a, b) => b.date.localeCompare(a.date)); // Most recent first
+
+                renderEmailList();
+
+            } catch (error) {
+                console.error('Error loading emails:', error);
+                nav.innerHTML = '<div class="error-message">Failed to load emails</div>';
+            }
+        }
+
+        function formatDate(dateStr) {
+            try {
+                const [year, month, day] = dateStr.split('-');
+                const date = new Date(year, month - 1, day);
+                const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
+                return date.toLocaleDateString('en-US', options);
+            } catch {
+                return dateStr;
+            }
+        }
+
+        function filterEmails() {
+            currentFilter = document.getElementById('versionFilter').value;
+            renderEmailList();
+        }
+
+        function renderEmailList() {
+            const nav = document.getElementById('sidebarNav');
+
+            // Filter emails
+            const filtered = currentFilter === 'all'
+                ? allEmails
+                : allEmails.filter(e => e.version === currentFilter);
+
+            if (filtered.length === 0) {
+                nav.innerHTML = '<div class="empty-state" style="padding: 40px 20px;"><p style="font-size: 13px; color: #999;">No emails match the filter</p></div>';
+                return;
+            }
+
+            // Group by month
+            const grouped = {};
+            filtered.forEach(email => {
+                const [year, month] = email.date.split('-');
+                const key = `${year}-${month}`;
+                if (!grouped[key]) {
+                    grouped[key] = [];
+                }
+                grouped[key].push(email);
+            });
+
+            // Render grouped list
+            let html = '';
+            Object.keys(grouped).sort().reverse().forEach(monthKey => {
+                const [year, month] = monthKey.split('-');
+                const monthName = new Date(year, month - 1).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+                html += `<div class="nav-section">`;
+                html += `<div class="nav-section-title">${monthName}</div>`;
+
+                grouped[monthKey].forEach(email => {
+                    const isActive = currentEmail && currentEmail.filename === email.filename;
+                    html += `
+                        <div class="nav-item ${isActive ? 'active' : ''}" onclick="viewEmail('${email.filename}')">
+                            <div class="nav-item-date">${email.displayDate}</div>
+                            <div class="nav-item-badge ${email.version}">${email.version}</div>
+                        </div>
+                    `;
+                });
+
+                html += `</div>`;
+            });
+
+            nav.innerHTML = html;
+        }
+
+        function viewEmail(filename) {
+            const email = allEmails.find(e => e.filename === filename);
+            if (!email) return;
+
+            currentEmail = email;
+
+            // Update active state in sidebar
+            renderEmailList();
+
+            // Update main title
+            document.getElementById('mainTitle').textContent = email.displayDate;
+
+            // Load email content
+            const contentArea = document.getElementById('contentArea');
+            contentArea.innerHTML = `
+                <div class="email-viewer">
+                    <div class="email-viewer-header">
+                        <div class="email-viewer-title">${email.displayDate}</div>
+                        <div class="email-viewer-meta">
+                            <span class="version-badge ${email.version}">${email.version}</span>
+                            <span>${email.date}</span>
+                            <a href="${email.path}" target="_blank" style="color: #0d9488; text-decoration: none; font-weight: 500;">Open in New Tab ↗</a>
+                        </div>
+                    </div>
+                    <div class="email-content">
+                        <iframe src="${email.path}" onload="resizeIframe(this)"></iframe>
+                    </div>
+                </div>
+            `;
+        }
+
+        function resizeIframe(iframe) {
+            try {
+                iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
+            } catch (e) {
+                // Cross-origin restriction, use default height
+                iframe.style.height = '800px';
+            }
+        }
+
+        // Load emails on page load
+        window.addEventListener('DOMContentLoaded', loadEmails);
+    </script>
+</body>
+</html>

@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feed Configuration - Daily News Agent</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #ffffff;
+            color: #000000;
+            line-height: 1.6;
+            padding: 40px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .nav-links {
+            margin-top: 16px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .nav-link {
+            color: #000;
+            text-decoration: none;
+            font-size: 13px;
+            padding: 6px 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+        }
+
+        .nav-link:hover {
+            background: #f5f5f5;
+        }
+
+        .auth-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+        }
+
+        .auth-section.collapsed {
+            padding: 12px 20px;
+        }
+
+        .auth-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .auth-title {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .auth-status {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .auth-status.authenticated {
+            color: #2e7d32;
+        }
+
+        .auth-content {
+            margin-top: 16px;
+        }
+
+        .auth-input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 13px;
+            font-family: monospace;
+            margin-bottom: 12px;
+        }
+
+        .auth-hint {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 12px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            background: #000;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #333;
+        }
+
+        .btn.secondary {
+            background: white;
+            color: #000;
+            border: 1px solid #e0e0e0;
+        }
+
+        .btn.secondary:hover {
+            background: #f5f5f5;
+        }
+
+        .stats {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 30px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .stat-value {
+            font-weight: 600;
+            color: #000;
+            margin-right: 4px;
+        }
+
+        .category-section {
+            margin-bottom: 32px;
+        }
+
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0 8px 0;
+            border-bottom: 2px solid #000;
+            margin-bottom: 12px;
+        }
+
+        .category-info {
+            flex: 1;
+        }
+
+        .category-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .category-meta {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .category-content {
+            display: block;
+        }
+
+        .feed-list {
+            margin-bottom: 20px;
+            display: table;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .feed-item {
+            display: table-row;
+        }
+
+        .feed-item:hover > div {
+            background: #fafafa;
+        }
+
+        .feed-item.disabled > div {
+            opacity: 0.5;
+        }
+
+        .feed-item > div {
+            display: table-cell;
+            padding: 5px 8px;
+            border-bottom: 1px solid #e8e8e8;
+            vertical-align: middle;
+            font-size: 13px;
+        }
+
+        .feed-controls {
+            width: 50px;
+        }
+
+        .feed-controls input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .status-dot.success { background: #2e7d32; }
+        .status-dot.empty { background: #f57c00; }
+        .status-dot.error { background: #c62828; }
+        .status-dot.unknown { background: #9e9e9e; }
+
+        .feed-name-col {
+            width: 30%;
+        }
+
+        .feed-name-col a {
+            color: #000;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .feed-name-col a:hover {
+            text-decoration: underline;
+        }
+
+        .feed-url-col {
+            width: 35%;
+            color: #999;
+            font-size: 11px;
+            font-family: monospace;
+        }
+
+        .feed-badges-col {
+            width: 20%;
+        }
+
+        .badge {
+            font-size: 10px;
+            padding: 2px 5px;
+            border: 1px solid #e0e0e0;
+            border-radius: 3px;
+            color: #666;
+            display: inline-block;
+            margin-right: 4px;
+        }
+
+        .feed-actions-col {
+            width: 80px;
+            text-align: right;
+        }
+
+        .feed-actions-col .btn {
+            padding: 3px 8px;
+            font-size: 11px;
+        }
+
+        .feed-actions-col .btn.delete {
+            background: #c62828;
+            color: white;
+            border-color: #c62828;
+        }
+
+        .feed-actions-col .btn.delete:hover {
+            background: #b71c1c;
+        }
+
+        .suggestions {
+            padding: 20px;
+            background: #fafafa;
+            border-radius: 4px;
+        }
+
+        .suggestions-header {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .suggestion-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: start;
+            gap: 12px;
+        }
+
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+
+        .suggestion-main {
+            flex: 1;
+        }
+
+        .suggestion-name {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .suggestion-desc {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        .suggestion-meta {
+            font-size: 11px;
+            color: #999;
+        }
+
+        .suggestion-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .save-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #000;
+            color: white;
+            padding: 16px 24px;
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+
+        .save-bar.visible {
+            display: flex;
+        }
+
+        .save-bar .btn {
+            background: white;
+            color: #000;
+        }
+
+        .save-bar .btn:hover {
+            background: #f5f5f5;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 16px;
+            }
+
+            .feed-item {
+                flex-wrap: wrap;
+            }
+
+            .feed-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Feed Configuration</h1>
+        <p>View and manage RSS feed sources</p>
+        <div class="nav-links">
+            <a href="../../index.html" class="nav-link">Home</a>
+            <a href="email-archive.html" class="nav-link">Email Archive</a>
+            <a href="feed-status.html" class="nav-link">Feed Status</a>
+        </div>
+    </div>
+
+    <!-- Auth Section (Optional) -->
+    <div class="auth-section collapsed" id="authSection">
+        <div class="auth-header" onclick="toggleAuth()">
+            <div class="auth-title">GitHub Authentication</div>
+            <div class="auth-status" id="authStatus">Read-only mode</div>
+        </div>
+        <div class="auth-content hidden" id="authContent">
+            <input type="password" class="auth-input" id="githubToken" placeholder="Enter GitHub Personal Access Token">
+            <div class="auth-hint">Required for editing. <a href="https://github.com/settings/tokens" target="_blank">Get token →</a></div>
+            <button class="btn" onclick="authenticate()">Enable Editing</button>
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <div style="margin-bottom: 24px;">
+        <!-- Search & Filter -->
+        <div style="display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap;">
+            <input type="text" id="searchInput" placeholder="Search feeds by name or URL..."
+                style="flex: 1; min-width: 250px; padding: 8px 12px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 14px;"
+                oninput="applyFilters()">
+            <select id="statusFilter" onchange="applyFilters()"
+                style="padding: 8px 12px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 14px; cursor: pointer;">
+                <option value="all">All Feeds</option>
+                <option value="enabled">Enabled Only</option>
+                <option value="disabled">Disabled Only</option>
+                <option value="success">Working Feeds</option>
+                <option value="error">Error Feeds</option>
+                <option value="empty">Empty Feeds</option>
+            </select>
+        </div>
+
+        <!-- Bulk Actions -->
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button class="btn secondary" onclick="bulkEnableAll()">Enable All</button>
+            <button class="btn secondary" onclick="bulkDisableAll()">Disable All</button>
+            <button class="btn secondary" onclick="bulkDisableEmpty()">Disable Empty Feeds</button>
+            <button class="btn secondary" onclick="bulkDisableErrors()">Disable Error Feeds</button>
+        </div>
+    </div>
+
+    <!-- Stats & Legend -->
+    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 30px; flex-wrap: wrap; gap: 20px;">
+        <div class="stats" id="stats">
+            <div><span class="stat-value">0</span> categories</div>
+            <div><span class="stat-value">0</span> feeds</div>
+            <div class="loading">Loading...</div>
+        </div>
+
+        <!-- Status Legend -->
+        <div style="display: flex; gap: 16px; font-size: 12px; color: #666;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+                <span class="status-dot success"></span>
+                <span>Working</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 6px;">
+                <span class="status-dot empty"></span>
+                <span>Empty</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 6px;">
+                <span class="status-dot error"></span>
+                <span>Error</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 6px;">
+                <span class="status-dot unknown"></span>
+                <span>Unknown</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categories Container -->
+    <div id="categoriesContainer">
+        <div class="loading">Loading configuration...</div>
+    </div>
+
+    <!-- Save Bar (appears when changes made) -->
+    <div class="save-bar" id="saveBar">
+        <span id="saveMessage">You have unsaved changes</span>
+        <div>
+            <button class="btn secondary" onclick="discardChanges()">Discard</button>
+            <button class="btn" onclick="saveChanges()">Save Changes</button>
+        </div>
+    </div>
+
+    <script>
+        let configData = null;
+        let feedStatus = {};
+        let feedSuggestions = {};
+        let isAuthenticated = false;
+        let hasChanges = false;
+        let currentSearchTerm = '';
+        let currentStatusFilter = 'all';
+
+        async function init() {
+            try {
+                // Load all data
+                await Promise.all([
+                    loadConfig(),
+                    loadFeedStatus(),
+                    loadFeedSuggestions()
+                ]);
+
+                // Check for saved token
+                const savedToken = localStorage.getItem('github_token');
+                if (savedToken) {
+                    document.getElementById('githubToken').value = savedToken;
+                    isAuthenticated = true;
+                    updateAuthUI();
+                }
+
+                renderCategories();
+                updateStats();
+            } catch (error) {
+                console.error('Error loading:', error);
+                document.getElementById('categoriesContainer').innerHTML = `
+                    <div style="padding: 20px; color: #c62828;">
+                        Error loading configuration: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        function getBasePath() {
+            // Detect if running locally or on server
+            if (window.location.protocol === 'file:') {
+                // Local file - go up to repo root
+                return '../..';
+            }
+            // Server (Cloudflare) - relative path works
+            return '../..';
+        }
+
+        async function loadConfig() {
+            const basePath = getBasePath();
+            const response = await fetch(`${basePath}/config/sources-v4.yaml`);
+            if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            const yamlText = await response.text();
+            configData = parseYAML(yamlText);
+        }
+
+        async function loadFeedStatus() {
+            try {
+                const basePath = getBasePath();
+                const response = await fetch(`${basePath}/config/feed-status.json`);
+                if (response.ok) {
+                    const data = await response.json();
+                    feedStatus = data.feeds || {};
+                }
+            } catch (e) {
+                console.log('Could not load feed status:', e);
+            }
+        }
+
+        async function loadFeedSuggestions() {
+            try {
+                const basePath = getBasePath();
+                const response = await fetch(`${basePath}/config/feed-suggestions.json`);
+                if (response.ok) {
+                    const data = await response.json();
+                    feedSuggestions = data.suggestions || {};
+                }
+            } catch (e) {
+                console.log('Could not load feed suggestions:', e);
+            }
+        }
+
+        function parseYAML(yamlText) {
+            const categories = {};
+            const lines = yamlText.split('\n');
+            let currentCategory = null;
+            let currentSource = null;
+            let inSources = false;
+
+            for (let line of lines) {
+                const trimmed = line.trim();
+                if (trimmed.startsWith('#') || !trimmed) continue;
+
+                if (line.match(/^  [a-z_]+:$/)) {
+                    const categoryName = line.trim().replace(':', '');
+                    currentCategory = categoryName;
+                    categories[categoryName] = {
+                        name: categoryName,
+                        priority: '',
+                        word_target: '',
+                        sources: []
+                    };
+                    inSources = false;
+                    continue;
+                }
+
+                if (!currentCategory) continue;
+
+                if (line.match(/^    priority:/)) {
+                    categories[currentCategory].priority = trimmed.split(':')[1].trim();
+                }
+                if (line.match(/^    word_target:/)) {
+                    categories[currentCategory].word_target = trimmed.split(':')[1].trim();
+                }
+                if (line.match(/^    sources:$/)) {
+                    inSources = true;
+                    continue;
+                }
+
+                if (inSources) {
+                    if (line.match(/^      - name:/)) {
+                        currentSource = {
+                            name: trimmed.split('name:')[1].trim().replace(/"/g, ''),
+                            url: '',
+                            type: '',
+                            priority: '',
+                            enabled: true
+                        };
+                        categories[currentCategory].sources.push(currentSource);
+                    } else if (currentSource) {
+                        if (line.match(/^        url:/)) {
+                            currentSource.url = trimmed.split('url:')[1].trim().replace(/"/g, '');
+                        }
+                        if (line.match(/^        type:/)) {
+                            currentSource.type = trimmed.split('type:')[1].trim();
+                        }
+                        if (line.match(/^        priority:/)) {
+                            currentSource.priority = trimmed.split('priority:')[1].trim();
+                        }
+                        if (line.match(/^        enabled:/)) {
+                            currentSource.enabled = trimmed.split('enabled:')[1].trim() === 'true';
+                        }
+                    }
+                }
+            }
+
+            return categories;
+        }
+
+        function updateStats() {
+            const totalCategories = Object.keys(configData).length;
+            let totalFeeds = 0;
+            Object.values(configData).forEach(cat => {
+                totalFeeds += cat.sources.length;
+            });
+
+            document.getElementById('stats').innerHTML = `
+                <div><span class="stat-value">${totalCategories}</span> categories</div>
+                <div><span class="stat-value">${totalFeeds}</span> feeds</div>
+            `;
+        }
+
+        function renderCategories() {
+            const html = Object.values(configData).map((cat, index) => {
+                const suggestions = feedSuggestions[cat.name] || [];
+
+                return `
+                    <div class="category-section">
+                        <div class="category-header">
+                            <div class="category-info">
+                                <div class="category-name">${cat.name}</div>
+                                <div class="category-meta">
+                                    ${cat.sources.length} feeds
+                                    ${cat.word_target ? ' • ' + cat.word_target + ' words' : ''}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="category-content">
+                            <div class="feed-list">
+                                ${renderFeeds(cat)}
+                            </div>
+                            ${suggestions.length > 0 ? renderSuggestions(cat.name, suggestions) : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('categoriesContainer').innerHTML = html;
+        }
+
+        function renderFeeds(category) {
+            return category.sources.map((feed, index) => {
+                // Apply filters
+                if (!shouldShowFeed(feed, category.name)) {
+                    return '';
+                }
+
+                const status = getFeedStatus(feed.name);
+                const isDisabled = feed.enabled === false;
+                const htmlUrl = getHtmlUrl(feed);
+
+                return `
+                    <div class="feed-item ${isDisabled ? 'disabled' : ''}">
+                        <div class="feed-controls">
+                            <input type="checkbox"
+                                ${feed.enabled !== false ? 'checked' : ''}
+                                onchange="toggleFeed('${category.name}', ${index}, this.checked)">
+                            <span class="status-dot ${status.class}" title="${status.tooltip}"></span>
+                        </div>
+                        <div class="feed-name-col">
+                            <a href="${htmlUrl}" target="_blank">${feed.name}</a>
+                        </div>
+                        <div class="feed-url-col">${feed.url}</div>
+                        <div class="feed-badges-col">
+                            ${feed.type ? `<span class="badge">${feed.type}</span>` : ''}
+                            ${feed.priority ? `<span class="badge">${feed.priority}</span>` : ''}
+                        </div>
+                        <div class="feed-actions-col">
+                            <a href="${feed.url}" target="_blank" class="btn secondary">RSS</a>
+                            ${isAuthenticated && isDisabled ? `
+                                <button class="btn delete" onclick="deleteFeed('${category.name}', ${index})">Delete</button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderSuggestions(categoryName, suggestions) {
+            return `
+                <div class="suggestions">
+                    <div class="suggestions-header">Suggested Feeds (${suggestions.length})</div>
+                    ${suggestions.map(sug => `
+                        <div class="suggestion-item">
+                            <div class="suggestion-main">
+                                <div class="suggestion-name">${sug.name}</div>
+                                <div class="suggestion-desc">${sug.description || ''}</div>
+                                <div class="suggestion-meta">
+                                    ${sug.estimated_posts_per_week || ''} • ${sug.confidence || 'unknown'} quality
+                                </div>
+                            </div>
+                            <div class="suggestion-actions">
+                                ${sug.preview_link ? `<a href="${sug.preview_link}" target="_blank" class="btn secondary">Preview</a>` : ''}
+                                <a href="${sug.url}" target="_blank" class="btn secondary">Test</a>
+                                ${isAuthenticated ? `<button class="btn" onclick="addSuggestion('${categoryName}', ${JSON.stringify(sug).replace(/"/g, '&quot;')})">Add</button>` : ''}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function getFeedStatus(feedName) {
+            const status = feedStatus[feedName];
+            if (!status) return { class: 'unknown', tooltip: 'Unknown status' };
+
+            const map = {
+                'success': { class: 'success', tooltip: status.tooltip || 'Working' },
+                'empty': { class: 'empty', tooltip: status.tooltip || 'Empty' },
+                'error': { class: 'error', tooltip: status.tooltip || 'Error' }
+            };
+
+            return map[status.status] || { class: 'unknown', tooltip: 'Unknown' };
+        }
+
+        function getHtmlUrl(feed) {
+            // Convert RSS feed URL to HTML page URL
+            if (feed.url.includes('reddit.com')) {
+                // Reddit: Remove .rss from the end
+                return feed.url.replace('/.rss', '/');
+            } else if (feed.url.includes('/feed')) {
+                // Most blogs: /feed or /feed.xml -> /
+                return feed.url.replace(/\/feed(\.xml)?$/, '/');
+            } else if (feed.url.includes('/rss')) {
+                // RSS feeds: /rss or /rss.xml -> /
+                return feed.url.replace(/\/rss(\.xml)?$/, '/');
+            } else if (feed.url.includes('.xml')) {
+                // Generic XML: Remove .xml extension
+                return feed.url.replace(/\.xml$/, '/');
+            } else if (feed.url.includes('atom.xml')) {
+                // Atom feeds
+                return feed.url.replace(/atom\.xml$/, '');
+            }
+            // Default: try to get base domain
+            try {
+                const url = new URL(feed.url);
+                return `${url.protocol}//${url.hostname}`;
+            } catch {
+                return feed.url;
+            }
+        }
+
+        function toggleAuth() {
+            const content = document.getElementById('authContent');
+            const section = document.getElementById('authSection');
+            content.classList.toggle('hidden');
+            section.classList.toggle('collapsed');
+        }
+
+        function authenticate() {
+            const token = document.getElementById('githubToken').value.trim();
+            if (!token) {
+                alert('Please enter a GitHub token');
+                return;
+            }
+            localStorage.setItem('github_token', token);
+            isAuthenticated = true;
+            updateAuthUI();
+            renderCategories();
+        }
+
+        function updateAuthUI() {
+            const status = document.getElementById('authStatus');
+            if (isAuthenticated) {
+                status.textContent = 'Editing enabled';
+                status.classList.add('authenticated');
+            } else {
+                status.textContent = 'Read-only mode';
+                status.classList.remove('authenticated');
+            }
+        }
+
+        function toggleFeed(categoryName, feedIndex, enabled) {
+            configData[categoryName].sources[feedIndex].enabled = enabled;
+            markChanged();
+            renderCategories();
+        }
+
+        function deleteFeed(categoryName, feedIndex) {
+            if (confirm('Permanently delete this feed?')) {
+                configData[categoryName].sources.splice(feedIndex, 1);
+                markChanged();
+                renderCategories();
+            }
+        }
+
+        function addSuggestion(categoryName, suggestion) {
+            const sugObj = typeof suggestion === 'string' ? JSON.parse(suggestion) : suggestion;
+            configData[categoryName].sources.push({
+                name: sugObj.name,
+                url: sugObj.url,
+                type: sugObj.type || 'rss',
+                priority: sugObj.confidence === 'high' ? 'high' : 'medium',
+                enabled: true
+            });
+            markChanged();
+            renderCategories();
+        }
+
+        function markChanged() {
+            hasChanges = true;
+            document.getElementById('saveBar').classList.add('visible');
+        }
+
+        function discardChanges() {
+            if (confirm('Discard all unsaved changes?')) {
+                location.reload();
+            }
+        }
+
+        async function saveChanges() {
+            const token = localStorage.getItem('github_token');
+            if (!token) {
+                alert('Please authenticate with GitHub first to save changes.');
+                return;
+            }
+
+            try {
+                // Convert configData back to YAML
+                const yamlContent = generateYAML(configData);
+
+                // Get current file SHA (required for GitHub API updates)
+                const basePath = getBasePath();
+                const owner = 'jonsims'; // Update with your GitHub username
+                const repo = 'daily-news-agent'; // Update with your repo name
+                const path = 'config/sources-v4.yaml';
+                const branch = 'v4-development';
+
+                // Get current file to get SHA
+                const getResponse = await fetch(
+                    `https://api.github.com/repos/${owner}/${repo}/contents/${path}?ref=${branch}`,
+                    {
+                        headers: {
+                            'Authorization': `token ${token}`,
+                            'Accept': 'application/vnd.github.v3+json'
+                        }
+                    }
+                );
+
+                if (!getResponse.ok) {
+                    throw new Error(`Failed to get current file: ${getResponse.statusText}`);
+                }
+
+                const fileData = await getResponse.json();
+                const sha = fileData.sha;
+
+                // Update file
+                const updateResponse = await fetch(
+                    `https://api.github.com/repos/${owner}/${repo}/contents/${path}`,
+                    {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': `token ${token}`,
+                            'Accept': 'application/vnd.github.v3+json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            message: `Update feed configuration via web UI\n\n🤖 Generated with Config Viewer`,
+                            content: btoa(yamlContent), // Base64 encode
+                            sha: sha,
+                            branch: branch
+                        })
+                    }
+                );
+
+                if (!updateResponse.ok) {
+                    throw new Error(`Failed to save: ${updateResponse.statusText}`);
+                }
+
+                // Success!
+                hasChanges = false;
+                document.getElementById('saveBar').classList.remove('visible');
+                alert('✅ Changes saved successfully to GitHub!');
+
+            } catch (error) {
+                console.error('Save error:', error);
+                alert(`❌ Failed to save changes: ${error.message}`);
+            }
+        }
+
+        function generateYAML(data) {
+            // Convert configData back to YAML format
+            let yaml = '# Updated Configuration with NYTimes feeds and new structure\ncategories:\n';
+
+            for (const [categoryName, category] of Object.entries(data)) {
+                yaml += `  ${categoryName}:\n`;
+                yaml += `    priority: ${category.priority}\n`;
+                yaml += `    word_target: ${category.word_target}\n`;
+                yaml += `    sources:\n`;
+
+                for (const source of category.sources) {
+                    yaml += `      - name: "${source.name}"\n`;
+                    yaml += `        url: ${source.url}\n`;
+                    if (source.type) yaml += `        type: ${source.type}\n`;
+                    if (source.priority) yaml += `        priority: ${source.priority}\n`;
+                    if (source.enabled === false) yaml += `        enabled: false\n`;
+                }
+                yaml += '\n';
+            }
+
+            return yaml;
+        }
+
+        function applyFilters() {
+            currentSearchTerm = document.getElementById('searchInput').value.toLowerCase();
+            currentStatusFilter = document.getElementById('statusFilter').value;
+            renderCategories();
+        }
+
+        function shouldShowFeed(feed, categoryName) {
+            // Search filter
+            if (currentSearchTerm) {
+                const matchesName = feed.name.toLowerCase().includes(currentSearchTerm);
+                const matchesUrl = feed.url.toLowerCase().includes(currentSearchTerm);
+                if (!matchesName && !matchesUrl) return false;
+            }
+
+            // Status filter
+            if (currentStatusFilter !== 'all') {
+                if (currentStatusFilter === 'enabled' && feed.enabled === false) return false;
+                if (currentStatusFilter === 'disabled' && feed.enabled !== false) return false;
+
+                const status = getFeedStatus(feed.name);
+                if (currentStatusFilter === 'success' && status.class !== 'success') return false;
+                if (currentStatusFilter === 'error' && status.class !== 'error') return false;
+                if (currentStatusFilter === 'empty' && status.class !== 'empty') return false;
+            }
+
+            return true;
+        }
+
+        function bulkEnableAll() {
+            if (!confirm('Enable all feeds across all categories?')) return;
+
+            for (const category of Object.values(configData)) {
+                for (const feed of category.sources) {
+                    feed.enabled = true;
+                }
+            }
+            markChanged();
+            renderCategories();
+            alert('✅ All feeds enabled');
+        }
+
+        function bulkDisableAll() {
+            if (!confirm('Disable all feeds across all categories? This will stop them from being processed.')) return;
+
+            for (const category of Object.values(configData)) {
+                for (const feed of category.sources) {
+                    feed.enabled = false;
+                }
+            }
+            markChanged();
+            renderCategories();
+            alert('✅ All feeds disabled');
+        }
+
+        function bulkDisableEmpty() {
+            let count = 0;
+            for (const category of Object.values(configData)) {
+                for (const feed of category.sources) {
+                    const status = getFeedStatus(feed.name);
+                    if (status.class === 'empty') {
+                        feed.enabled = false;
+                        count++;
+                    }
+                }
+            }
+
+            if (count === 0) {
+                alert('No empty feeds found.');
+                return;
+            }
+
+            markChanged();
+            renderCategories();
+            alert(`✅ Disabled ${count} empty feed${count !== 1 ? 's' : ''}`);
+        }
+
+        function bulkDisableErrors() {
+            let count = 0;
+            for (const category of Object.values(configData)) {
+                for (const feed of category.sources) {
+                    const status = getFeedStatus(feed.name);
+                    if (status.class === 'error') {
+                        feed.enabled = false;
+                        count++;
+                    }
+                }
+            }
+
+            if (count === 0) {
+                alert('No error feeds found.');
+                return;
+            }
+
+            markChanged();
+            renderCategories();
+            alert(`✅ Disabled ${count} feed${count !== 1 ? 's' : ''} with errors`);
+        }
+
+        // Initialize
+        init();
+    </script>
+</body>
+</html>

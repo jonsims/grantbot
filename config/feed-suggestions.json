@@ -1,0 +1,269 @@
+{
+  "generated_at": "2025-10-10T21:37:05.756082",
+  "total_categories": 6,
+  "total_suggestions": 25,
+  "suggestions": {
+    "ai": [
+      {
+        "name": "AI21 Labs Blog",
+        "url": "https://www.ai21.com/blog/rss.xml",
+        "type": "rss",
+        "description": "Jurassic AI model updates",
+        "estimated_posts_per_week": "~5-15 posts",
+        "sample_headline": "High-quality curated feed",
+        "preview_link": "https://www.ai21.com/blog",
+        "confidence": "high"
+      },
+      {
+        "name": "r/ArtificialIntelligence",
+        "url": "https://www.reddit.com/r/ArtificialIntelligence/.rss",
+        "type": "reddit",
+        "description": "Reddit community for ai",
+        "estimated_posts_per_week": "~15-30 posts",
+        "sample_headline": "Click preview to see recent posts",
+        "preview_link": "https://www.reddit.com/r/ArtificialIntelligence",
+        "confidence": "high"
+      }
+    ],
+    "academic_research": [
+      {
+        "name": "Nature AI",
+        "url": "https://www.nature.com/subjects/machine-learning.rss",
+        "type": "rss",
+        "description": "ML research publications",
+        "estimated_posts_per_week": "~5-15 posts",
+        "sample_headline": "High-quality curated feed",
+        "preview_link": "https://www.nature.com/subjects/machine-learning",
+        "confidence": "high"
+      },
+      {
+        "name": "Science Robotics",
+        "url": "https://www.science.org/rss/robotics.xml",
+        "type": "rss",
+        "description": "Robotics research",
+        "estimated_posts_per_week": "~5-15 posts",
+        "sample_headline": "High-quality curated feed",
+        "preview_link": "https://www.science.org/topic/robotics",
+        "confidence": "high"
+      },
+      {
+        "name": "arXiv CS.AI",
+        "url": "https://export.arxiv.org/rss/cs.AI",
+        "type": "rss",
+        "description": "AI preprints from arXiv",
+        "estimated_posts_per_week": "~5-15 posts",
+        "sample_headline": "High-quality curated feed",
+        "preview_link": "https://arxiv.org/list/cs.AI/recent",
+        "confidence": "high"
+      },
+      {
+        "name": "r/science",
+        "url": "https://www.reddit.com/r/science/.rss",
+        "type": "reddit",
+        "description": "Reddit community for academic research",
+        "estimated_posts_per_week": "~15-30 posts",
+        "sample_headline": "Click preview to see recent posts",
+        "preview_link": "https://www.reddit.com/r/science",
+        "confidence": "high"
+      },
+      {
+        "name": "r/AskScience",
+        "url": "https://www.reddit.com/r/AskScience/.rss",
+        "type": "reddit",
+        "description": "Reddit community for academic research",
+        "estimated_posts_per_week": "~15-30 posts",
+        "sample_headline": "Click preview to see recent posts",
+        "preview_link": "https://www.reddit.com/r/AskScience",
+        "confidence": "high"
+      }
+    ],
+    "market_business": [
+      {
+        "name": "Bloomberg Markets",
+        "url": "https://www.bloomberg.com/feed/podcast/bloomberg-markets.xml",
+        "type": "rss",
+        "description": "Financial markets analysis",
+        "estimated_posts_per_week": "~5-15 posts",
+        "sample_headline": "High-quality curated feed",
+        "preview_link": "https://www.bloomberg.com/podcasts/bloomberg-markets",
+        "confidence": "high"
+      },
+      {
+        "name": "Financial Times Tech",
+        "url": "https://www.ft.com/technology?format=rss",
+        "type": "rss",
+        "description": "Business technology coverage",
+        "estimated_posts_per_week": "~5-15 posts",
+        "sample_headline": "High-quality curated feed",
+        "preview_link": "https://www.ft.com/technology",
+        "confidence": "high"
+      },
+      {
+        "name": "WSJ Tech",
+        "url": "https://feeds.a.dj.com/rss/RSSWSJD.xml",
+        "type": "rss",
+        "description": "Wall Street Journal tech news",
+        "estimated_posts_per_week": "~5-15 posts",
+        "sample_headline": "High-quality curated feed",
+        "preview_link": "https://www.wsj.com/tech",
+        "confidence": "high"
+      },
+      {
+        "name": "r/stocks",
+        "url": "https://www.reddit.com/r/stocks/.rss",
+        "type": "reddit",
+        "description": "Reddit community for market business",
+        "estimated_posts_per_week": "~15-30 posts",
+        "sample_headline": "Click preview to see recent posts",
+        "preview_link": "https://www.reddit.com/r/stocks",
+        "confidence": "high"
+      },
+      {
+        "name": "r/investing",
+        "url": "https://www.reddit.com/r/investing/.rss",
+        "type": "reddit",
+        "description": "Reddit community for market business",
+        "estimated_posts_per_week": "~15-30 posts",
+        "sample_headline": "Click preview to see recent posts",
+        "preview_link": "https://www.reddit.com/r/investing",
+        "confidence": "high"
+      }
+    ],
+    "tech_headlines": [
+      {
+        "name": "r/technology",
+        "url": "https://www.reddit.com/r/technology/.rss",
+        "type": "reddit",
+        "description": "Reddit community for tech headlines",
+        "estimated_posts_per_week": "~15-30 posts",
+        "sample_headline": "Click preview to see recent posts",
+        "preview_link": "https://www.reddit.com/r/technology",
+        "confidence": "high"
+      },
+      {
+        "name": "r/Futurology",
+        "url": "https://www.reddit.com/r/Futurology/.rss",
+        "type": "reddit",
+        "description": "Reddit community for tech headlines",
+        "estimated_posts_per_week": "~15-30 posts",
+        "sample_headline": "Click preview to see recent posts",
+        "preview_link": "https://www.reddit.com/r/Futurology",
+        "confidence": "high"
+      },
+      {
+        "name": "r/gadgets",
+        "url": "https://www.reddit.com/r/gadgets/.rss",
+        "type": "reddit",
+        "description": "Reddit community for tech headlines",
+        "estimated_posts_per_week": "~15-30 posts",
+        "sample_headline": "Click preview to see recent posts",
+        "preview_link": "https://www.reddit.com/r/gadgets",
+        "confidence": "high"
+      }
+    ],
+    "tech_tools": [
+      {
+        "name": "Linear Changelog",
+        "url": "https://linear.app/changelog/rss",
+        "type": "rss",
+        "description": "Project management tool updates",
+        "estimated_posts_per_week": "~5-15 posts",
+        "sample_headline": "High-quality curated feed",
+        "preview_link": "https://linear.app/changelog",
+        "confidence": "high"
+      },
+      {
+        "name": "Notion Blog",
+        "url": "https://www.notion.so/blog/rss",
+        "type": "rss",
+        "description": "Productivity and collaboration tools",
+        "estimated_posts_per_week": "~5-15 posts",
+        "sample_headline": "High-quality curated feed",
+        "preview_link": "https://www.notion.so/blog",
+        "confidence": "high"
+      },
+      {
+        "name": "Figma Blog",
+        "url": "https://www.figma.com/blog/rss/",
+        "type": "rss",
+        "description": "Design and prototyping platform",
+        "estimated_posts_per_week": "~5-15 posts",
+        "sample_headline": "High-quality curated feed",
+        "preview_link": "https://www.figma.com/blog",
+        "confidence": "high"
+      },
+      {
+        "name": "r/SideProject",
+        "url": "https://www.reddit.com/r/SideProject/.rss",
+        "type": "reddit",
+        "description": "Reddit community for tech tools",
+        "estimated_posts_per_week": "~15-30 posts",
+        "sample_headline": "Click preview to see recent posts",
+        "preview_link": "https://www.reddit.com/r/SideProject",
+        "confidence": "high"
+      },
+      {
+        "name": "r/webdev",
+        "url": "https://www.reddit.com/r/webdev/.rss",
+        "type": "reddit",
+        "description": "Reddit community for tech tools",
+        "estimated_posts_per_week": "~15-30 posts",
+        "sample_headline": "Click preview to see recent posts",
+        "preview_link": "https://www.reddit.com/r/webdev",
+        "confidence": "high"
+      }
+    ],
+    "agentic_coding": [
+      {
+        "name": "Windsurf Blog",
+        "url": "https://codeium.com/blog/rss.xml",
+        "type": "rss",
+        "description": "AI coding assistant updates",
+        "estimated_posts_per_week": "~5-15 posts",
+        "sample_headline": "High-quality curated feed",
+        "preview_link": "https://codeium.com/blog",
+        "confidence": "high"
+      },
+      {
+        "name": "GitHub Copilot",
+        "url": "https://github.blog/tag/github-copilot/feed/",
+        "type": "rss",
+        "description": "Copilot product updates",
+        "estimated_posts_per_week": "~5-15 posts",
+        "sample_headline": "High-quality curated feed",
+        "preview_link": "https://github.blog/tag/github-copilot",
+        "confidence": "high"
+      },
+      {
+        "name": "Tabnine Blog",
+        "url": "https://www.tabnine.com/blog/rss.xml",
+        "type": "rss",
+        "description": "AI code completion tool",
+        "estimated_posts_per_week": "~5-15 posts",
+        "sample_headline": "High-quality curated feed",
+        "preview_link": "https://www.tabnine.com/blog",
+        "confidence": "high"
+      },
+      {
+        "name": "r/copilot",
+        "url": "https://www.reddit.com/r/copilot/.rss",
+        "type": "reddit",
+        "description": "Reddit community for agentic coding",
+        "estimated_posts_per_week": "~15-30 posts",
+        "sample_headline": "Click preview to see recent posts",
+        "preview_link": "https://www.reddit.com/r/copilot",
+        "confidence": "high"
+      },
+      {
+        "name": "r/Codeium",
+        "url": "https://www.reddit.com/r/Codeium/.rss",
+        "type": "reddit",
+        "description": "Reddit community for agentic coding",
+        "estimated_posts_per_week": "~15-30 posts",
+        "sample_headline": "Click preview to see recent posts",
+        "preview_link": "https://www.reddit.com/r/Codeium",
+        "confidence": "high"
+      }
+    ]
+  }
+}

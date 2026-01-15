@@ -1,0 +1,218 @@
+# Content Priorities for Daily News Agent v3
+# Focus on discovery, innovation, and intellectual stimulation
+
+content_priorities:
+  # High priority categories (moonshots, research, innovation)
+  high_priority:
+    moonshot_frontiers:
+      weight: 1.0
+      min_articles: 5
+      max_articles: 8
+      sources_priority:
+        - "MIT News"
+        - "Stratechery"
+        - "Knowledge@Wharton"
+        - "MIT Sloan Management Review"
+        - "Platform Strategy"
+        - "Tomasz Tunguz"
+        - "HBS Working Knowledge"
+      focus_keywords:
+        - breakthrough
+        - pioneering
+        - revolutionary
+        - first-of-its-kind
+        - experimental
+        - ambitious
+    
+    ai_future_computing:
+      weight: 0.9
+      min_articles: 5
+      max_articles: 8
+      sources_priority:
+        - "DeepMind Blog"
+        - "OpenAI Blog"
+        - "Hugging Face Blog"
+        - "MIT News - Artificial intelligence"
+        - "ByteByteGo"
+        - "Google AI Blog"
+      exclude_keywords:
+        - "chatgpt tips"
+        - "ai tools list"
+        - "prompt engineering basics"
+    
+    research_discoveries:
+      weight: 0.9
+      min_articles: 5
+      max_articles: 10
+      sources_priority:
+        - "Strategic Management Journal"
+        - "Organization Science"
+        - "Research Policy"
+        - "Academy of Management Review"
+        - "Journal of Business Venturing"
+        - "Administrative Science Quarterly"
+        - "Academy of Management Journal"
+      focus_on:
+        - novel methodologies
+        - counterintuitive findings
+        - interdisciplinary research
+    
+    space_frontier_science:
+      weight: 0.8
+      min_articles: 5
+      max_articles: 8
+      sources_priority:
+        - "ESA News"
+        - "NASA News"
+        - "SpaceNews"
+        - "Universe Today"
+        - "Ars Technica Space"
+      focus_keywords:
+        - discovery
+        - exploration
+        - breakthrough
+        - first observation
+        - unprecedented
+    
+    strategic_thinking:
+      weight: 0.8
+      min_articles: 3
+      max_articles: 6
+      sources_priority:
+        - "Stratechery by Ben Thompson"
+        - "Wait But Why"
+        - "Aeon Essays"
+        - "Wired Backchannel"
+        - "One Useful Thing"
+      article_types:
+        - analysis
+        - essay
+        - longform
+    
+    cool_news:
+      weight: 0.7
+      min_articles: 3
+      max_articles: 5
+      discovery_criteria:
+        - low_mainstream_coverage
+        - high_novelty_score
+        - niche_source_priority
+  
+  # Medium priority (selectively included)
+  medium_priority:
+    innovative_business:
+      weight: 0.5
+      min_articles: 2
+      max_articles: 4
+      filter: "innovative_only"
+      exclude:
+        - earnings reports
+        - stock prices
+        - executive changes
+        - standard acquisitions
+    
+    tech_breakthroughs:
+      weight: 0.4
+      min_articles: 2
+      max_articles: 4
+      filter: "breakthrough_only"
+      exclude:
+        - product reviews
+        - minor updates
+        - price changes
+  
+  # Low priority (rarely included)
+  low_priority:
+    mainstream_news:
+      weight: 0.1
+      min_articles: 0
+      max_articles: 2
+      filter: "major_impact_only"
+    
+    politics:
+      weight: 0.05
+      min_articles: 0
+      max_articles: 1
+      filter: "technology_policy_only"
+
+# Article scoring rubric
+article_scoring:
+  novelty_factors:
+    unknown_source: 3.0
+    unique_angle: 2.5
+    counterintuitive: 2.0
+    niche_topic: 2.0
+    academic_depth: 1.8
+    innovative_approach: 1.5
+  
+  penalty_factors:
+    mainstream_topic: -2.0
+    clickbait_title: -3.0
+    political_content: -2.5
+    celebrity_mention: -3.0
+    sports_related: -5.0
+    entertainment: -5.0
+
+# Article type detection patterns
+article_types:
+  research:
+    indicators:
+      - "study finds"
+      - "research shows"
+      - "paper published"
+      - "journal"
+      - "researchers"
+    
+  analysis:
+    indicators:
+      - "deep dive"
+      - "examination"
+      - "analysis"
+      - "breakdown"
+      - "why"
+      - "how"
+  
+  opinion:
+    indicators:
+      - "opinion"
+      - "i think"
+      - "we should"
+      - "perspective"
+      - "view"
+  
+  news:
+    indicators:
+      - "announces"
+      - "launches"
+      - "reports"
+      - "breaking"
+  
+  essay:
+    indicators:
+      - "essay"
+      - "reflection"
+      - "meditation"
+      - "thoughts on"
+  
+  interview:
+    indicators:
+      - "interview"
+      - "conversation with"
+      - "talks with"
+      - "q&a"
+
+# Personal interest keywords (customize per user)
+personal_interests:
+  boost_keywords:
+    - "cognitive science"
+    - "systems thinking"
+    - "network effects"
+    - "platform strategy"
+    - "moonshot"
+    - "first principles"
+    - "mental models"
+    - "decision science"
+    - "behavioral economics"
+    - "complex systems"
+    - "emergence"
+    - "antifragility"

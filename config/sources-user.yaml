@@ -1,0 +1,279 @@
+# User's RSS Feeds from OPML - Auto-generated configuration
+categories:
+  moonshots:
+    priority: high
+    word_target: 150
+    keywords:
+      - breakthrough
+      - innovation
+      - grand challenge
+      - moonshot
+      - disruptive
+      - quantum
+      - fusion
+      - space exploration
+      - medical breakthrough
+      - artificial intelligence
+      - deepmind
+      - singularity
+    sources:
+      - name: Google AI Blog
+        url: https://googleaiblog.blogspot.com/atom.xml
+        html_url: https://ai.googleblog.com/
+        type: rss
+      - name: Latest Post
+        url: https://deepmind.com/blog/feed/basic/
+        html_url: https://deepmind.com/blog/
+        type: rss
+      - name: MIT News - Artificial intelligence
+        url: https://news.mit.edu/rss/topic/artificial-intelligence2
+        html_url: https://news.mit.edu/topic/mitartificial-intelligence2-rss.xml
+        type: rss
+      - name: One Useful Thing (And Also Some Other Things)
+        url: https://oneusefulthing.substack.com/feed
+        html_url: https://oneusefulthing.substack.com/
+        type: rss
+      - name: OpenAI Blog
+        url: https://blog.openai.com/rss/
+        html_url: https://blog.openai.com/
+        type: rss
+      - name: Singularity HUB
+        url: https://singularityhub.com/feed/
+        html_url: https://singularityhub.com/
+        type: rss
+      - name: Space.com
+        url: https://www.space.com/syn/space.xml
+        html_url: https://www.space.com/
+        type: rss
+      - name: Top News - MIT Technology Review
+        url: https://www.technologyreview.com/topnews.rss
+        html_url: https://www.technologyreview.com/topnews.rss
+        type: rss
+      - name: ScienceDaily Newsletter
+        url: https://sciencedaily.substack.com/feed
+        html_url: https://sciencedaily.substack.com/
+        type: rss
+
+  strategic_management:
+    priority: medium
+    word_target: 100
+    keywords:
+      - strategy
+      - management
+      - business model
+      - competitive advantage
+      - organizational
+      - leadership
+      - transformation
+      - harvard business
+      - mckinsey
+      - wharton
+    sources:
+      - name: HBR.org
+        url: http://feeds.hbr.org/harvardbusiness/
+        html_url: http://hbr.org/
+        type: rss
+      - name: HBS Working Knowledge
+        url: https://hbswk.hbs.edu/rss/rss.xml
+        html_url: https://hbswk.hbs.edu/
+        type: rss
+      - name: Knowledge@Wharton
+        url: http://knowledge.wharton.upenn.edu/knowledgefeed.xml
+        html_url: http://knowledge.wharton.upenn.edu/
+        type: rss
+      - name: McKinsey Insights & Publications
+        url: https://www.mckinsey.com/Insights/rss.aspx
+        html_url: https://www.mckinsey.com/insights
+        type: rss
+      - name: MIT Sloan Management Review
+        url: https://feeds.feedburner.com/mitsmr
+        html_url: https://sloanreview.mit.edu/
+        type: rss
+      - name: Platform Strategy – by Sangeet Paul Choudary
+        url: https://feeds.feedburner.com/platformed
+        html_url: https://platformed.info/
+        type: rss
+      - name: Stratechery by Ben Thompson
+        url: https://stratechery.com/feed/
+        html_url: https://stratechery.com/
+        type: rss
+      - name: strategy+business - All Updates
+        url: https://www.strategy-business.com/all_updates.xml
+        html_url: http://www.strategy-business.com/
+        type: rss
+      - name: Academy of Management Journal
+        url: https://journals.aom.org/action/showFeed?jc=amj&type=etoc&feed=rss
+        html_url: https://journals.aom.org/loi/amj?af=R
+        type: rss
+      - name: Academy of Management Review
+        url: https://journals.aom.org/action/showFeed?jc=amr&type=etoc&feed=rss
+        html_url: https://journals.aom.org/loi/amr?af=R
+        type: rss
+
+  tech_headlines:
+    priority: high
+    word_target: 200
+    keywords:
+      - technology
+      - AI
+      - software
+      - hardware
+      - startup
+      - product launch
+      - apple
+      - google
+      - microsoft
+      - verge
+      - wired
+      - techcrunch
+    sources:
+      - name: AppleInsider
+        url: https://www.appleinsider.com/appleinsider.rss
+        html_url: https://appleinsider.com/
+        type: rss
+      - name: Ars Technica
+        url: https://feeds.arstechnica.com/arstechnica/index/
+        html_url: https://arstechnica.com/
+        type: rss
+      - name: The Verge -  All Posts
+        url: https://www.theverge.com/rss/index.xml
+        html_url: http://www.theverge.com/
+        type: rss
+      - name: The Verge -  Command Line
+        url: https://www.theverge.com/rss/partner/subscriber-only-command-line/rss.xml
+        html_url: https://www.theverge.com/
+        type: rss
+      - name: The Verge -  Installer
+        url: https://www.theverge.com/rss/installer-newsletter/index.xml
+        html_url: https://www.theverge.com/installer-newsletter
+        type: rss
+      - name: Wired News
+        url: https://www.wired.com/news/feeds/rss2/0,2610,,00.xml
+        html_url: https://www.wired.com/
+        type: rss
+      - name: Replit Blog
+        url: https://blog.replit.com/feed.xml
+        html_url: https://blog.replit.com/
+        type: rss
+      - name: ByteByteGo
+        url: https://blog.bytebytego.com/feed
+        html_url: https://blog.bytebytego.com/
+        type: rss
+      - name: Technically
+        url: https://read.technically.dev/feed
+        html_url: https://read.technically.dev/
+        type: rss
+      - name: Obsidian Roundup
+        url: https://obsidianroundup.org/blog/rss/
+        html_url: https://obsidianroundup.org/
+        type: rss
+
+  us_news:
+    priority: medium
+    word_target: 150
+    keywords:
+      - politics
+      - government
+      - policy
+      - congress
+      - senate
+      - election
+      - federal
+      - supreme court
+    exclude_keywords:
+      - Trump
+      - Donald Trump
+      - MAGA
+    sources:
+      # Need to add external US news sources since user's OPML doesn't have many
+      - name: Reuters Top News
+        url: https://feeds.reuters.com/reuters/topNews
+        html_url: https://www.reuters.com/
+        type: rss
+      - name: AP News
+        url: https://feeds.apnews.com/rss/apf-topnews
+        html_url: https://apnews.com/
+        type: rss
+
+  market_business:
+    priority: high
+    word_target: 200
+    keywords:
+      - market
+      - stocks
+      - business
+      - economy
+      - earnings
+      - IPO
+      - merger
+      - funding
+      - investment
+      - startup
+      - venture capital
+    sources:
+      - name: Mad Fientist
+        url: https://www.madfientist.com/feed/
+        html_url: https://www.madfientist.com/
+        type: rss
+      - name: Mr. Money Mustache
+        url: https://feeds.feedburner.com/MrMoneyMustache
+        html_url: https://www.mrmoneymustache.com/
+        type: rss
+      - name: Tomasz Tunguz
+        url: https://tomtunguz.com/index.xml
+        html_url: https://www.tomtunguz.com/index.xml/
+        type: rss
+      - name: Peter Cohan
+        url: https://www.forbes.com/sites/petercohan/feed/
+        html_url: https://www.forbes.com/sites/petercohan/
+        type: rss
+      # Add external business sources
+      - name: WSJ Markets
+        url: https://feeds.a.dj.com/rss/RSSMarketsMain.xml
+        html_url: https://www.wsj.com/news/markets
+        type: rss
+      - name: MarketWatch
+        url: https://feeds.marketwatch.com/marketwatch/marketpulse/
+        html_url: https://www.marketwatch.com/
+        type: rss
+
+  boston_tech:
+    priority: medium
+    word_target: 100
+    keywords:
+      - Boston
+      - Cambridge
+      - MIT
+      - Harvard
+      - startup
+      - biotech
+      - fintech
+      - entrepreneurship
+      - Babson
+      - innovation
+    sources:
+      - name: Global & Multicultural | Living Entrepreneurship Blog
+        url: http://blogs.babson.edu/entrepreneurship/category/global-and-multicultural/feed/
+        html_url: http://blogs.babson.edu/entrepreneurship/category/global-and-multicultural/
+        type: rss
+      - name: News & Announcements Blog | All College Blogs
+        url: http://blogs.babson.edu/news/feed/
+        html_url: http://blogs.babson.edu/news/
+        type: rss
+      # Add external Boston sources
+      - name: Boston Globe Tech
+        url: https://www.bostonglobe.com/business/technology/?outputType=rss
+        html_url: https://www.bostonglobe.com/business/technology/
+        type: rss
+      - name: Boston Business Journal
+        url: https://www.bizjournals.com/boston/feeds/headlines.xml
+        html_url: https://www.bizjournals.com/boston/
+        type: rss
+
+  on_this_day:
+    priority: low
+    word_target: 50
+    sources:
+      - name: Wikipedia On This Day
+        type: api
+        endpoint: https://api.wikimedia.org/feed/v1/wikipedia/en/onthisday/all

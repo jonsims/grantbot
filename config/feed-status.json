@@ -1,0 +1,582 @@
+{
+  "generated_at": "2026-01-13T10:05:56.745650",
+  "total_feeds": 96,
+  "feeds": {
+    "GitHub Blog": {
+      "status": "success",
+      "tooltip": "\u2713 1 article fetched",
+      "article_count": 1,
+      "last_checked": "2026-01-13T10:05:49.003391"
+    },
+    "Cursor Changelog (Unofficial)": {
+      "status": "empty",
+      "tooltip": "\u26a0 No new articles (feed may be empty or inactive)",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:44.453189"
+    },
+    "Supabase Blog": {
+      "status": "empty",
+      "tooltip": "\u26a0 No new articles (feed may be empty or inactive)",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:48.912478"
+    },
+    "One Useful Thing (And Also Some Other Things)": {
+      "status": "error",
+      "tooltip": "\u2717 Error: HTTP 403",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:44.780741"
+    },
+    "Hugging Face Blog": {
+      "status": "empty",
+      "tooltip": "\u26a0 No new articles (feed may be empty or inactive)",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:44.785864"
+    },
+    "OpenAI Blog": {
+      "status": "empty",
+      "tooltip": "\u26a0 No new articles (feed may be empty or inactive)",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:49.805583"
+    },
+    "Vercel Blog": {
+      "status": "empty",
+      "tooltip": "\u26a0 No new articles (feed may be empty or inactive)",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:49.566887"
+    },
+    "DeepMind Blog": {
+      "status": "empty",
+      "tooltip": "\u26a0 No new articles (feed may be empty or inactive)",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:45.011958"
+    },
+    "VentureBeat AI": {
+      "status": "success",
+      "tooltip": "\u2713 4 articles fetched",
+      "article_count": 4,
+      "last_checked": "2026-01-13T10:05:45.240206"
+    },
+    "Journal of Business Venturing": {
+      "status": "success",
+      "tooltip": "\u2713 20 articles fetched",
+      "article_count": 20,
+      "last_checked": "2026-01-13T10:05:45.448487"
+    },
+    "MIT News - Artificial intelligence": {
+      "status": "empty",
+      "tooltip": "\u26a0 No new articles (feed may be empty or inactive)",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:45.479766"
+    },
+    "Strategic Management Journal": {
+      "status": "empty",
+      "tooltip": "\u26a0 No new articles (feed may be empty or inactive)",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:45.595113"
+    },
+    "Replit Blog": {
+      "status": "empty",
+      "tooltip": "\u26a0 No new articles (feed may be empty or inactive)",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:49.773146"
+    },
+    "Administrative Science Quarterly": {
+      "status": "empty",
+      "tooltip": "\u26a0 No new articles (feed may be empty or inactive)",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:45.670258"
+    },
+    "Research Policy": {
+      "status": "success",
+      "tooltip": "\u2713 20 articles fetched",
+      "article_count": 20,
+      "last_checked": "2026-01-13T10:05:45.682826"
+    },
+    "Platform Strategy": {
+      "status": "empty",
+      "tooltip": "\u26a0 No new articles (feed may be empty or inactive)",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:45.741628"
+    },
+    "Organization Science": {
+      "status": "empty",
+      "tooltip": "\u26a0 No new articles (feed may be empty or inactive)",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:46.004947"
+    },
+    "Lovable Blog": {
+      "status": "empty",
+      "tooltip": "\u26a0 No new articles (feed may be empty or inactive)",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:46.040201"
+    },
+    "Google AI Blog": {
+      "status": "error",
+      "tooltip": "\u2717 Error: HTTP 404",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:48.449777"
+    },
+    "Academy of Management Journal": {
+      "status": "empty",
+      "tooltip": "\u26a0 No new articles (feed may be empty or inactive)",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:46.199766"
+    },
+    "ScienceDaily": {
+      "status": "success",
+      "tooltip": "\u2713 17 articles fetched",
+      "article_count": 17,
+      "last_checked": "2026-01-13T10:05:46.204017"
+    },
+    "Phys.org": {
+      "status": "success",
+      "tooltip": "\u2713 20 articles fetched",
+      "article_count": 20,
+      "last_checked": "2026-01-13T10:05:46.323560"
+    },
+    "MIT News Science": {
+      "status": "error",
+      "tooltip": "\u2717 Error: HTTP 404",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:46.329571"
+    },
+    "Academy of Management Review": {
+      "status": "empty",
+      "tooltip": "\u26a0 No new articles (feed may be empty or inactive)",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:46.389120"
+    },
+    "ByteByteGo": {
+      "status": "success",
+      "tooltip": "\u2713 1 article fetched",
+      "article_count": 1,
+      "last_checked": "2026-01-13T10:05:46.444799"
+    },
+    "Nature News": {
+      "status": "success",
+      "tooltip": "\u2713 8 articles fetched",
+      "article_count": 8,
+      "last_checked": "2026-01-13T10:05:46.672803"
+    },
+    "NPR News": {
+      "status": "success",
+      "tooltip": "\u2713 10 articles fetched",
+      "article_count": 10,
+      "last_checked": "2026-01-13T10:05:46.816727"
+    },
+    "Tomasz Tunguz": {
+      "status": "empty",
+      "tooltip": "\u26a0 No new articles (feed may be empty or inactive)",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:46.820275"
+    },
+    "Financial Times": {
+      "status": "success",
+      "tooltip": "\u2713 9 articles fetched",
+      "article_count": 9,
+      "last_checked": "2026-01-13T10:05:46.832665"
+    },
+    "StrictlyVC": {
+      "status": "empty",
+      "tooltip": "\u26a0 No new articles (feed may be empty or inactive)",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:47.108318"
+    },
+    "BBC News US": {
+      "status": "success",
+      "tooltip": "\u2713 16 articles fetched",
+      "article_count": 16,
+      "last_checked": "2026-01-13T10:05:47.118417"
+    },
+    "Science Magazine": {
+      "status": "success",
+      "tooltip": "\u2713 1 article fetched",
+      "article_count": 1,
+      "last_checked": "2026-01-13T10:05:47.176903"
+    },
+    "Quanta Magazine": {
+      "status": "success",
+      "tooltip": "\u2713 1 article fetched",
+      "article_count": 1,
+      "last_checked": "2026-01-13T10:05:47.269281"
+    },
+    "TechCrunch": {
+      "status": "success",
+      "tooltip": "\u2713 20 articles fetched",
+      "article_count": 20,
+      "last_checked": "2026-01-13T10:05:48.956692"
+    },
+    "Crunchbase News": {
+      "status": "empty",
+      "tooltip": "\u26a0 No new articles (feed may be empty or inactive)",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:47.453722"
+    },
+    "Ars Technica": {
+      "status": "success",
+      "tooltip": "\u2713 20 articles fetched",
+      "article_count": 20,
+      "last_checked": "2026-01-13T10:05:47.531877"
+    },
+    "New Scientist": {
+      "status": "success",
+      "tooltip": "\u2713 6 articles fetched",
+      "article_count": 6,
+      "last_checked": "2026-01-13T10:05:47.591755"
+    },
+    "Daring Fireball": {
+      "status": "success",
+      "tooltip": "\u2713 10 articles fetched",
+      "article_count": 10,
+      "last_checked": "2026-01-13T10:05:47.683887"
+    },
+    "Ars Technica Space": {
+      "status": "success",
+      "tooltip": "\u2713 4 articles fetched",
+      "article_count": 4,
+      "last_checked": "2026-01-13T10:05:47.816650"
+    },
+    "TechRadar": {
+      "status": "success",
+      "tooltip": "\u2713 20 articles fetched",
+      "article_count": 20,
+      "last_checked": "2026-01-13T10:05:47.987467"
+    },
+    "Popular Science": {
+      "status": "success",
+      "tooltip": "\u2713 12 articles fetched",
+      "article_count": 12,
+      "last_checked": "2026-01-13T10:05:48.100265"
+    },
+    "NYTimes Space": {
+      "status": "empty",
+      "tooltip": "\u26a0 No new articles (feed may be empty or inactive)",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:48.128490"
+    },
+    "Space.com": {
+      "status": "success",
+      "tooltip": "\u2713 19 articles fetched",
+      "article_count": 19,
+      "last_checked": "2026-01-13T10:05:48.165834"
+    },
+    "Stratechery by Ben Thompson": {
+      "status": "success",
+      "tooltip": "\u2713 1 article fetched",
+      "article_count": 1,
+      "last_checked": "2026-01-13T10:05:48.292008"
+    },
+    "r/space": {
+      "status": "success",
+      "tooltip": "\u2713 20 articles fetched",
+      "article_count": 20,
+      "last_checked": "2026-01-13T10:05:48.353473"
+    },
+    "Anthropic Blog": {
+      "status": "error",
+      "tooltip": "\u2717 Error: HTTP 404",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:48.479340"
+    },
+    "r/nasa": {
+      "status": "success",
+      "tooltip": "\u2713 8 articles fetched",
+      "article_count": 8,
+      "last_checked": "2026-01-13T10:05:48.617361"
+    },
+    "Reddit Longform (Filtered)": {
+      "status": "success",
+      "tooltip": "\u2713 14 articles fetched",
+      "article_count": 14,
+      "last_checked": "2026-01-13T10:05:48.785043"
+    },
+    "MIT News": {
+      "status": "success",
+      "tooltip": "\u2713 3 articles fetched",
+      "article_count": 3,
+      "last_checked": "2026-01-13T10:05:48.939100"
+    },
+    "Babson Entrepreneurship": {
+      "status": "success",
+      "tooltip": "\u2713 1 article fetched",
+      "article_count": 1,
+      "last_checked": "2026-01-13T10:05:49.103109"
+    },
+    "The Verge": {
+      "status": "success",
+      "tooltip": "\u2713 10 articles fetched",
+      "article_count": 10,
+      "last_checked": "2026-01-13T10:05:49.256193"
+    },
+    "Product Hunt": {
+      "status": "success",
+      "tooltip": "\u2713 13 articles fetched",
+      "article_count": 13,
+      "last_checked": "2026-01-13T10:05:49.274871"
+    },
+    "r/LocalLLaMA": {
+      "status": "success",
+      "tooltip": "\u2713 19 articles fetched",
+      "article_count": 19,
+      "last_checked": "2026-01-13T10:05:50.899935"
+    },
+    "r/SelfDrivingCars": {
+      "status": "success",
+      "tooltip": "\u2713 11 articles fetched",
+      "article_count": 11,
+      "last_checked": "2026-01-13T10:05:50.030941"
+    },
+    "r/OpenAI": {
+      "status": "success",
+      "tooltip": "\u2713 18 articles fetched",
+      "article_count": 18,
+      "last_checked": "2026-01-13T10:05:50.082603"
+    },
+    "r/MachineLearning": {
+      "status": "success",
+      "tooltip": "\u2713 14 articles fetched",
+      "article_count": 14,
+      "last_checked": "2026-01-13T10:05:50.120636"
+    },
+    "r/artificial": {
+      "status": "success",
+      "tooltip": "\u2713 19 articles fetched",
+      "article_count": 19,
+      "last_checked": "2026-01-13T10:05:50.137607"
+    },
+    "Notion Blog": {
+      "status": "error",
+      "tooltip": "\u2717 Error: HTTP 404",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:50.191673"
+    },
+    "r/HomeAutomation": {
+      "status": "success",
+      "tooltip": "\u2713 20 articles fetched",
+      "article_count": 20,
+      "last_checked": "2026-01-13T10:05:50.252201"
+    },
+    "r/hardware": {
+      "status": "success",
+      "tooltip": "\u2713 14 articles fetched",
+      "article_count": 14,
+      "last_checked": "2026-01-13T10:05:50.281581"
+    },
+    "r/ChatGPTCoding": {
+      "status": "success",
+      "tooltip": "\u2713 4 articles fetched",
+      "article_count": 4,
+      "last_checked": "2026-01-13T10:05:50.406928"
+    },
+    "Ryan Holiday": {
+      "status": "empty",
+      "tooltip": "\u26a0 No new articles (feed may be empty or inactive)",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:50.541868"
+    },
+    "r/ClaudeAI": {
+      "status": "success",
+      "tooltip": "\u2713 19 articles fetched",
+      "article_count": 19,
+      "last_checked": "2026-01-13T10:05:50.605340"
+    },
+    "r/CursorAI": {
+      "status": "success",
+      "tooltip": "\u2713 3 articles fetched",
+      "article_count": 3,
+      "last_checked": "2026-01-13T10:05:50.642573"
+    },
+    "Sunny Skyz": {
+      "status": "success",
+      "tooltip": "\u2713 2 articles fetched",
+      "article_count": 2,
+      "last_checked": "2026-01-13T10:05:50.716891"
+    },
+    "YES! Magazine": {
+      "status": "error",
+      "tooltip": "\u2717 Error: HTTP 403",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:50.738547"
+    },
+    "r/replit": {
+      "status": "success",
+      "tooltip": "\u2713 18 articles fetched",
+      "article_count": 18,
+      "last_checked": "2026-01-13T10:05:50.757331"
+    },
+    "r/vibecoding": {
+      "status": "success",
+      "tooltip": "\u2713 18 articles fetched",
+      "article_count": 18,
+      "last_checked": "2026-01-13T10:05:50.953185"
+    },
+    "Good News Network": {
+      "status": "success",
+      "tooltip": "\u2713 10 articles fetched",
+      "article_count": 10,
+      "last_checked": "2026-01-13T10:05:51.004900"
+    },
+    "r/DataIsBeautiful": {
+      "status": "success",
+      "tooltip": "\u2713 19 articles fetched",
+      "article_count": 19,
+      "last_checked": "2026-01-13T10:05:51.041293"
+    },
+    "r/ollama": {
+      "status": "success",
+      "tooltip": "\u2713 8 articles fetched",
+      "article_count": 8,
+      "last_checked": "2026-01-13T10:05:51.130967"
+    },
+    "Early Retirement Now": {
+      "status": "empty",
+      "tooltip": "\u26a0 No new articles (feed may be empty or inactive)",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:51.363402"
+    },
+    "Positive News": {
+      "status": "success",
+      "tooltip": "\u2713 1 article fetched",
+      "article_count": 1,
+      "last_checked": "2026-01-13T10:05:51.517633"
+    },
+    "SUCCESS Magazine": {
+      "status": "error",
+      "tooltip": "\u2717 Error: HTTP 404",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:51.898518"
+    },
+    "Go Curry Cracker": {
+      "status": "empty",
+      "tooltip": "\u26a0 No new articles (feed may be empty or inactive)",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:51.914667"
+    },
+    "Green Building Advisor": {
+      "status": "error",
+      "tooltip": "\u2717 Error: HTTP 403",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:51.998704"
+    },
+    "Millennial Revolution": {
+      "status": "empty",
+      "tooltip": "\u26a0 No new articles (feed may be empty or inactive)",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:52.053492"
+    },
+    "TAWCAN": {
+      "status": "success",
+      "tooltip": "\u2713 1 article fetched",
+      "article_count": 1,
+      "last_checked": "2026-01-13T10:05:52.141481"
+    },
+    "Financial Samurai": {
+      "status": "success",
+      "tooltip": "\u2713 1 article fetched",
+      "article_count": 1,
+      "last_checked": "2026-01-13T10:05:52.203673"
+    },
+    "Mr. Money Mustache": {
+      "status": "empty",
+      "tooltip": "\u26a0 No new articles (feed may be empty or inactive)",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:52.402853"
+    },
+    "EcoHome": {
+      "status": "error",
+      "tooltip": "\u2717 Error: HTTP 403",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:52.406216"
+    },
+    "Smart Home Solver": {
+      "status": "error",
+      "tooltip": "\u2717 Error: HTTP 404",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:52.651957"
+    },
+    "Upworthy": {
+      "status": "error",
+      "tooltip": "\u2717 Error: HTTP 404",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:52.714193"
+    },
+    "Reasons to be Cheerful": {
+      "status": "success",
+      "tooltip": "\u2713 2 articles fetched",
+      "article_count": 2,
+      "last_checked": "2026-01-13T10:05:52.749204"
+    },
+    "BuildingGreen": {
+      "status": "success",
+      "tooltip": "\u2713 15 articles fetched",
+      "article_count": 15,
+      "last_checked": "2026-01-13T10:05:52.800475"
+    },
+    "Tiny Empires": {
+      "status": "error",
+      "tooltip": "\u2717 Error: HTTP 403",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:52.819238"
+    },
+    "Passive House Plus": {
+      "status": "error",
+      "tooltip": "\u2717 Error: HTTP 404",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:52.907651"
+    },
+    "Mad Fientist": {
+      "status": "empty",
+      "tooltip": "\u26a0 No new articles (feed may be empty or inactive)",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:53.023470"
+    },
+    "Prefab Review": {
+      "status": "error",
+      "tooltip": "\u2717 Error: HTTP 404",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:53.026607"
+    },
+    "Indie Hackers": {
+      "status": "empty",
+      "tooltip": "\u26a0 No new articles (feed may be empty or inactive)",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:53.137782"
+    },
+    "MicroConf": {
+      "status": "error",
+      "tooltip": "\u2717 Error: HTTP 404",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:53.178172"
+    },
+    "Starter Story": {
+      "status": "error",
+      "tooltip": "\u2717 Error: HTTP 404",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:53.202452"
+    },
+    "Failory": {
+      "status": "error",
+      "tooltip": "\u2717 Error: HTTP 404",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:53.228950"
+    },
+    "Passive House Accelerator": {
+      "status": "empty",
+      "tooltip": "\u26a0 No new articles (feed may be empty or inactive)",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:53.422697"
+    },
+    "The White Coat Investor": {
+      "status": "success",
+      "tooltip": "\u2713 2 articles fetched",
+      "article_count": 2,
+      "last_checked": "2026-01-13T10:05:53.955017"
+    },
+    "Solo Build It": {
+      "status": "empty",
+      "tooltip": "\u26a0 No new articles (feed may be empty or inactive)",
+      "article_count": 0,
+      "last_checked": "2026-01-13T10:05:55.010011"
+    }
+  }
+}

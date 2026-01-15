@@ -1,0 +1,214 @@
+# RSS Sources Configuration V3 - Premium Sources Test
+# Testing expanded premium publication feeds
+
+sources:
+  moonshot_frontiers:
+    display_name: "Moonshot Frontiers"
+    sources:
+      MIT Technology Review:
+        url: "https://www.technologyreview.com/feed/"
+        limit: 5
+      Nature:
+        url: "https://www.nature.com/nature.rss"
+        limit: 3
+      TechCrunch:
+        url: "https://techcrunch.com/feed/"
+        limit: 3
+      Future.com:
+        url: "https://future.com/feed/"
+        limit: 3
+      # Harvard Business Review - needs URL verification
+      # Wired - access restricted
+      # IEEE Spectrum - not RSS
+      # Sifted - 403 error
+
+  ai_future_computing:
+    display_name: "AI & Future Computing"
+    sources:
+      GitHub Blog:
+        url: "https://github.blog/feed/"
+        limit: 2
+      DeepMind Blog:
+        url: "https://www.deepmind.com/blog/feed/basic"
+        limit: 2
+      arXiv ML:
+        url: "https://arxiv.org/rss/cs.LG"
+        limit: 5
+      TechCrunch AI:
+        url: "https://techcrunch.com/tag/artificial-intelligence/feed/"
+        limit: 3
+      Product Hunt AI:
+        url: "https://www.producthunt.com/topics/artificial-intelligence.rss"
+        limit: 2
+      # Meta AI Blog:
+      #   url: "https://ai.facebook.com/blog/rss/"
+      #   limit: 2
+      # OpenAI Blog - 403 error
+      # Google AI Blog - 404 error
+      # Wired AI - access restricted
+
+  research_discoveries_academic:
+    display_name: "Research Discoveries (Academic)"
+    sources:
+      Strategic Management Journal:
+        url: "https://onlinelibrary.wiley.com/feed/1472-8781/most-recent"
+        limit: 3
+      Academy of Management Journal:
+        url: "https://journals.aom.org/action/showFeed?ui=0&mi=3b2d7g&ai=1g61&jc=amj&type=etoc&feed=rss"
+        limit: 2
+      Academy of Management Review:
+        url: "https://journals.aom.org/action/showFeed?ui=0&mi=3b2d7g&ai=1g61&jc=amr&type=etoc&feed=rss"
+        limit: 2
+      Research Policy:
+        url: "https://www.sciencedirect.com/journal/research-policy/rss"
+        limit: 3
+      Organization Science:
+        url: "https://pubsonline.informs.org/action/showFeed?jc=orgsci&type=etoc&feed=rss"
+        limit: 2
+      Journal of Business Venturing:
+        url: "https://www.sciencedirect.com/journal/journal-of-business-venturing/rss"
+        limit: 2
+      Management Science:
+        url: "https://pubsonline.informs.org/action/showFeed?jc=mansci&type=etoc&feed=rss"
+        limit: 2
+      Administrative Science Quarterly:
+        url: "https://journals.sagepub.com/rss/asq/current.xml"
+        limit: 2
+      Strategic Entrepreneurship Journal:
+        url: "https://onlinelibrary.wiley.com/feed/1932-443X/most-recent"
+        limit: 2
+
+  research_discoveries_practitioner:
+    display_name: "Research Discoveries (Practitioner)"
+    sources:
+      McKinsey Insights:
+        url: "https://www.mckinsey.com/insights/rss"
+        limit: 3
+      MIT Sloan Management Review:
+        url: "https://sloanreview.mit.edu/feed/"
+        limit: 2
+      Bain Insights:
+        url: "https://www.bain.com/about/rss/"
+        limit: 2
+      BCG Perspectives:
+        url: "https://www.bcg.com/en-us/rss"
+        limit: 2
+      Strategy Business:
+        url: "https://www.strategy-business.com/rss/strategyandbusiness.xml"
+        limit: 2
+
+  space_frontier_science:
+    display_name: "Space & Frontier Science"
+    sources:
+      Nature Astronomy:
+        url: "https://www.nature.com/natastron.rss"
+        limit: 3
+      Science Magazine:
+        url: "http://www.sciencemag.org/rss/news_current.xml"
+        limit: 3
+      NASA Breaking News:
+        url: "https://www.nasa.gov/rss/dyn/breaking_news.rss"
+        limit: 3
+      ESA News:
+        url: "https://www.esa.int/rssfeed/Our_Activities"
+        limit: 2
+      SpaceNews:
+        url: "https://spacenews.com/feed/"
+        limit: 3
+      Ars Technica Space:
+        url: "https://feeds.arstechnica.com/arstechnica/space"
+        limit: 2
+      Planetary Society:
+        url: "https://www.planetary.org/blogs/rss"
+        limit: 2
+      JPL NASA News:
+        url: "https://www.jpl.nasa.gov/feeds/news.xml"
+        limit: 2
+      New Scientist Space:
+        url: "https://www.newscientist.com/subject/space/feed/"
+        limit: 2
+
+  strategic_thinking:
+    display_name: "Strategic Thinking"
+    sources:
+      MIT Sloan Management Review:
+        url: "https://sloanreview.mit.edu/feed/"
+        limit: 2
+      Economist Leaders:
+        url: "https://www.economist.com/leaders/rss.xml"
+        limit: 3
+      INSEAD Knowledge:
+        url: "https://knowledge.insead.edu/rss"
+        limit: 2
+      Kellogg Insight:
+        url: "https://insight.kellogg.northwestern.edu/rss"
+        limit: 2
+      # Harvard Business Review - needs URL verification
+
+  hidden_gems:
+    display_name: "Hidden Gems"
+    sources:
+      The Atlantic:
+        url: "https://www.theatlantic.com/feed/all/"
+        limit: 3
+      Aeon:
+        url: "https://aeon.co/feed.rss"
+        limit: 2
+      Noema Magazine:
+        url: "https://www.noemamag.com/feed/"
+        limit: 2
+      The Browser:
+        url: "https://thebrowser.com/feed"
+        limit: 2
+      Long Now Foundation:
+        url: "https://longnow.org/news/feed/"
+        limit: 1
+      The Side View:
+        url: "https://thesideview.co/feed/"
+        limit: 1
+      The Diff Substack:
+        url: "https://thediff.substack.com/feed"
+        limit: 1
+
+# Legacy categories for current system compatibility
+  academic_research:
+    display_name: "Academic Research"
+    sources:
+      Strategic Management Journal:
+        url: "https://onlinelibrary.wiley.com/feed/1472-8781/most-recent"
+        limit: 3
+
+  ai:
+    display_name: "AI"
+    sources:
+      GitHub Blog:
+        url: "https://github.blog/feed/"
+        limit: 2
+
+  space_news:
+    display_name: "Space News"
+    sources:
+      NASA Breaking News:
+        url: "https://www.nasa.gov/rss/dyn/breaking_news.rss"
+        limit: 3
+
+  longform_articles:
+    display_name: "Long-form Articles"
+    sources:
+      The Atlantic:
+        url: "https://www.theatlantic.com/feed/all/"
+        limit: 2
+
+  daily_stoicism:
+    display_name: "Daily Stoicism"
+    sources:
+      Ryan Holiday:
+        url: "https://ryanholiday.net/feed/"
+        limit: 1
+
+# Supplementary data sources
+weather:
+  zip_code: "01701"
+  
+on_this_day:
+  enabled: true
