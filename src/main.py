@@ -1,24 +1,32 @@
 #!/usr/bin/env python3
 """
-Daily News Agent - Main Orchestration Script
-Coordinates all components to generate daily news updates
+GrantBot - AI-powered grant discovery and analysis
+
+Usage:
+    python src/main.py              # Run full discovery
+    python src/main.py --test       # Test mode (no email)
 """
 
 import os
 import sys
 import yaml
 import logging
+import argparse
 from datetime import datetime
 from dotenv import load_dotenv
-from typing import Dict, Any
+from typing import Dict, Any, List
 
-# Add src directory to path for imports
+# Add src directory to path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from collectors.rss_collector import RSSCollector
-from collectors.supplementary import SupplementaryCollector
-from processors.ai_summarizer import AISummarizer
-from generators.markdown import MarkdownGenerator
+from collectors.grants_gov import GrantsGovCollector
+from collectors.nsf import NSFCollector
+from collectors.foundations import FoundationCollector
+from processors.matcher import GrantMatcher, OrgProfile
+from processors.analyzer import GrantAnalyzer
+from generators.digest import DigestGenerator
+from utils.deduplication import ArticleDeduplicator
+from utils.version import VersionManager
 
 # Set up logging
 logging.basicConfig(
@@ -27,227 +35,171 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-class DailyNewsAgent:
-    def __init__(self, config_path: str = "config/sources.yaml"):
-        """Initialize the Daily News Agent"""
-        load_dotenv()  # Load environment variables
-        
-        self.config_path = config_path
-        self.config = self._load_config()
-        
-        # Initialize components
-        self.rss_collector = RSSCollector()
-        self.supplementary_collector = SupplementaryCollector(
-            market_api_key=os.getenv('ALPHA_VANTAGE_API_KEY')
-        )
-        self.ai_summarizer = AISummarizer(
-            claude_api_key=os.getenv('CLAUDE_API_KEY'),
-            openai_api_key=os.getenv('OPENAI_API_KEY')
-        )
-        self.markdown_generator = MarkdownGenerator()
-        
-        logger.info("Daily News Agent initialized")
-    
-    def _load_config(self) -> Dict[str, Any]:
-        """Load configuration from YAML file"""
+
+class GrantBot:
+    """Main GrantBot application"""
+
+    def __init__(self, config_path: str = "config/sources-grants.yaml"):
+        load_dotenv()
+
+        self.config = self._load_config(config_path)
+        self.org_profile = self._load_org_profile()
+
+        # Initialize collectors
+        self.grants_gov = GrantsGovCollector()
+        self.nsf = NSFCollector()
+        self.foundations = FoundationCollector()
+
+        # Initialize processors
+        self.matcher = GrantMatcher(self.org_profile)
+        self.analyzer = GrantAnalyzer()
+
+        # Initialize generators
+        self.digest = DigestGenerator()
+
+        # Utils
+        self.deduplicator = ArticleDeduplicator()
+        self.version = VersionManager()
+
+        logger.info(f"GrantBot initialized - {self.version.get_version_string()}")
+
+    def _load_config(self, config_path: str) -> Dict[str, Any]:
+        """Load sources configuration"""
+        config_file = os.path.join(os.path.dirname(os.path.dirname(__file__)), config_path)
         try:
-            config_file = os.path.join(os.path.dirname(os.path.dirname(__file__)), self.config_path)
-            with open(config_file, 'r', encoding='utf-8') as f:
-                config = yaml.safe_load(f)
-            logger.info(f"Configuration loaded from {config_file}")
-            return config
+            with open(config_file, 'r') as f:
+                return yaml.safe_load(f)
         except Exception as e:
-            logger.error(f"Error loading config: {str(e)}")
-            # Return minimal config for testing
-            return self._get_default_config()
-    
-    def _get_default_config(self) -> Dict[str, Any]:
-        """Default configuration for testing"""
-        return {
-            'categories': {
-                'moonshots': {
-                    'word_target': 150,
-                    'keywords': ['breakthrough', 'innovation'],
-                    'sources': [
-                        {'name': 'MIT News', 'url': 'https://news.mit.edu/rss/topic/innovation', 'type': 'rss'}
-                    ]
-                },
-                'tech_headlines': {
-                    'word_target': 200,
-                    'keywords': ['technology', 'AI', 'software'],
-                    'sources': [
-                        {'name': 'The Verge', 'url': 'https://www.theverge.com/rss/index.xml', 'type': 'rss'}
-                    ]
-                }
-            }
-        }
-    
-    def collect_all_content(self) -> tuple[Dict[str, list], Dict[str, Any]]:
-        """Collect content from all sources"""
-        logger.info("Starting content collection...")
-        
-        # Collect RSS articles by category
-        categorized_articles = self.rss_collector.collect_by_category(
-            self.config.get('categories', {})
+            logger.error(f"Failed to load config: {e}")
+            return {}
+
+    def _load_org_profile(self) -> OrgProfile:
+        """Load organization profile"""
+        profile_path = os.path.join(
+            os.path.dirname(os.path.dirname(__file__)),
+            "config/org-profile.yaml"
         )
-        
-        # Collect supplementary content
-        supplementary_data = self.supplementary_collector.collect_all_supplementary()
-        
-        # Log collection results
-        total_articles = sum(len(articles) for articles in categorized_articles.values())
-        logger.info(f"Collected {total_articles} articles across {len(categorized_articles)} categories")
-        
-        for category, articles in categorized_articles.items():
-            logger.info(f"  {category}: {len(articles)} articles")
-        
-        return categorized_articles, supplementary_data
-    
-    def generate_summaries(self, categorized_articles: Dict[str, list]) -> Dict[str, str]:
-        """Generate AI summaries for all categories"""
-        logger.info("Generating AI summaries...")
-        
-        # Extract word targets from config
-        word_targets = {}
-        for category, config in self.config.get('categories', {}).items():
-            word_targets[category] = config.get('word_target', 150)
-        
-        summaries = self.ai_summarizer.create_section_summaries(
-            categorized_articles, word_targets
-        )
-        
-        logger.info(f"Generated summaries for {len(summaries)} categories")
-        return summaries
-    
-    def generate_daily_update(self, output_dir: str = None) -> str:
-        """Generate complete daily update"""
-        logger.info("=== Starting Daily News Update Generation ===")
-        
         try:
-            # Step 1: Collect content
-            categorized_articles, supplementary_data = self.collect_all_content()
-            
-            # Step 2: Generate summaries
-            summaries = self.generate_summaries(categorized_articles)
-            
-            # Step 3: Create article links section
-            article_links = self.ai_summarizer.create_article_links_section(categorized_articles)
-            
-            # Step 4: Generate markdown
-            markdown_content = self.markdown_generator.generate_daily_update(
-                summaries, categorized_articles, supplementary_data, article_links
+            with open(profile_path, 'r') as f:
+                data = yaml.safe_load(f)
+            return OrgProfile(
+                entity_type=data['entity']['type'],
+                location=data['location']['state'],
+                focus_areas=data['focus_areas']['primary'] + data['focus_areas']['secondary'],
+                grant_size_min=data['grant_preferences']['size_min'],
+                grant_size_max=data['grant_preferences']['size_max']
             )
-            
-            # Step 5: Save to file
-            if output_dir is None:
-                # Default to Daily Updates folder if run from the correct location
-                output_dir = "/Users/jonsims/Documents/Obsidian Vault/Daily Updates (Agent)"
-                if not os.path.exists(output_dir):
-                    output_dir = "output"  # Fallback to local output directory
-            
-            filepath = self.markdown_generator.save_to_file(markdown_content, output_dir)
-            
-            # Log statistics
-            word_count = self.markdown_generator.get_word_count(markdown_content)
-            logger.info(f"Daily update generated successfully:")
-            logger.info(f"  File: {filepath}")
-            logger.info(f"  Word count: {word_count}")
-            logger.info(f"  Categories: {len(summaries)}")
-            logger.info(f"  Total articles: {sum(len(articles) for articles in categorized_articles.values())}")
-            
-            return filepath
-            
         except Exception as e:
-            logger.error(f"Error generating daily update: {str(e)}")
-            raise
-    
-    def test_components(self) -> Dict[str, bool]:
-        """Test all components for debugging"""
-        logger.info("=== Testing All Components ===")
-        
-        test_results = {}
-        
-        # Test RSS collector
-        try:
-            test_articles = self.rss_collector.collect_by_category(
-                {'tech_headlines': self.config['categories']['tech_headlines']}
+            logger.error(f"Failed to load org profile: {e}")
+            # Return default profile
+            return OrgProfile(
+                entity_type="university",
+                location="Massachusetts",
+                focus_areas=["entrepreneurship", "AI", "innovation"],
+                grant_size_min=1000,
+                grant_size_max=1000000
             )
-            test_results['rss_collector'] = len(test_articles.get('tech_headlines', [])) > 0
-            logger.info(f"RSS Collector: {'✓' if test_results['rss_collector'] else '✗'}")
-        except Exception as e:
-            test_results['rss_collector'] = False
-            logger.error(f"RSS Collector failed: {str(e)}")
-        
-        # Test supplementary collector
-        try:
-            supp_data = self.supplementary_collector.collect_all_supplementary()
-            test_results['supplementary'] = 'on_this_day' in supp_data
-            logger.info(f"Supplementary Collector: {'✓' if test_results['supplementary'] else '✗'}")
-        except Exception as e:
-            test_results['supplementary'] = False
-            logger.error(f"Supplementary Collector failed: {str(e)}")
-        
-        # Test AI summarizer
-        try:
-            mock_articles = [{'title': 'Test', 'content': 'Test content', 'source': 'Test', 'link': '#'}]
-            summary = self.ai_summarizer.create_narrative_summary(mock_articles, 'test', 50)
-            test_results['ai_summarizer'] = len(summary) > 10
-            logger.info(f"AI Summarizer: {'✓' if test_results['ai_summarizer'] else '✗'}")
-        except Exception as e:
-            test_results['ai_summarizer'] = False
-            logger.error(f"AI Summarizer failed: {str(e)}")
-        
-        # Test markdown generator
-        try:
-            test_content = self.markdown_generator.generate_daily_update(
-                {'test': 'Test summary'}, {'test': []}, {}, 'Test links'
+
+    def collect_grants(self) -> List[Dict[str, Any]]:
+        """Collect grants from all enabled sources"""
+        all_grants = []
+
+        # Collect from grants.gov
+        if self.config.get('sources', {}).get('federal', {}).get('grants_gov', {}).get('enabled'):
+            logger.info("Collecting from grants.gov...")
+            grants = self.grants_gov.fetch_opportunities(
+                keywords=self.org_profile.focus_areas
             )
-            test_results['markdown_generator'] = len(test_content) > 100
-            logger.info(f"Markdown Generator: {'✓' if test_results['markdown_generator'] else '✗'}")
-        except Exception as e:
-            test_results['markdown_generator'] = False
-            logger.error(f"Markdown Generator failed: {str(e)}")
-        
-        return test_results
+            all_grants.extend(grants)
+            logger.info(f"Found {len(grants)} grants from grants.gov")
+
+        # Collect from NSF
+        if self.config.get('sources', {}).get('federal', {}).get('nsf', {}).get('enabled'):
+            logger.info("Collecting from NSF...")
+            grants = self.nsf.fetch_opportunities(
+                keywords=self.org_profile.focus_areas
+            )
+            all_grants.extend(grants)
+            logger.info(f"Found {len(grants)} grants from NSF")
+
+        # Collect from foundations
+        if self.config.get('sources', {}).get('foundations', {}).get('kauffman', {}).get('enabled'):
+            logger.info("Collecting from Kauffman Foundation...")
+            grants = self.foundations.fetch_kauffman_opportunities()
+            all_grants.extend(grants)
+            logger.info(f"Found {len(grants)} grants from Kauffman")
+
+        logger.info(f"Total grants collected: {len(all_grants)}")
+        return all_grants
+
+    def run(self, test_mode: bool = False) -> str:
+        """
+        Run full grant discovery and analysis pipeline
+
+        Args:
+            test_mode: If True, skip email delivery
+
+        Returns:
+            Path to generated digest file
+        """
+        logger.info("=" * 50)
+        logger.info("Starting GrantBot run")
+        logger.info("=" * 50)
+
+        # Step 1: Collect grants
+        all_grants = self.collect_grants()
+
+        # Step 2: Filter and match
+        matched_grants = self.matcher.filter_and_rank(all_grants)
+        logger.info(f"Matched grants after filtering: {len(matched_grants)}")
+
+        # Step 3: Deduplicate (skip already-seen grants)
+        new_grants = []
+        for grant in matched_grants:
+            grant_id = grant.get('opportunity_id') or grant.get('title', '')
+            if not self.deduplicator.is_duplicate(grant_id, grant_id):
+                new_grants.append(grant)
+                self.deduplicator.mark_seen(grant_id, grant_id)
+        logger.info(f"New grants after deduplication: {len(new_grants)}")
+
+        # Step 4: Deep analysis (top grants only to save API calls)
+        analyzed_grants = []
+        for grant in new_grants[:10]:  # Analyze top 10
+            analysis = self.analyzer.analyze_grant(grant, vars(self.org_profile))
+            grant.update(analysis)
+            analyzed_grants.append(grant)
+
+        # Step 5: Generate digest
+        markdown = self.digest.generate_markdown(analyzed_grants)
+
+        # Save to file
+        date_str = datetime.now().strftime("%Y-%m-%d")
+        output_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "output")
+        os.makedirs(output_dir, exist_ok=True)
+        output_path = os.path.join(output_dir, f"{date_str}-grant-digest.md")
+
+        with open(output_path, 'w') as f:
+            f.write(markdown)
+        logger.info(f"Digest saved to {output_path}")
+
+        # Step 6: Send email (unless test mode)
+        if not test_mode and analyzed_grants:
+            # TODO: Implement email sending
+            logger.info("Email sending not yet implemented")
+
+        logger.info("GrantBot run complete")
+        return output_path
+
 
 def main():
-    """Main entry point"""
-    import argparse
-    
-    parser = argparse.ArgumentParser(description='Generate daily news update')
-    parser.add_argument('--test', action='store_true', help='Test all components')
-    parser.add_argument('--output', '-o', help='Output directory for generated file')
-    parser.add_argument('--config', '-c', default='config/sources.yaml', help='Config file path')
-    
+    parser = argparse.ArgumentParser(description="GrantBot - AI-powered grant discovery")
+    parser.add_argument('--test', action='store_true', help="Test mode (no email)")
     args = parser.parse_args()
-    
-    try:
-        agent = DailyNewsAgent(config_path=args.config)
-        
-        if args.test:
-            results = agent.test_components()
-            print("\n=== Component Test Results ===")
-            for component, passed in results.items():
-                status = "✓ PASS" if passed else "✗ FAIL"
-                print(f"{component:20} {status}")
-            
-            if not all(results.values()):
-                print("\n⚠️  Some components failed. Check logs for details.")
-                sys.exit(1)
-            else:
-                print("\n🎉 All components working!")
-        else:
-            # Generate daily update
-            filepath = agent.generate_daily_update(args.output)
-            print(f"✅ Daily update generated: {filepath}")
-            
-    except KeyboardInterrupt:
-        print("\n🛑 Operation cancelled by user")
-        sys.exit(1)
-    except Exception as e:
-        logger.error(f"Fatal error: {str(e)}")
-        print(f"❌ Error: {str(e)}")
-        sys.exit(1)
+
+    bot = GrantBot()
+    output = bot.run(test_mode=args.test)
+    print(f"Digest generated: {output}")
+
 
 if __name__ == "__main__":
     main()

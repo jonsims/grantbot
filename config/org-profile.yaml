@@ -1,0 +1,61 @@
+# Organization Profile for Grant Matching
+# Generator AI Lab at Babson College
+
+entity:
+  name: "Generator AI Lab"
+  parent: "Babson College"
+  type: "university"  # Used for eligibility filtering
+  ein: ""  # Tax ID if needed
+
+location:
+  state: "Massachusetts"
+  city: "Wellesley"
+  region: "Northeast"
+
+focus_areas:
+  primary:
+    - entrepreneurship
+    - innovation
+    - artificial intelligence
+    - AI impact
+  secondary:
+    - pedagogy
+    - educational research
+    - interdisciplinary studies
+    - technology education
+
+grant_preferences:
+  size_min: 1000      # $1K minimum
+  size_max: 1000000   # $1M maximum (no upper limit really)
+  duration_preference: "any"  # 1-year, multi-year, any
+
+keywords:
+  # Keywords to search for in grant descriptions
+  include:
+    - entrepreneurship
+    - startup
+    - venture
+    - innovation
+    - artificial intelligence
+    - machine learning
+    - AI
+    - pedagogy
+    - teaching
+    - curriculum
+    - higher education
+    - business education
+    - technology transfer
+
+  # Keywords that likely indicate poor fit
+  exclude:
+    - clinical trial
+    - medical device
+    - drug development
+    - K-12 only
+    - community college only
+
+eligibility_types:
+  # Types of entities we can apply as
+  - "Nonprofits having a 501(c)(3) status"
+  - "Private institutions of higher education"
+  - "Public and State controlled institutions of higher education"

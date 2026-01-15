@@ -1,0 +1,61 @@
+# Grant Sources Configuration
+
+sources:
+  federal:
+    grants_gov:
+      enabled: true
+      description: "Federal grants from all agencies"
+      url: "https://www.grants.gov"
+      # XML export available daily
+      xml_export: "https://www.grants.gov/xml-extract.html"
+      # Focus on these agencies
+      agencies:
+        - NSF  # National Science Foundation
+        - DOE  # Department of Energy
+        - DOC  # Department of Commerce (EDA)
+        - SBA  # Small Business Administration
+        - ED   # Department of Education
+
+    nsf:
+      enabled: true
+      description: "National Science Foundation"
+      api_url: "https://api.nsf.gov/services/v1/awards.json"
+      # Relevant program areas
+      programs:
+        - "Innovation Corps (I-Corps)"
+        - "Convergence Accelerator"
+        - "IUSE (Improving Undergraduate STEM Education)"
+        - "Research Experiences for Undergraduates (REU)"
+
+  foundations:
+    kauffman:
+      enabled: true
+      description: "Ewing Marion Kauffman Foundation"
+      url: "https://www.kauffman.org/grants/"
+      focus: "entrepreneurship education"
+      notes: "Primary foundation target - strong entrepreneurship focus"
+
+    # TODO: Add more foundations as identified
+    # sloan:
+    #   enabled: false
+    #   description: "Alfred P. Sloan Foundation"
+
+  state:
+    masstech:
+      enabled: true
+      description: "Massachusetts Technology Collaborative"
+      url: "https://masstech.org/procurements-and-grants"
+      programs:
+        - "R&D Matching Grant"
+        - "Innovation Institute"
+
+    mlsc:
+      enabled: false  # Life sciences focus - less relevant
+      description: "Massachusetts Life Sciences Center"
+      url: "https://www.masslifesciences.com/funding-programs/"
+
+# Refresh settings
+refresh:
+  federal: "daily"      # Check federal sources daily
+  foundations: "weekly" # Check foundations weekly
+  state: "weekly"       # Check state sources weekly
