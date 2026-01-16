@@ -20,12 +20,28 @@ sources:
       enabled: true
       description: "National Science Foundation"
       api_url: "https://api.nsf.gov/services/v1/awards.json"
+      rss_feeds:
+        - name: "NSF - All Programs"
+          url: "https://www.nsf.gov/rss/rss_www_funding.xml"
+        - name: "NSF - Education & Human Resources"
+          url: "https://www.nsf.gov/rss/rss_www_funding_pgm_dir.xml?org=EHR"
+        - name: "NSF - Computer & Information Science"
+          url: "https://www.nsf.gov/rss/rss_www_funding_pgm_dir.xml?org=CISE"
+        - name: "NSF - Social, Behavioral & Economic Sciences"
+          url: "https://www.nsf.gov/rss/rss_www_funding_pgm_dir.xml?org=SBE"
       # Relevant program areas
       programs:
         - "Innovation Corps (I-Corps)"
         - "Convergence Accelerator"
         - "IUSE (Improving Undergraduate STEM Education)"
         - "Research Experiences for Undergraduates (REU)"
+
+    dept_education:
+      enabled: true
+      description: "Department of Education"
+      urls:
+        - "https://www2.ed.gov/fund/grant/find/edlite-forecast.html"
+        - "https://www2.ed.gov/programs/find/title/index.html?src=fp"
 
   foundations:
     kauffman:
@@ -35,10 +51,47 @@ sources:
       focus: "entrepreneurship education"
       notes: "Primary foundation target - strong entrepreneurship focus"
 
-    # TODO: Add more foundations as identified
-    # sloan:
-    #   enabled: false
-    #   description: "Alfred P. Sloan Foundation"
+    lumina:
+      enabled: true
+      description: "Lumina Foundation"
+      url: "https://www.luminafoundation.org/grants/"
+      focus: "higher education"
+
+    spencer:
+      enabled: true
+      description: "Spencer Foundation - Research Grants"
+      url: "https://www.spencer.org/grant-types"
+      focus: "education research"
+
+    sloan:
+      enabled: true
+      description: "Alfred P. Sloan Foundation"
+      url: "https://sloan.org/grants/apply"
+      focus: "STEM higher education"
+
+    google:
+      enabled: true
+      description: "Google.org Impact Challenge"
+      url: "https://www.google.org/"
+      focus: "AI for social good"
+
+    microsoft:
+      enabled: true
+      description: "Microsoft AI for Good"
+      url: "https://www.microsoft.com/en-us/ai/ai-for-good"
+      focus: "AI grants"
+
+    aws:
+      enabled: true
+      description: "AWS Cloud Credits for Research"
+      url: "https://aws.amazon.com/government-education/research-and-technical-computing/cloud-credit-for-research/"
+      focus: "cloud computing credits"
+
+    nvidia:
+      enabled: true
+      description: "NVIDIA Academic Hardware Grants"
+      url: "https://developer.nvidia.com/academic_gpu_seeding"
+      focus: "GPU hardware grants"
 
   state:
     masstech:
@@ -53,6 +106,33 @@ sources:
       enabled: false  # Life sciences focus - less relevant
       description: "Massachusetts Life Sciences Center"
       url: "https://www.masslifesciences.com/funding-programs/"
+
+    mass_higher_ed:
+      enabled: true
+      description: "MA Dept of Higher Education"
+      url: "https://www.mass.edu/forstufam/grantsloans/"
+
+  aggregators:
+    grantwatch:
+      enabled: true
+      description: "GrantWatch - Higher Education"
+      url: "https://www.grantwatch.com/cat/35/higher-education-grants.html"
+
+    philanthropy_news:
+      enabled: true
+      description: "Philanthropy News Digest - RFPs"
+      url: "https://philanthropynewsdigest.org/rfps"
+
+  reddit:
+    grants:
+      enabled: true
+      description: "r/grants subreddit"
+      url: "https://www.reddit.com/r/grants/.rss"
+
+    higher_education:
+      enabled: true
+      description: "r/HigherEducation subreddit"
+      url: "https://www.reddit.com/r/highereducation/.rss"
 
 # Refresh settings
 refresh:

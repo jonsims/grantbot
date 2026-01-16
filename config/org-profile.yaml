@@ -11,6 +11,7 @@ location:
   state: "Massachusetts"
   city: "Wellesley"
   region: "Northeast"
+  country: "US"
 
 focus_areas:
   primary:
@@ -18,15 +19,23 @@ focus_areas:
     - innovation
     - artificial intelligence
     - AI impact
+    - pedagogical_research
   secondary:
     - pedagogy
     - educational research
     - interdisciplinary studies
     - technology education
+    - workforce_development
+    - higher_education
+    - stem_education
+    - business_education
 
 grant_preferences:
   size_min: 1000      # $1K minimum
-  size_max: 1000000   # $1M maximum (no upper limit really)
+  size_max: null      # No upper limit
+  sweet_spot:
+    min: 25000
+    max: 250000
   duration_preference: "any"  # 1-year, multi-year, any
 
 keywords:
@@ -45,6 +54,14 @@ keywords:
     - higher education
     - business education
     - technology transfer
+    - education research
+    - workforce
+    - STEM
+    - interdisciplinary
+    - digital
+    - training
+    - skills
+    - future of work
 
   # Keywords that likely indicate poor fit
   exclude:
@@ -59,3 +76,23 @@ eligibility_types:
   - "Nonprofits having a 501(c)(3) status"
   - "Private institutions of higher education"
   - "Public and State controlled institutions of higher education"
+  - university
+  - college
+  - higher_education
+  - nonprofit
+  - educational_institution
+
+excluded_entity_types:
+  - individual
+  - k12_only
+  - international_only
+
+# Foundations of particular interest
+priority_funders:
+  - Kauffman Foundation
+  - Lumina Foundation
+  - Gates Foundation
+  - Sloan Foundation
+  - Spencer Foundation
+  - National Science Foundation
+  - Department of Education
